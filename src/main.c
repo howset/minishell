@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/18 17:38:47 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:42:04 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main()
 		add_history(input); //add input to readline history
 		if (ft_strncmp(input,"exit", 4) == 0)
 			exit(0);
-		printf("input is:%s\n", input); //just a feedback (useful for echo??)
+		printf("input was:%s\n", input); //just a feedback (useful for echo??)
 		free(input);
 	}
 	return 0;
