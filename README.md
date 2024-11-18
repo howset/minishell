@@ -10,8 +10,13 @@ Just starting.
 	- printf to terminal the content of `input`
 	- exit cleanly
 - How to store?
+	- Ex. `cmd arg1 arg2 arg3` --> delimited by a space
+	- ft_split to get an array ["cmd", "arg1", "arg2", "arg3"]
+	- Just print out the array
+	- Or just linked lists??
 - Test with valgrind from the start ✅ --> `make test` or `make test_log`
 	- reachable bytes only from `readline`
+	- if used, add_history also contributes to reachable bytes
 - Read and make notes of builtins, redirections, execvp, environment, etc
 
 ## Collected materials:
