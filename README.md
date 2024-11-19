@@ -17,7 +17,10 @@ Just starting.
 - Test with valgrind from the start ✅ --> `make test` or `make test_log`
 	- reachable bytes only from `readline`
 	- if used, add_history also contributes to reachable bytes
-- Read and make notes of builtins, redirections, execvp, environment, etc
+- Read and make notes of builtins, redirections, execve, environment, etc
+
+### 19.11.2024
+- git, storing things, comms
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/18 20:32:56 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:48:37 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	find_delimiter(char *input)
 {
 	int		i;
-	int		len;
 
 	i = 0;
-	len = ft_strlen(input);
-	while (i <= len)
+	while (input[i])
 	{
 		if (input[i] == ' ' || input[i] == ',' || input[i] == '.')
 			return(input[i]);
@@ -28,7 +26,7 @@ char	find_delimiter(char *input)
 	return(input[i]);
 }
 
-int main()
+int main(void)
 {
 	char*	input;
 	char	**res;
