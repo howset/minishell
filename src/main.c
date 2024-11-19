@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/19 14:55:20 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:28:24 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	lexer(const char *input, Token tokens[], int *token_count)
 	*token_count = count;
 }
 
+//test change
 int main(void)
 {
 	char*	input;
