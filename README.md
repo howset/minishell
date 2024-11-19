@@ -20,7 +20,11 @@ Just starting.
 - Read and make notes of builtins, redirections, execve, environment, etc
 
 ### 19.11.2024
-- git, storing things, comms
+- comms -> via WA
+- preliminary arrangements on using git
+- added rudimentary lexer
+- linked lists -> reem
+- lexer -> howard
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
