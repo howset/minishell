@@ -33,6 +33,7 @@ Just starting.
 - https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 - https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 - https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+- https://brennan.io/2015/01/16/write-a-shell-in-c/
 
 ## Scribbles
 ### `readline`
