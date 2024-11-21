@@ -6,85 +6,33 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/19 16:28:24 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:56:38 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef enum {
-	TOKEN_COMMANDS, //0 Token command
-	TOKEN_ARGUMENTS, //1 --> anything
-	TOKEN_REDIRECTIONS, //2 Token redirection
-	TOKEN_END //3
-} TokenType;
-
-typedef struct {
-	TokenType type;
-	char value[256];
-} Token;
-
-int	ft_isspace(char c)
-{
-	if (c == ' ')
-		return (1);
-	return (0);
-}
-
-void	lexer(const char *input, Token tokens[], int *token_count) 
-{
-	const char	*current = input;
-	int			count = 0;
-
-	while (*current != '\0') 
-	{
-		while (ft_isspace(*current)) // Skip whitespace
-			current++;
-		if (ft_isalpha(*current)) // Commands
-		{
-			int length = 0;
-			while (ft_isalnum(*current))
-			{
-				tokens[count].value[length++] = *current++;
-			}
-			tokens[count].value[length] = '\0';
-			tokens[count].type = TOKEN_COMMANDS;
-			count++;
-		} 
-		else if (ft_isdigit(*current)) // Arguments
-		{
-			int length = 0;
-			while (ft_isdigit(*current)) 
-				tokens[count].value[length++] = *current++;
-			tokens[count].value[length] = '\0';
-			tokens[count].type = TOKEN_ARGUMENTS;
-			count++;
-		} 
-		else if (*current == '|' || *current == '<' || *current == '>') // Redirs, problem: what about << & >>
-		{
-			tokens[count].value[0] = *current++;
-			tokens[count].value[1] = '\0';
-			tokens[count].type = TOKEN_REDIRECTIONS;
-			count++;
+void print_tokens(t_token *tokens, size_t token_count) {
+	for (size_t i = 0; i < token_count; i++) {
+		printf("Token %zu: ", i + 1);
+		if (tokens[i].type == TKN_WORD) {
+			printf("WORD, ");
+		} else {
+			printf("METACHARACTER, ");
 		}
-		else // Unknown character, skip
-			current++;
+		printf("Value: '%s'\n", tokens[i].value);
 	}
-
-	// End token
-	tokens[count].type = TOKEN_END;
-	strcpy(tokens[count].value, "END");
-	count++;
-
-	*token_count = count;
 }
 
-//test change
+/**
+ * currently the main function is still nothing
+ */
+
 int main(void)
 {
-	char*	input;
-	Token	tokens[256];
-	int		token_count = 0;
+	char	*input;
+	t_token	*tokens;
+	int	token_count = 0;
 	
 	while (1)
 	{	
@@ -92,10 +40,13 @@ int main(void)
 		add_history(input); //add input to readline history
 		if (ft_strncmp(input,"exit", 4) == 0) //exit
 			exit(0);
-		lexer(input, tokens, &token_count);
+		/* lexer(input, tokens, &token_count);
 		printf("Token count:%d\n", token_count);
 		for (int i = 0; i < token_count; i++) 
-			printf("Type: %d, Value: %s\n", tokens[i].type, tokens[i].value);
+			printf("Type: %d, Value: %s\n", tokens[i].type, tokens[i].value); */
+		tokens = lexer(input, &token_count);
+		print_tokens(tokens, token_count);
+		free_tokens(tokens, token_count);
 	}
-	return 0;
+	return (0);
 }
