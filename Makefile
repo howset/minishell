@@ -13,7 +13,8 @@ RM					= rm -f
 LIBS				= -lreadline
 
 ## Sources & header
-SRC-MS				= ./src/main.c
+SRC-MS				= ./src/main.c \
+						./src/lexer.c
 HEADER				= ./src/
 
 ## Text colors
