@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/21 18:26:47 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:23:19 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,20 @@ int	ft_isspace(char c)
 // Lexer function
 t_token *lexer(const char *input, int *token_count) 
 {
-	size_t capacity = 10; // change with argc
 	size_t i;
-	t_token token;
 	size_t start;
 	size_t length;
 	
-	t_token *tokens = malloc(sizeof(t_token) * capacity);
-	if (!tokens)
-	{
-		perror("Malloc failed for tokens");
-		exit(EXIT_FAILURE);
-	}
+	static t_token tokens[ARG_LEN];
 	i = 0;
 	while (input[i] != '\0') 
 	{
 		if (ft_isspace(input[i]))
 			i++;
-		//if (isalnum(input[i]) || input[i] == '_')
+		t_token token;
 		if (ft_isalnum(input[i]))
 		{
 			start = i;
-			//while (isalnum(input[i]) || input[i] == '_')
 			while (ft_isalnum(input[i]))
 				i++;
 			length = i - start;
@@ -123,9 +115,16 @@ t_token *lexer(const char *input, int *token_count)
 			}
 			ft_strlcpy(token.value, &input[start], length + 1);
 		}
-		tokens[*token_count].type = token.type;
-		tokens[*token_count].value = token.value; //add token to array
-		(*token_count)++;
+		if (*token_count < ARG_LEN)
+		{
+			tokens[*token_count] = token;
+			(*token_count)++;
+		} else
+		{
+			printf("Too many tokens\n");
+			free(token.value);
+			break;
+		}
 	}
 	return (tokens);
 }
@@ -135,7 +134,10 @@ void free_tokens(t_token *tokens, size_t token_count)
 	size_t	i;
 
 	i = 0;
+	printf("executing free\n");
 	while (i < token_count)
+	{
 		free(tokens[i].value);
-	free(tokens);
+		i++;
+	}
 }

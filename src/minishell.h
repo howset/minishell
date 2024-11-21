@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/21 17:47:31 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:46:55 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 	TKN_OPERATOR,
 	TKN_END,
 }	t_tkntype; */
+
+#define ARG_LEN 100 //arrange by argc??
 
 typedef enum e_tkntype
 {
