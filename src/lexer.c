@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:23:19 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:34:25 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ t_token *lexer(const char *input, int *token_count)
 	size_t start;
 	size_t length;
 	
-	static t_token tokens[ARG_LEN];
+	static t_token tokens[ARG_LEN]; //malloc tokens?
+	
 	i = 0;
 	while (input[i] != '\0') 
 	{
@@ -134,7 +135,7 @@ void free_tokens(t_token *tokens, size_t token_count)
 	size_t	i;
 
 	i = 0;
-	printf("executing free\n");
+	//printf("executing free\n");
 	while (i < token_count)
 	{
 		free(tokens[i].value);
