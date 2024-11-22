@@ -6,47 +6,54 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/19 11:48:37 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:22:30 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	find_delimiter(char *input)
+void print_tokens(t_token *tokens, size_t token_count) 
 {
-	int		i;
+	size_t i;
 
 	i = 0;
-	while (input[i])
+	while (i < token_count)
 	{
-		if (input[i] == ' ' || input[i] == ',' || input[i] == '.')
-			return(input[i]);
+		printf("Token %zu: ", i + 1);
+		if (tokens[i].type == TKN_WORD) {
+			printf("WORD, ");
+		} else {
+			printf("METACHARACTER, ");
+		}
+		printf("Value: '%s'\n", tokens[i].value);
 		i++;
 	}
-	return(input[i]);
 }
+
+/**
+ * currently the main function is still nothing
+ */
 
 int main(void)
 {
-	char*	input;
-	char	**res;
-	int		i;
+	char	*input;
+	t_token	*tokens;
+	int		token_count;
 	
 	while (1)
 	{	
 		input = readline("wtf-shell> "); //display prompt
 		add_history(input); //add input to readline history
 		if (ft_strncmp(input,"exit", 4) == 0) //exit
-			exit(0);
-		res = ft_split(input, find_delimiter(input)); //delimiter is space, komma, or period
-		i = 0;
-		while (res[i]) 
 		{
-			ft_printf("Word %d: %s\n", i + 1, res[i]);
-			free(res[i]);
-			i++;
+			free(input);
+			exit(0);
 		}
+		token_count = 0;
+		tokens = lexer(input, &token_count);
+		print_tokens(tokens, token_count);
+		free_tokens(tokens, token_count);
 		free(input);
 	}
-	return 0;
+	return (0);
 }

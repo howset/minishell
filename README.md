@@ -20,7 +20,17 @@ Just starting.
 - Read and make notes of builtins, redirections, execve, environment, etc
 
 ### 19.11.2024
-- git, storing things, comms
+- comms -> via WA
+- preliminary arrangements on using git
+- added rudimentary lexer
+- linked lists -> reem
+- lexer -> howard
+
+### 21.11.2024
+- tried to simplify lexer to tokenize string from readline to just words and metachars.
+- failed spectacularly in malloc-ing the array and free-ing them.
+- a frankenstein function now, but seems working.
+- next: categorize further (from TKN_WORDS) OR just tokenize further (to other TKN_s).
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
@@ -29,6 +39,8 @@ Just starting.
 - https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 - https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 - https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+- https://brennan.io/2015/01/16/write-a-shell-in-c/
+- https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 
 ## Scribbles
 ### `readline`
