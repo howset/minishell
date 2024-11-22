@@ -36,6 +36,8 @@ Just starting.
 - Keep makefile as it is, if there is a problem, change to use wildcards (?)
 - expand tokens to specify things further.
 - start with wrapper functions to save lines.
+- must recode the lexer to get rid of the fixed array tokens.
+- also a good idea to start specifying the tokens.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
