@@ -32,6 +32,11 @@ Just starting.
 - a frankenstein function now, but seems working.
 - next: categorize further (from TKN_WORDS) OR just tokenize further (to other TKN_s).
 
+### 22.22.2024
+- Keep makefile as it is, if there is a problem, change to use wildcards (?)
+- expand tokens to specify things further.
+- start with wrapper functions to save lines.
+
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell/blob/main/README.md
