@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:33:35 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:06:34 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ typedef enum e_tkntype
 typedef struct s_token{
 	t_tkntype	type;
 	char		*value;
+	int			position
 }	t_token;
 
 int	ft_isspace(char c);
 //void	lexer(const char *input, Token tokens[], int *token_count) ;
-t_token *lexer(const char *input, int *token_count, size_t len);
+t_token *lexer(const char *input, int *token_count);
 void free_tokens(t_token *tokens, size_t token_count);
 void	*malloc_perex(size_t bytes, char *msg);
 

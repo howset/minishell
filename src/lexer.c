@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:33:24 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:00:06 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,24 @@ int	ft_isspace(char c)
 	return (0);
 }
 
+
 // Lexer function
-t_token *lexer(const char *input, int *token_count, size_t len) 
+t_token *lexer(const char *input, int *token_count) 
 {
 	size_t i;
 	size_t start;
 	size_t length;
-	static t_token tokens[len]; //malloc tokens?
-	
+	t_token token;
+	t_token *tokens;
+
+	//static t_token tokens[ARG_LEN]; //malloc tokens?
+
 	i = 0;
+	tokens = malloc_perex(sizeof(t_token), "Failed on tokens");
 	while (input[i] != '\0') 
 	{
 		if (ft_isspace(input[i]))
 			i++;
-		t_token token;
 		if (ft_isalnum(input[i]))
 		{
 			start = i;
