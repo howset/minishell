@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/21 18:46:55 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:34:24 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int	ft_isspace(char c);
 //void	lexer(const char *input, Token tokens[], int *token_count) ;
 t_token *lexer(const char *input, int *token_count);
 void free_tokens(t_token *tokens, size_t token_count);
+void	*malloc_perex(size_t bytes, char *msg);
 
 #endif

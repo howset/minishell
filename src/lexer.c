@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 13:34:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:34:02 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,13 @@ t_token *lexer(const char *input, int *token_count)
 				i++;
 			length = i - start;
 			token.type = TKN_WORD;
-			token.value = malloc(length + 1);
+			token.value = malloc_perex(length + 1, "Failed on words");
+/* 			token.value = malloc(length + 1);
 			if (!token.value) 
 			{
 				perror("Malloc failed for token.value (words)");
 				exit(EXIT_FAILURE);
-			}
+			} */
 			ft_strlcpy(token.value, &input[start], length + 1);
 		}
 		else
@@ -108,12 +109,13 @@ t_token *lexer(const char *input, int *token_count)
 				i++; //others ('|', '<', '>')
 			length = i - start;
 			token.type = TKN_METACHAR;
-			token.value = malloc(length + 1);
+			token.value = malloc_perex(length + 1, "Failed on chars");
+			/* token.value = malloc(length + 1);
 			if (!token.value)
 			{
 				perror("Malloc failedfor token.value (metachars)");
 				exit(EXIT_FAILURE);
-			}
+			} */
 			ft_strlcpy(token.value, &input[start], length + 1);
 		}
 		if (*token_count < ARG_LEN)

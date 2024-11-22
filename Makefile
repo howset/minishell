@@ -14,7 +14,8 @@ LIBS				= -lreadline
 
 ## Sources & header
 SRC-MS				= ./src/main.c \
-						./src/lexer.c
+						./src/lexer.c \
+						./src/utils_wrapper.c
 HEADER				= ./src/
 
 ## Text colors
