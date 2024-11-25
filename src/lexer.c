@@ -5,140 +5,136 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 13:34:25 by hsetyamu         ###   ########.fr       */
+/*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/11/25 18:56:14 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_isspace(char c)
-{
-	if (c == ' ')
-		return (1);
-	return (0);
-}
+t_token	*lexer(const char *input);
+t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos);
+void	append_tkn(t_token **head, t_token *new_token);
+void	print_tkn(t_token *tokens);
+void	free_tkn(t_token *tokens);
 
-/* void	lexer(const char *input, Token tokens[], int *token_count) 
+/**The lexer function just iterates over the input string and whenever a defined 
+ * symbol is encountered, a corresponding function is called to create a node 
+ * that contains an appropriate token. This will be appended to the list.
+ * The (singly/doubly linked) list will contain all the tokens (the type, value,
+ * and position).
+ * Currently I have no idea why the TKN_WORD cant be wrapped properly in the 
+ * lex_word function. So I left it as it is.
+ */
+t_token	*lexer(const char *input)
 {
-	const char	*current = input;
-	int			count = 0;
+	t_token	*tokens;
+	t_token	*new_tkn;
+	int		pos;
+	int		start;
+	int		len;
 
-	while (*current != '\0') 
+	tokens = NULL;
+	new_tkn = NULL;
+	pos = 0;
+	while (input[pos])
 	{
-		while (ft_isspace(*current)) // Skip whitespace
-			current++;
-		if (ft_isalpha(*current)) // Commands
+		if (ft_isspace(input[pos]))
+			pos++;
+		if (input[pos] == '|')
+			pos = lex_or_pipe(input, pos, tokens, new_tkn);
+		else if (input[pos] == '&')
+			pos = lex_and_bg(input, pos, tokens, new_tkn);
+		else if (input[pos] == '<')
+			pos = lex_hd_rin(input, pos, tokens, new_tkn);
+		else if (input[pos] == '>')
+			pos = lex_app_rout(input, pos, tokens, new_tkn);
+		else if (input[pos] == ';')
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
+		else if (input[pos] == '(')
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
+		else if (input[pos] == ')')
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
+		else if (input[pos] == '\'')
+			pos = lex_quo_sin(input, pos, tokens, new_tkn);
+		else if (input[pos] == '"')
+			pos = lex_quo_dou(input, pos, tokens, new_tkn);
+		else if (input[pos] == '$')
+			pos = lex_var(input, pos, tokens, new_tkn);
+		else if (ft_isalnum(input[pos]))
+			//pos = lex_word(input, pos, &tokens, new_tkn);
+			//pos = lex_word(input, pos, tokens, new_tkn);
 		{
-			int length = 0;
-			while (ft_isalnum(*current))
-			{
-				tokens[count].value[length++] = *current++;
-			}
-			tokens[count].value[length] = '\0';
-			tokens[count].type = TOKEN_COMMANDS;
-			count++;
-		} 
-		else if (ft_isdigit(*current)) // Arguments
-		{
-			int length = 0;
-			while (ft_isdigit(*current)) 
-				tokens[count].value[length++] = *current++;
-			tokens[count].value[length] = '\0';
-			tokens[count].type = TOKEN_ARGUMENTS;
-			count++;
-		} 
-		else if (*current == '|' || *current == '<' || *current == '>') // Redirs, problem: what about << & >>
-		{
-			tokens[count].value[0] = *current++;
-			tokens[count].value[1] = '\0';
-			tokens[count].type = TOKEN_REDIRECTIONS;
-			count++;
-		}
-		else // Unknown character, skip
-			current++;
-	}
-
-	// End token
-	tokens[count].type = TOKEN_END;
-	strcpy(tokens[count].value, "END");
-	count++;
-
-//	*token_count = count;
-} */
-
-// Lexer function
-t_token *lexer(const char *input, int *token_count) 
-{
-	size_t i;
-	size_t start;
-	size_t length;
-	
-	static t_token tokens[ARG_LEN]; //malloc tokens?
-	
-	i = 0;
-	while (input[i] != '\0') 
-	{
-		if (ft_isspace(input[i]))
-			i++;
-		t_token token;
-		if (ft_isalnum(input[i]))
-		{
-			start = i;
-			while (ft_isalnum(input[i]))
-				i++;
-			length = i - start;
-			token.type = TKN_WORD;
-			token.value = malloc(length + 1);
-			if (!token.value) 
-			{
-				perror("Malloc failed for token.value (words)");
-				exit(EXIT_FAILURE);
-			}
-			ft_strlcpy(token.value, &input[start], length + 1);
-		}
-		else
-		{
-			start = i;
-			if (input[i] == '<' && input[i + 1] == '<')
-				i += 2;
-			else if (input[i] == '>' && input[i + 1] == '>')
-				i += 2;
-			else
-				i++; //others ('|', '<', '>')
-			length = i - start;
-			token.type = TKN_METACHAR;
-			token.value = malloc(length + 1);
-			if (!token.value)
-			{
-				perror("Malloc failedfor token.value (metachars)");
-				exit(EXIT_FAILURE);
-			}
-			ft_strlcpy(token.value, &input[start], length + 1);
-		}
-		if (*token_count < ARG_LEN)
-		{
-			tokens[*token_count] = token;
-			(*token_count)++;
-		} else
-		{
-			printf("Too many tokens\n");
-			free(token.value);
-			break;
+			start = pos;
+			while ((input[pos] && !ft_isspace(input[pos])) && 
+					!ft_strchr("|&;<>$()'\"", input[pos]))
+				pos++;
+			len = pos - start;
+			new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
+			append_tkn(&tokens, new_tkn);
 		}
 	}
+	new_tkn = create_tkn(TKN_EOF, "", 0, pos);
+	append_tkn(&tokens, new_tkn);
 	return (tokens);
 }
 
-void free_tokens(t_token *tokens, size_t token_count)
+/**This function creates a node for the list. The node is malloc'ed. The value
+ * is also malloc'ed because the size changes.
+ */
+t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos)
 {
-	size_t	i;
+	t_token	*token;
 
-	i = 0;
-	//printf("executing free\n");
-	while (i < token_count)
+	token = malloc_perex(sizeof(t_token), "Malloc error on create_tkn");
+	token->type = type;
+	token->value = malloc_perex(len + 1, "Malloc error on create_tkn val");
+	ft_strlcpy(token->value, start, len + 1);
+	token->position = pos;
+	token->next = NULL;
+	return (token);
+}
+
+/**Add a new node to the list.
+ * 
+ */
+void	append_tkn(t_token **head, t_token *new_token)
+{
+	t_token *temp;
+	
+	if (!*head)
+		*head = new_token;
+	else
 	{
-		free(tokens[i].value);
-		i++;
+		temp = *head;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_token;
+		//new_token->prev = temp; //doubly linked
+	}
+}
+
+//direct copy
+void print_tkn(t_token *tokens) 
+{
+	t_token *current = tokens;
+	while (current) 
+	{
+		printf("Type: %d, Value: '%s', Position: %d\n",
+				current->type, current->value, current->position);
+		current = current->next;
+	}
+}
+
+//direct copy
+void free_tkn(t_token *tokens) 
+{
+	t_token *current = tokens;
+	while (current) 
+	{
+		t_token *next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:02:33 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:45:12 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,57 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* typedef enum {
-	TOKEN_COMMANDS, //0 Token command
-	TOKEN_ARGUMENTS, //1 --> anything
-	TOKEN_REDIRECTIONS, //2 Token redirection
-	TOKEN_END //3
-} TokenType;
- */
-/* typedef enum e_tkntype{
-	TKN_WORD, //everything (incl keywords, commands, others)
-	TKN_METACHAR, //separator e.g. |, &, ;, (, ), <, >, space, tab, newline
-	TKN_OPERATOR,
-	TKN_END,
-}	t_tkntype; */
-
-# define ARG_LEN 100 //arrange by argc??
-
 typedef enum e_tkntype
 {
-	TKN_WORD, //everything (incl keywords, commands, others)
-	TKN_PIPE, //|
-	TKN_REDIRECT_IN, //<
-	TKN_REDIRECT_OUT, //>
-	TKN_REDIRECT_APPEND, //>>
-	TKN_HEREDOC //<<
+	TKN_OR, //0
+	TKN_PIPE, //1
+	TKN_BG, //2
+	TKN_AND, //3
+	TKN_RDIR_IN, //4
+	TKN_HEREDOC, //5
+	TKN_RDIR_OUT, //6
+	TKN_APPEND, //7
+	TKN_SEMCOL, //8
+	TKN_PAREN_OP, //9
+	TKN_PAREN_CL, //10
+	TKN_QUO_SIN, //11
+	TKN_QUO_DOU, //12
+	TKN_VAR, //13
+	TKN_WORD, //14
+	TKN_EOF, //15
 }	t_tkntype;
 
-typedef struct s_token
-{
+typedef struct s_token{
 	t_tkntype		type;
 	char			*value;
-	int				position; //position in the input string
-	struct s_token	*next; //pointer to the next token (for linked list implementation)
+	int				position;
+	struct s_token	*next;
+	//struct s_token	*prev; //doubly linked
 }	t_token;
 
-int	ft_isspace(char c);
-//void	lexer(const char *input, Token tokens[], int *token_count) ;
-void		free_tokens(t_token *tokens, size_t token_count);
-t_token		*lexer(const char *input, int *token_count);
+//lexer.c
+t_token	*lexer(const char *input);
+t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos);
+void	append_tkn(t_token **head, t_token *new_token);
+void	print_tkn(t_token *tokens);
+void	free_tkn(t_token *tokens);
+
+//lexer_utils1.c
+int lex_or_pipe(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_and_bg(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_hd_rin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_app_rout(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_single_sym(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+
+//lexer_utils2.c
+int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_quo_dou(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_var(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+//int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+//int lex_word(const char *input, int pos, t_token **tokens);
+
+//utils_wrapper.c
+void	*malloc_perex(size_t bytes, char *msg);
+
 #endif

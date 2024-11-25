@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_wrapper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:36:15 by hsetyamu         ###   ########.fr       */
+/*   Created: 2024/11/22 13:37:24 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/11/22 14:34:06 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * currently the main function is still nothing
- */
-
-int main(void)
+//malloc with perror and exit, to shorten things up
+void	*malloc_perex(size_t bytes, char *msg)
 {
-	char	*input;
-	t_token	*tokens;
-	
-	while (1)
-	{	
-		input = readline("wtf-shell> ");
-		add_history(input);
-		if (ft_strncmp(input,"exit", 4) == 0)
-		{
-			free(input);
-			exit(0);
-		}
-		tokens = lexer(input);
-		print_tkn(tokens);
-		free_tkn(tokens);
-		free(input);
+	void	*res;
+
+	res = malloc(bytes); 
+	if (res == NULL)
+	{
+		perror(msg);
+		exit(EXIT_FAILURE);
 	}
-	return (0);
+	return (res);
 }
