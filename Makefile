@@ -18,7 +18,7 @@ SRC-MS				= ./src/main.c \
 						./src/lexer/lexer.c \
 						./src/lexer/lexer_utils1.c \
 						./src/lexer/lexer_utils2.c \
-						./src/utils_wrapper.c
+						./src/lexer/token.c 
 HEADER				= ./src/
 
 ## Text colors
@@ -58,7 +58,7 @@ $(NAME-LIBFT):
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
 $(NAME-MS): ./src/main.c $(NAME-LIBFT)
-		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
+		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
 ##------------------------------------------------------------------##
