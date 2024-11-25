@@ -6,11 +6,11 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 20:38:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/25 21:04:03 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "lexer.h"
 
 /**The lexer function just iterates over the input string and whenever a defined
  * symbol is encountered, a corresponding function is called to create a node
@@ -44,11 +44,11 @@ t_token	*lexer(const char *input)
 		else if (input[pos] == '>')
 			pos = lex_app_rout(input, pos, tokens, new_tkn);
 		else if (input[pos] == ';')
-			pos = lex_single_sym(input, pos, tokens, new_tkn);
+			pos = lex_semi_col(input, pos, tokens, new_tkn);
 		else if (input[pos] == '(')
-			pos = lex_single_sym(input, pos, tokens, new_tkn);
+			pos = lex_paren_op(input, pos, tokens, new_tkn);
 		else if (input[pos] == ')')
-			pos = lex_single_sym(input, pos, tokens, new_tkn);
+			pos = lex_paren_cl(input, pos, tokens, new_tkn);
 		else if (input[pos] == '\'')
 			pos = lex_quo_sin(input, pos, tokens, new_tkn);
 		else if (input[pos] == '"')

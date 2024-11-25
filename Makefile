@@ -13,12 +13,17 @@ RM					= rm -f
 LIBS				= -lreadline
 
 UTILS 				= ./src/utils/malloc_perex.c
+
 ## Sources & header
 SRC-MS				= ./src/main.c \
+						./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
-						./src/lexer/lexer_utils1.c \
-						./src/lexer/lexer_utils2.c \
-						./src/lexer/token.c 
+						./src/lexer/operator.c \
+						./src/lexer/quote.c \
+						./src/lexer/redirection.c \
+						./src/lexer/token.c \
+						./src/lexer/word.c
+						
 HEADER				= ./src/
 
 ## Text colors
