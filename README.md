@@ -1,30 +1,12 @@
 # Minishell
 
 ## Notes
-### 15.11.2024
-Just starting.
-
-### 18.11.2024
-- Bare minimal working example;
-	- store readline in `input`
-	- printf to terminal the content of `input`
-	- exit cleanly
-- How to store?
-	- Ex. `cmd arg1 arg2 arg3` --> delimited by a space
-	- ft_split to get an array ["cmd", "arg1", "arg2", "arg3"]
-	- Just print out the array
-	- Or just linked lists??
-- Test with valgrind from the start ✅ --> `make test` or `make test_log`
-	- reachable bytes only from `readline`
-	- if used, add_history also contributes to reachable bytes
-- Read and make notes of builtins, redirections, execve, environment, etc
-
-### 19.11.2024
-- comms -> via WA
-- preliminary arrangements on using git
-- added rudimentary lexer
-- linked lists -> reem
-- lexer -> howard
+### 25.11.2024
+- lex_word is faulty, why? -- must recheck
+- better way to handle quotes --> blocking operation?
+- best way to comment functions? --> ask reem
+- test further? --> seems ok though
+- doubly linked list?
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
