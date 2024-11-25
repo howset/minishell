@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:56:14 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:48:22 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*lexer(const char *input)
 	pos = 0;
 	while (input[pos])
 	{
-		if (ft_isspace(input[pos]))
+		while (ft_isspace(input[pos]))
 			pos++;
 		if (input[pos] == '|')
 			pos = lex_or_pipe(input, pos, tokens, new_tkn);
@@ -49,11 +49,7 @@ t_token	*lexer(const char *input)
 			pos = lex_hd_rin(input, pos, tokens, new_tkn);
 		else if (input[pos] == '>')
 			pos = lex_app_rout(input, pos, tokens, new_tkn);
-		else if (input[pos] == ';')
-			pos = lex_single_sym(input, pos, tokens, new_tkn);
-		else if (input[pos] == '(')
-			pos = lex_single_sym(input, pos, tokens, new_tkn);
-		else if (input[pos] == ')')
+		else if (input[pos] == ';' || input[pos] == '(' || input[pos] == ')')
 			pos = lex_single_sym(input, pos, tokens, new_tkn);
 		else if (input[pos] == '\'')
 			pos = lex_quo_sin(input, pos, tokens, new_tkn);
@@ -61,7 +57,7 @@ t_token	*lexer(const char *input)
 			pos = lex_quo_dou(input, pos, tokens, new_tkn);
 		else if (input[pos] == '$')
 			pos = lex_var(input, pos, tokens, new_tkn);
-		else if (ft_isalnum(input[pos]))
+		else //if (ft_isalnum(input[pos]))
 			//pos = lex_word(input, pos, &tokens, new_tkn);
 			//pos = lex_word(input, pos, tokens, new_tkn);
 		{
@@ -129,10 +125,13 @@ void print_tkn(t_token *tokens)
 //direct copy
 void free_tkn(t_token *tokens) 
 {
-	t_token *current = tokens;
+	t_token *current;
+	t_token *next;
+	
+	current = tokens;
 	while (current) 
 	{
-		t_token *next = current->next;
+		next = current->next;
 		free(current->value);
 		free(current);
 		current = next;
