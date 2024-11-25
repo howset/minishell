@@ -5,22 +5,22 @@
 
 // Define the token types
 typedef enum e_token_type {
-    TOKEN_WORD,            // Generic word (commands, filenames, etc.)
-    TOKEN_PIPE,            // |
-    TOKEN_REDIRECT_IN,     // <
-    TOKEN_REDIRECT_OUT,    // >
-    TOKEN_REDIRECT_APPEND, // >>
-    TOKEN_HEREDOC,         // <<
-    TOKEN_BACKGROUND,      // &
-    TOKEN_AND,             // &&
-    TOKEN_OR,              // ||
-    TOKEN_SEMICOLON,       // ;
-    TOKEN_OPEN_PAREN,      // (
-    TOKEN_CLOSE_PAREN,     // )
-    TOKEN_VARIABLE,        // $VAR
-    TOKEN_QUOTE_SINGLE,    // '
-    TOKEN_QUOTE_DOUBLE,    // "
-    TOKEN_EOF              // End of input
+    TOKEN_WORD,            // 0 Generic word (commands, filenames, etc.)
+    TOKEN_PIPE,            // 1 |
+    TOKEN_REDIRECT_IN,     // 2 <
+    TOKEN_REDIRECT_OUT,    // 3 >
+    TOKEN_REDIRECT_APPEND, // 4 >>
+    TOKEN_HEREDOC,         // 5 <<
+    TOKEN_BACKGROUND,      // 6 &
+    TOKEN_AND,             // 7 &&
+    TOKEN_OR,              // 8 ||
+    TOKEN_SEMICOLON,       // 9 ;
+    TOKEN_OPEN_PAREN,      // 10 (
+    TOKEN_CLOSE_PAREN,     // 11 )
+    TOKEN_VARIABLE,        // 12 $VAR
+    TOKEN_QUOTE_SINGLE,    // 13 '
+    TOKEN_QUOTE_DOUBLE,    // 14 "
+    TOKEN_EOF              // 15 End of input
 } t_token_type;
 
 // Define the token structure
@@ -221,7 +221,7 @@ void free_tokens(t_token *tokens) {
 
 // Example usage
 int main() {
-    const char *input = "cat file.txt | grep \"search term\" > output.txt";
+    const char *input = "cat file.txt | grep \"search term > output.txt";
     t_token *tokens = tokenize_input(input);
     print_tokens(tokens);
     free_tokens(tokens);
