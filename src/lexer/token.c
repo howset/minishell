@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 /**This function creates a node for the list. The node is malloc'ed. The value
  * is also malloc'ed because the size changes.

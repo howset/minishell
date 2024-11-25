@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 //malloc with perror and exit, to shorten things up 
 

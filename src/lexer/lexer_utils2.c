@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:18:48 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:55:54 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:39:07 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn)
 {

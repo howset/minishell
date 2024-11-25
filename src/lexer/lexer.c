@@ -6,11 +6,11 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 20:14:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/25 20:38:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /**The lexer function just iterates over the input string and whenever a defined
  * symbol is encountered, a corresponding function is called to create a node
