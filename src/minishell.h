@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:26:41 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:52:50 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 int lex_quo_dou(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 int lex_var(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 //int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn);
-//int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 //int lex_word(const char *input, int pos, t_token **tokens);
 
 //utils_wrapper.c

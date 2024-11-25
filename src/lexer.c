@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:31:03 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:56:14 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void	append_tkn(t_token **head, t_token *new_token);
 void	print_tkn(t_token *tokens);
 void	free_tkn(t_token *tokens);
 
+/**The lexer function just iterates over the input string and whenever a defined 
+ * symbol is encountered, a corresponding function is called to create a node 
+ * that contains an appropriate token. This will be appended to the list.
+ * The (singly/doubly linked) list will contain all the tokens (the type, value,
+ * and position).
+ * Currently I have no idea why the TKN_WORD cant be wrapped properly in the 
+ * lex_word function. So I left it as it is.
+ */
 t_token	*lexer(const char *input)
 {
 	t_token	*tokens;
@@ -71,6 +79,9 @@ t_token	*lexer(const char *input)
 	return (tokens);
 }
 
+/**This function creates a node for the list. The node is malloc'ed. The value
+ * is also malloc'ed because the size changes.
+ */
 t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos)
 {
 	t_token	*token;
@@ -84,6 +95,9 @@ t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos)
 	return (token);
 }
 
+/**Add a new node to the list.
+ * 
+ */
 void	append_tkn(t_token **head, t_token *new_token)
 {
 	t_token *temp;

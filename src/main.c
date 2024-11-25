@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 16:20:20 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:36:15 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@ int main(void)
 {
 	char	*input;
 	t_token	*tokens;
-	//int		token_count;
 	
 	while (1)
 	{	
-		input = readline("wtf-shell> "); //display prompt
-		add_history(input); //add input to readline history
-		if (ft_strncmp(input,"exit", 4) == 0) //exit
+		input = readline("wtf-shell> ");
+		add_history(input);
+		if (ft_strncmp(input,"exit", 4) == 0)
 		{
 			free(input);
 			exit(0);
