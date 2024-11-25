@@ -14,9 +14,9 @@ LIBS				= -lreadline
 
 ## Sources & header
 SRC-MS				= ./src/main.c \
-						./src/lexer.c \
-						./src/lexer_utils1.c \
-						./src/lexer_utils2.c \
+						./src/lexer/lexer.c \
+						./src/lexer/lexer_utils1.c \
+						./src/lexer/lexer_utils2.c \
 						./src/utils_wrapper.c
 HEADER				= ./src/
 
