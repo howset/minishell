@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 15:22:46 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:46:57 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,6 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-/* typedef enum {
-	TOKEN_COMMANDS, //0 Token command
-	TOKEN_ARGUMENTS, //1 --> anything
-	TOKEN_REDIRECTIONS, //2 Token redirection
-	TOKEN_END //3
-} TokenType;
- */
-/* typedef enum e_tkntype{
-	TKN_WORD, //everything (incl keywords, commands, others)
-	TKN_METACHAR, //separator e.g. |, &, ;, (, ), <, >, space, tab, newline
-	TKN_OPERATOR,
-	TKN_END,
-}	t_tkntype; */
-
-//#define ARG_LEN 100 //arrange by argc??
 
 typedef enum e_tkntype
 {
@@ -66,14 +50,27 @@ typedef struct s_token{
 	//struct s_token	*prev; //doubly linked
 }	t_token;
 
-//void	lexer(const char *input, Token tokens[], int *token_count) ;
-//t_token *lexer(const char *input, int *token_count);
-//void free_tokens(t_token *tokens, size_t token_count);
+//lexer.c
 t_token	*lexer(const char *input);
 t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos);
-void	append_tkn(t_token **head, t_token *new_token); //ft_lstadd_back??
+void	append_tkn(t_token **head, t_token *new_token);
 void	print_tkn(t_token *tokens);
 void	free_tkn(t_token *tokens);
+
+//lexer_utils1.c
+int lex_or_pipe(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_and_bg(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_hd_rin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_app_rout(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_single_sym(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+
+//lexer_utils2.c
+int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_quo_dou(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_var(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+
+//utils_wrapper.c
 void	*malloc_perex(size_t bytes, char *msg);
 
 #endif

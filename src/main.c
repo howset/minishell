@@ -6,29 +6,11 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 15:23:47 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:20:20 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* void print_tokens(t_token *tokens, size_t token_count) 
-{
-	size_t i;
-
-	i = 0;
-	while (i < token_count)
-	{
-		printf("Token %zu: ", i + 1);
-		if (tokens[i].type == TKN_WORD) {
-			printf("WORD, ");
-		} else {
-			printf("METACHARACTER, ");
-		}
-		printf("Value: '%s'\n", tokens[i].value);
-		i++;
-	}
-} */
 
 /**
  * currently the main function is still nothing

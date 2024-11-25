@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 15:40:21 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:46:10 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_token	*lexer(const char *input);
 t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos);
-void	append_tkn(t_token **head, t_token *new_token); //ft_lstadd_back??
+void	append_tkn(t_token **head, t_token *new_token);
 void	print_tkn(t_token *tokens);
 void	free_tkn(t_token *tokens);
 
@@ -30,143 +30,35 @@ t_token	*lexer(const char *input)
 	tokens = NULL;
 	new_tkn = NULL;
 	pos = 0;
-	//start = 0;
-	//len = 0;
 	while (input[pos])
 	{
 		if (ft_isspace(input[pos]) == 1)
 			pos++;
 		if (input[pos] == '|')
-		{
-			if (input[pos + 1] == '|')
-			{
-				new_tkn = create_tkn(TKN_OR, &input[pos], 2, pos);
-				append_tkn(&tokens, new_tkn);
-				pos += 2;
-			}
-			else
-			{
-				new_tkn = create_tkn(TKN_PIPE, &input[pos], 1, pos);
-				append_tkn(&tokens, new_tkn);
-				pos++;
-			}
-		}
+			pos = lex_or_pipe(input, pos, tokens, new_tkn);
 		else if (input[pos] == '&')
-		{
-			if (input[pos + 1] == '&')
-			{
-				new_tkn = create_tkn(TKN_AND, &input[pos], 2, pos);
-				append_tkn(&tokens, new_tkn);
-				pos += 2;
-			}
-			else
-			{
-				new_tkn = create_tkn(TKN_BG, &input[pos], 1, pos);
-				append_tkn(&tokens, new_tkn);
-				pos++;
-			}
-		}
+			pos = lex_and_bg(input, pos, tokens, new_tkn);
 		else if (input[pos] == '<')
-		{
-			if (input[pos + 1] == '<')
-			{
-				new_tkn = create_tkn(TKN_HEREDOC, &input[pos], 2, pos);
-				append_tkn(&tokens, new_tkn);
-				pos += 2;
-			}
-			else
-			{
-				new_tkn = create_tkn(TKN_RDIR_IN, &input[pos], 1, pos);
-				append_tkn(&tokens, new_tkn);
-				pos++;
-			}
-		}
+			pos = lex_hd_rin(input, pos, tokens, new_tkn);
 		else if (input[pos] == '>')
-		{
-			if (input[pos + 1] == '>')
-			{
-				new_tkn = create_tkn(TKN_APPEND, &input[pos], 2, pos);
-				append_tkn(&tokens, new_tkn);
-				pos += 2;
-			}
-			else
-			{
-				new_tkn = create_tkn(TKN_RDIR_OUT, &input[pos], 1, pos);
-				append_tkn(&tokens, new_tkn);
-				pos++;
-			}
-		}
+			pos = lex_app_rout(input, pos, tokens, new_tkn);
 		else if (input[pos] == ';')
-		{
-			new_tkn = create_tkn(TKN_SEMCOL, &input[pos], 1, pos);
-			append_tkn(&tokens, new_tkn);
-			pos++;
-		}
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
 		else if (input[pos] == '(')
-		{
-			new_tkn = create_tkn(TKN_PAREN_OP, &input[pos], 1, pos);
-			append_tkn(&tokens, new_tkn);
-			pos++;
-		}
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
 		else if (input[pos] == ')')
-		{
-			new_tkn = create_tkn(TKN_PAREN_CL, &input[pos], 1, pos);
-			append_tkn(&tokens, new_tkn);
-			pos++;
-		}
+			pos = lex_single_sym(input, pos, tokens, new_tkn);
 		else if (input[pos] == '\'')
-		{
-			start = pos;
-			pos++;
-			while (input[pos] && input[pos] != '\'')
-				pos++;
-			if (input[pos] == '\'')
-			{
-				pos++;
-				len = pos - start;
-				new_tkn = create_tkn(TKN_QUO_SIN, &input[start], len, start);
-				append_tkn(&tokens, new_tkn);
-			}
-			else
-			{
-				perror("Unterminated single quote");
-				exit(EXIT_FAILURE);
-			}
-		}
+			pos = lex_quo_sin(input, pos, tokens, new_tkn);
 		else if (input[pos] == '"')
-		{
-			start = pos;
-			pos++;
-			while (input[pos] && input[pos] != '"')
-				pos++;
-			if (input[pos] == '"')
-			{
-				pos++;
-				len = pos - start;
-				new_tkn = create_tkn(TKN_QUO_DOU, &input[start], len, start);
-				append_tkn(&tokens, new_tkn);
-			}
-			else
-			{
-				perror("Unterminated double quote");
-				exit(EXIT_FAILURE);
-			}
-		}
+			pos = lex_quo_dou(input, pos, tokens, new_tkn);
 		else if (input[pos] == '$')
-		{
-			start = pos;
-			pos++;
-			while (ft_isalnum(input[pos]) || input[pos] == '_')
-				pos++;
-			len = pos - start;
-			new_tkn = create_tkn(TKN_VAR, &input[start], len, start);
-			append_tkn(&tokens, new_tkn);
-		}
+			pos = lex_var(input, pos, tokens, new_tkn);
 		else
+			//pos = lex_word(input, pos, tokens, new_tkn);
 		{
 			start = pos;
-			while (input[pos] && !ft_isspace(input[pos]) &&
-					!ft_strchr("|&;<>$()'\"", input[pos]))
+			while (input[pos] && !ft_isspace(input[pos]) && !ft_strchr("|&;<>$()'\"", input[pos]))
 				pos++;
 			len = pos - start;
 			new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
@@ -207,6 +99,8 @@ void	append_tkn(t_token **head, t_token *new_token)
 	}
 }
 
+
+//direct copy
 void print_tkn(t_token *tokens) 
 {
 	t_token *current = tokens;
@@ -218,6 +112,7 @@ void print_tkn(t_token *tokens)
 	}
 }
 
+//direct copy
 void free_tkn(t_token *tokens) 
 {
 	t_token *current = tokens;

@@ -15,6 +15,8 @@ LIBS				= -lreadline
 ## Sources & header
 SRC-MS				= ./src/main.c \
 						./src/lexer.c \
+						./src/lexer_utils1.c \
+						./src/lexer_utils2.c \
 						./src/utils_wrapper.c
 HEADER				= ./src/
 
@@ -28,7 +30,7 @@ COLOFF				=	\033[0m
 
 all:				$(NAME-LIBFT) $(NAME-MS)
 
-#bonus:				$(NAME-LIBFT) $(NAME-CLIENTB) $(NAME-SERVERB)
+#bonus:				$(NAME-LIBFT) $(NAME-BONUS)
 
 clean:
 					@$(RM) $(NAME-MS)

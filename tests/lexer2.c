@@ -221,7 +221,7 @@ void free_tokens(t_token *tokens) {
 
 // Example usage
 int main() {
-    const char *input = "cat file.txt | grep \"search term > output.txt";
+    const char *input = "  cat file.txt | grep \"search term\" > output.txt";
     t_token *tokens = tokenize_input(input);
     print_tokens(tokens);
     free_tokens(tokens);
