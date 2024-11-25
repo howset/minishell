@@ -12,6 +12,7 @@ AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
 
+UTILS 				= ./src/utils/malloc_perex.c
 ## Sources & header
 SRC-MS				= ./src/main.c \
 						./src/lexer/lexer.c \
