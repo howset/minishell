@@ -3,6 +3,7 @@
 		"type_traits": "c",
 		"libft.h": "c",
 		"history.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"minishell.h": "c"
 	}
 }

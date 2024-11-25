@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 16:46:10 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:31:03 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ t_token	*lexer(const char *input)
 	int		pos;
 	int		start;
 	int		len;
-	t_token *eof_tkn;
 
 	tokens = NULL;
 	new_tkn = NULL;
 	pos = 0;
 	while (input[pos])
 	{
-		if (ft_isspace(input[pos]) == 1)
+		if (ft_isspace(input[pos]))
 			pos++;
 		if (input[pos] == '|')
 			pos = lex_or_pipe(input, pos, tokens, new_tkn);
@@ -54,19 +53,21 @@ t_token	*lexer(const char *input)
 			pos = lex_quo_dou(input, pos, tokens, new_tkn);
 		else if (input[pos] == '$')
 			pos = lex_var(input, pos, tokens, new_tkn);
-		else
+		else if (ft_isalnum(input[pos]))
+			//pos = lex_word(input, pos, &tokens, new_tkn);
 			//pos = lex_word(input, pos, tokens, new_tkn);
 		{
 			start = pos;
-			while (input[pos] && !ft_isspace(input[pos]) && !ft_strchr("|&;<>$()'\"", input[pos]))
+			while ((input[pos] && !ft_isspace(input[pos])) && 
+					!ft_strchr("|&;<>$()'\"", input[pos]))
 				pos++;
 			len = pos - start;
 			new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
 			append_tkn(&tokens, new_tkn);
 		}
 	}
-	eof_tkn = create_tkn(TKN_EOF, "", 0, pos);
-	append_tkn(&tokens, eof_tkn);
+	new_tkn = create_tkn(TKN_EOF, "", 0, pos);
+	append_tkn(&tokens, new_tkn);
 	return (tokens);
 }
 
@@ -98,7 +99,6 @@ void	append_tkn(t_token **head, t_token *new_token)
 		//new_token->prev = temp; //doubly linked
 	}
 }
-
 
 //direct copy
 void print_tkn(t_token *tokens) 

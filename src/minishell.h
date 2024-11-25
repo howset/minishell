@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 16:46:57 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:26:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@
 
 typedef enum e_tkntype
 {
-	TKN_OR,
-	TKN_PIPE,
-	TKN_BG,
-	TKN_AND,
-	TKN_RDIR_IN,
-	TKN_HEREDOC,
-	TKN_RDIR_OUT,
-	TKN_APPEND,
-	TKN_SEMCOL,
-	TKN_PAREN_OP,
-	TKN_PAREN_CL,
-	TKN_QUO_SIN,
-	TKN_QUO_DOU,
-	TKN_VAR,
-	TKN_WORD,
-	TKN_EOF,
+	TKN_OR, //0
+	TKN_PIPE, //1
+	TKN_BG, //2
+	TKN_AND, //3
+	TKN_RDIR_IN, //4
+	TKN_HEREDOC, //5
+	TKN_RDIR_OUT, //6
+	TKN_APPEND, //7
+	TKN_SEMCOL, //8
+	TKN_PAREN_OP, //9
+	TKN_PAREN_CL, //10
+	TKN_QUO_SIN, //11
+	TKN_QUO_DOU, //12
+	TKN_VAR, //13
+	TKN_WORD, //14
+	TKN_EOF, //15
 }	t_tkntype;
 
 typedef struct s_token{
@@ -68,7 +68,9 @@ int lex_single_sym(const char *input, int pos, t_token *tokens, t_token *new_tkn
 int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 int lex_quo_dou(const char *input, int pos, t_token *tokens, t_token *new_tkn);
 int lex_var(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+//int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+//int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+//int lex_word(const char *input, int pos, t_token **tokens);
 
 //utils_wrapper.c
 void	*malloc_perex(size_t bytes, char *msg);

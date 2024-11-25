@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:18:48 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 16:41:42 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:25:38 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,3 +88,35 @@ int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn)
 	append_tkn(&tokens, new_tkn);
 	return (pos);
 }
+
+/* // New function to handle TKN_WORD
+int lex_word(const char *input, int pos, t_token **tokens) {
+	int start = pos;
+	t_token *new_tkn;
+
+	// Find the end of the word
+	while (input[pos] && !ft_isspace(input[pos]) && !ft_strchr("|&;<>$()'\"", input[pos]))
+		pos++;
+
+	// Calculate the length and create a token
+	int len = pos - start;
+	new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
+	append_tkn(tokens, new_tkn);
+
+	return pos;  // Return the updated position
+} */
+
+/* int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn) {
+    int start = pos;
+
+    // Find the end of the word
+    while (input[pos] && !ft_isspace(input[pos]) && !ft_strchr("|&;<>$()'\"", input[pos]))
+        pos++;
+
+    // Calculate the length and create a token
+    int len = pos - start;
+    new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
+    append_tkn(tokens, new_tkn);
+
+    return pos;  // Return the updated position
+} */
