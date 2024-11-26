@@ -4,7 +4,6 @@
 ## Name
 NAME-MS				= minishell
 NAME-LIBFT			= ./src/lib/libft.a
-TEST_MAKEFILE		= test_Makefile
 ## Compiler, flags, & other commands
 CC 					= cc
 CFLAGS 				= -g -Wall -Werror -Wextra -I
@@ -52,7 +51,7 @@ re-bonus:			fclean bonus
 
 
 test:
-		@make -C tests -f $(TEST_MAKEFILE) run
+		@make -C tests -f makefile run
 		@echo "$(GREEN)Tests executed!$(COLOFF)"
 
 # test:				$(NAME-LIBFT) $(NAME-MS)
