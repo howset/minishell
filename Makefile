@@ -4,7 +4,7 @@
 ## Name
 NAME-MS				= minishell
 NAME-LIBFT			= ./src/lib/libft.a
-
+TEST_MAKEFILE		= test_Makefile
 ## Compiler, flags, & other commands
 CC 					= cc
 CFLAGS 				= -g -Wall -Werror -Wextra -I
@@ -50,11 +50,16 @@ re:					fclean all
 
 re-bonus:			fclean bonus
 
-test:				$(NAME-LIBFT) $(NAME-MS)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
 
-test_log:			$(NAME-LIBFT) $(NAME-MS)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
+test:
+		@make -C tests -f $(TEST_MAKEFILE) run
+		@echo "$(GREEN)Tests executed!$(COLOFF)"
+
+# test:				$(NAME-LIBFT) $(NAME-MS)
+# 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
+
+# test_log:			$(NAME-LIBFT) $(NAME-MS)
+# 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Targets
