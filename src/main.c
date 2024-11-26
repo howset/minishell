@@ -6,27 +6,27 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:22:30 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:52:17 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_tokens(t_token *tokens, size_t token_count) 
+/**Traverse the list (forward only) and find a certain value
+ * and print it to the terminal
+*/
+void	traverse_find(t_token *tokens, char *value)
 {
-	size_t i;
+	t_token *current_node;
+	int len;
 
-	i = 0;
-	while (i < token_count)
+	current_node = tokens;
+	len = ft_strlen(value);
+	while (current_node) 
 	{
-		printf("Token %zu: ", i + 1);
-		if (tokens[i].type == TKN_WORD) {
-			printf("WORD, ");
-		} else {
-			printf("METACHARACTER, ");
-		}
-		printf("Value: '%s'\n", tokens[i].value);
-		i++;
+		if (ft_strncmp(current_node->value, value, len) == 0)
+			printf("Val found: %s, %d\n", current_node->value, current_node->position);
+		current_node = current_node->next;
 	}
 }
 
@@ -38,21 +38,27 @@ int main(void)
 {
 	char	*input;
 	t_token	*tokens;
-	int		token_count;
 	
 	while (1)
 	{	
-		input = readline("wtf-shell> "); //display prompt
-		add_history(input); //add input to readline history
-		if (ft_strncmp(input,"exit", 4) == 0) //exit
+		input = readline("wtf-shell> ");
+		add_history(input);
+		if (ft_strncmp(input,"exit", 4) == 0)
 		{
 			free(input);
 			exit(0);
 		}
-		token_count = 0;
-		tokens = lexer(input, &token_count);
-		print_tokens(tokens, token_count);
-		free_tokens(tokens, token_count);
+		tokens = lexer(input);
+		print_tkn(tokens);
+		//traverse_find(tokens, ">>"); //
+		
+		Parser parser = {tokens, tokens};
+		ASTNode *tree = parse(&parser);
+		printf("\nAbstract Syntax Tree:\n");
+		print_ast(tree, 0);
+		free_ast(tree);
+		
+		free_tkn(tokens);
 		free(input);
 	}
 	return (0);

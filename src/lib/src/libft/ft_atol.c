@@ -6,11 +6,12 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:00:55 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/05/08 17:03:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:30:24 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <limits.h>
 
 /* long	ft_atol(const char *nptr)
 {
@@ -38,13 +39,6 @@
 	res = res * sign;
 	return (res);
 } */
-
-static int	ft_isspace(int c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (8192);
-	return (0);
-}
 
 long	ft_atol(const char *nptr)
 {
