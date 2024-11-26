@@ -46,6 +46,10 @@ Just starting.
 - test further? --> seems ok though
 - doubly linked list?
 
+### 26.11.2024
+- start a parsing branch.
+- whooooo this is confusing. the code seems to work but i have no idea how.
+
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell/blob/main/README.md
