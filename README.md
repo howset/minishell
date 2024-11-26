@@ -14,6 +14,20 @@
 - a frankenstein function now, but seems working.
 - next: categorize further (from TKN_WORDS) OR just tokenize further (to other TKN_s).
 
+### 22.11.2024
+- Keep makefile as it is, if there is a problem, change to use wildcards (?)
+- expand tokens to specify things further.
+- start with wrapper functions to save lines.
+- must recode the lexer to get rid of the fixed array tokens.
+- also a good idea to start specifying the tokens.
+
+### 25.11.2024
+- lex_word is faulty, why? -- must recheck
+- better way to handle quotes --> blocking operation?
+- best way to comment functions? --> ask reem
+- test further? --> seems ok though
+- doubly linked list?
+
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell/blob/main/README.md

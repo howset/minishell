@@ -1,3 +1,4 @@
+
 # Created by https://www.toptal.com/developers/gitignore/api/c,macos,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,macos,linux
 
@@ -102,5 +103,3 @@ Temporary Items
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
-
-minishell
