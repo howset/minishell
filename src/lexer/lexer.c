@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/26 13:30:58 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/26 19:36:07 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_token	*lexer(const char *input)
 	t_token	*tokens;
 	t_token	*new_tkn;
 	int		pos;
-	int		start;
-	int		len;
 
 	tokens = NULL;
 	new_tkn = NULL;
@@ -36,37 +34,27 @@ t_token	*lexer(const char *input)
 		if (ft_isspace(input[pos]))
 			pos++;
 		if (input[pos] == '|')
-			pos = lex_or_pipe(input, pos, tokens, new_tkn);
+			pos = lex_or_pipe(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '&')
-			pos = lex_and_bg(input, pos, tokens, new_tkn);
+			pos = lex_and_bg(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '<')
-			pos = lex_hd_rin(input, pos, tokens, new_tkn);
+			pos = lex_hd_rin(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '>')
-			pos = lex_app_rout(input, pos, tokens, new_tkn);
+			pos = lex_app_rout(input, pos, &tokens, new_tkn);
 		else if (input[pos] == ';')
-			pos = lex_semi_col(input, pos, tokens, new_tkn);
+			pos = lex_semi_col(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '(')
-			pos = lex_paren_op(input, pos, tokens, new_tkn);
+			pos = lex_paren_op(input, pos, &tokens, new_tkn);
 		else if (input[pos] == ')')
-			pos = lex_paren_cl(input, pos, tokens, new_tkn);
+			pos = lex_paren_cl(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '\'')
-			pos = lex_quo_sin(input, pos, tokens, new_tkn);
+			pos = lex_quo_sin(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '"')
-			pos = lex_quo_dou(input, pos, tokens, new_tkn);
+			pos = lex_quo_dou(input, pos, &tokens, new_tkn);
 		else if (input[pos] == '$')
-			pos = lex_var(input, pos, tokens, new_tkn);
+			pos = lex_var(input, pos, &tokens, new_tkn);
 		else
-		// pos = lex_word(input, pos, &tokens, new_tkn);
-		// pos = lex_word(input, pos, tokens, new_tkn);
-		{
-			start = pos;
-			while ((input[pos] && !ft_isspace(input[pos]))
-				&& !ft_strchr("|&;<>$()'\"", input[pos]))
-				pos++;
-			len = pos - start;
-			new_tkn = create_tkn(TKN_WORD, &input[start], len, start);
-			append_tkn(&tokens, new_tkn);
-		}
+			pos = lex_word(input, pos, &tokens, new_tkn);
 	}
 	new_tkn = create_tkn(TKN_EOF, "", 0, pos);
 	append_tkn(&tokens, new_tkn);

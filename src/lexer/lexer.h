@@ -41,26 +41,26 @@ void	print_tkn(t_token *tokens);
 void	free_tkn(t_token *tokens);
 
 //operator.c
-int lex_or_pipe(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int lex_and_bg(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int	lex_semi_col(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_or_pipe(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int lex_and_bg(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int	lex_semi_col(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 
 //redirection.c
-int lex_hd_rin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int lex_app_rout(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_hd_rin(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int lex_app_rout(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 
 //grouping.c
-int lex_paren_op(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int lex_paren_cl(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_paren_op(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int lex_paren_cl(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 
 //quote.c
-int lex_quo_sin(const char *input, int pos, t_token *tokens, t_token *new_tkn);
-int lex_quo_dou(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn);
+int lex_quo_dou(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 
 //word.c
-int lex_var(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_var(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 //int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn);
-int lex_word(const char *input, int pos, t_token *tokens, t_token *new_tkn);
+int lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn);
 //int lex_word(const char *input, int pos, t_token **tokens);
 
 
