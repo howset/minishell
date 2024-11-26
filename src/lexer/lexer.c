@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 21:04:03 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:30:58 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_token	*lexer(const char *input)
 			pos = lex_quo_dou(input, pos, tokens, new_tkn);
 		else if (input[pos] == '$')
 			pos = lex_var(input, pos, tokens, new_tkn);
-		else if (ft_isalnum(input[pos]))
+		else
 		// pos = lex_word(input, pos, &tokens, new_tkn);
 		// pos = lex_word(input, pos, tokens, new_tkn);
 		{
