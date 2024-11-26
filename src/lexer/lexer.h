@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:53:27 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/26 21:07:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/11/26 21:21:53 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_token
 
 // lexer.c
 t_token				*lexer(const char *input);
+int					handle_token(const char *input, int pos, t_token **tokens);
 
 // token.c
 t_token				*create_tkn(t_tkntype type, const char *start, int len,
