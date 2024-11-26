@@ -22,7 +22,8 @@ SRC-MS				= ./src/main.c \
 						./src/lexer/quote.c \
 						./src/lexer/redirection.c \
 						./src/lexer/token.c \
-						./src/lexer/word.c
+						./src/lexer/word.c \
+						./src/parser/parser.c \
 						
 HEADER				= ./src/
 

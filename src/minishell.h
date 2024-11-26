@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/26 12:46:36 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:14:09 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 
 # include "./includes.h"
 # include "./lexer/lexer.h"
+# include "./parser/parser.h"
 
 #endif

@@ -138,7 +138,20 @@ t_token *tokenize_input(const char *input) {
         } else if (input[position] == ')') {
             // TOKEN_CLOSE_PAREN
             t_token *token = create_token(TOKEN_CLOSE_PAREN, &input[position], 1, position);
-            append_token(&tokens, token);
+            (current);
+        current = next;
+    }
+}
+
+// Example usage
+int main() {
+    const char *input = "  cat file.txt | grep \"search term\" > output.txt";
+    t_token *tokens = tokenize_input(input);
+    print_tokens(tokens);
+    free_tokens(tokens);
+    return 0;
+}
+append_token(&tokens, token);
             position++;
         } else if (input[position] == '$') {
             // TOKEN_VARIABLE

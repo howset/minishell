@@ -3,7 +3,7 @@
 
 #include "../includes.h"
 
-typedef enum e_tkntype
+/* typedef enum e_tkntype
 {
 	TKN_OR, //0
 	TKN_PIPE, //1
@@ -29,7 +29,7 @@ typedef struct s_token{
 	int				position;
 	struct s_token	*next;
 	//struct s_token	*prev; //doubly linked
-}	t_token;
+}	t_token; */
 
 //lexer.c
 t_token	*lexer(const char *input);

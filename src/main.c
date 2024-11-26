@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 19:25:56 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:52:17 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@ int main(void)
 		}
 		tokens = lexer(input);
 		print_tkn(tokens);
-		traverse_find(tokens, ">>"); //
+		//traverse_find(tokens, ">>"); //
+		
+		Parser parser = {tokens, tokens};
+		ASTNode *tree = parse(&parser);
+		printf("\nAbstract Syntax Tree:\n");
+		print_ast(tree, 0);
+		free_ast(tree);
+		
 		free_tkn(tokens);
 		free(input);
 	}
