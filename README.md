@@ -1,6 +1,29 @@
 # Minishell
 
+## Install Dependencies
+### Macos
+```bash
+brew install readline
+brew install check
+brew install pkg-config
+```
+
+### Linux
+```bash
+sudo apt-get install libreadline-dev
+sudo apt-get install check
+sudo apt-get install pkg-config
+```
+
 ## Notes
+### 26.11.2024
+- fixed lex_word. 
+- fixed a bug in when starting with a symbol. Like `()` would fail. 
+- added automated unit tests for lexer. run `make test` to run tests for lexer.
+- refactored lexer to be more modular
+- cleaned up some code and removed unnecessary files
+
+
 ### 25.11.2024
 - lex_word is faulty, why? -- must recheck
 - better way to handle quotes --> blocking operation?
