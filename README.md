@@ -17,11 +17,12 @@ sudo apt-get install pkg-config
 
 ## Notes
 ### 26.11.2024
-- fixed lex_word. 
-- fixed a bug in when starting with a symbol. Like `()` would fail. 
+- fixed lex_word.
+- fixed a bug in when starting with a symbol. Like `()` would fail.
 - added automated unit tests for lexer. run `make test` to run tests for lexer.
 - refactored lexer to be more modular
-- cleaned up some code and removed unnecessary files
+- cleaned up some code and removed unnecessary files\
+- finished norminetting the lexer
 
 
 ### 25.11.2024
@@ -132,7 +133,7 @@ histdata_t data;
 | **isatty**			| `man isatty`		| `<unistd.h>`				| test whether a file descriptor refers to a terminal (returns 1 if yes)
 | **ttyname**			| `man ttyname`		| `<unistd.h>`				| returns a pointer to the null-terminated pathname of the terminal
 | **ttyslot**			| `man ttyslot`		| `<unistd.h>`				| find the slot of the current user's terminal in some file
-| **ioctl**				| `man 2/3 ioctl`	| `<stropts.h>`				| 
+| **ioctl**				| `man 2/3 ioctl`	| `<stropts.h>`				|
 | **getenv**			| `man getenv`		| `<stdlib.h>`				| get an environment variable
 | **tcsetattr**			| `man termios`		| `<unistd.h>`				| sets the parameters associated with the terminal
 | **tcgetattr**			| `man termios`		| `<unistd.h>`				| gets the parameters associated with the object referred by fd and stores them
