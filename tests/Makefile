@@ -22,7 +22,9 @@ LIBFT   = ../src/lib/libft.a
 
 LEXER_TESTS = ./lexer/lexer_grouping_test.c \
 			  ./lexer/lexer_operator_test.c \
-			  ./lexer/lexer_quotes_test.c
+			  ./lexer/lexer_quote_test.c \
+			  ./lexer/lexer_redirection_test.c \
+			  ./lexer/lexer_word_test.c 
 ## Test sources
 TEST_SRCS   = main_test.c $(LEXER_TESTS)
 TEST_EXEC   = test_runner

@@ -5,8 +5,10 @@
 Suite	*lexer_grouping_suite(void);
 Suite	*lexer_operator_suite(void);
 Suite	*lexer_quote_suite(void);
+Suite	*lexer_redirection_suite(void);
+Suite	*lexer_word_suite(void);
 
-	int main(void)
+int	main(void)
 {
 	int number_failed;
 	SRunner *sr;
@@ -18,6 +20,8 @@ Suite	*lexer_quote_suite(void);
 	srunner_add_suite(sr, lexer_grouping_suite());
 	srunner_add_suite(sr, lexer_operator_suite());
 	srunner_add_suite(sr, lexer_quote_suite());
+	srunner_add_suite(sr, lexer_redirection_suite());
+	srunner_add_suite(sr, lexer_word_suite());
 
 	// If you have more suites, add them here
 	// srunner_add_suite(sr, another_suite());
