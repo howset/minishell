@@ -21,7 +21,7 @@ sudo apt-get install pkg-config
 - fixed a bug in when starting with a symbol. Like `()` would fail.
 - added automated unit tests for lexer. run `make test` to run tests for lexer.
 - refactored lexer to be more modular
-- cleaned up some code and removed unnecessary files\
+- cleaned up some code and removed unnecessary files
 - finished norminetting the lexer
 
 
