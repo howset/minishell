@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:55:18 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/25 18:17:24 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:43:48 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
