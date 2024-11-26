@@ -5,14 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 15:30:54 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:06:46 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/25 13:55:18 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/11/25 19:43:48 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
+#include "libft.h"
+
+/* int	ft_isspace(char c)
 {
-	if (c == ' ')
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+} */
+
+int	ft_isspace(int c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
 	return (0);
 }
