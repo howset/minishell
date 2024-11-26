@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/26 21:01:23 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/25 13:55:18 by hsetyamu          #+#    #+#             */
+/*   Updated: 2024/11/26 21:07:56 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-/**
- * currently the main function is still nothing
- */
-
-int	main(void)
+/* int	ft_isspace(char c)
 {
-	char	*input;
-	t_token	*tokens;
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+} */
 
-	while (1)
-	{
-		input = readline("wtf-shell> ");
-		add_history(input);
-		if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
-			exit(0);
-		}
-		tokens = lexer(input);
-		print_tkn(tokens);
-		free_tkn(tokens);
-		free(input);
-	}
+int	ft_isspace(int c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
 	return (0);
 }

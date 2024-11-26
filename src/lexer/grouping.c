@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   grouping.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/26 21:01:23 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/26 20:53:36 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/26 21:01:49 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
 
-/**
- * currently the main function is still nothing
- */
-
-int	main(void)
+int	lex_paren_op(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 {
-	char	*input;
-	t_token	*tokens;
+	new_tkn = create_tkn(TKN_PAREN_OP, &input[pos], 1, pos);
+	append_tkn(tokens, new_tkn);
+	pos++;
+	return (pos);
+}
 
-	while (1)
-	{
-		input = readline("wtf-shell> ");
-		add_history(input);
-		if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
-			exit(0);
-		}
-		tokens = lexer(input);
-		print_tkn(tokens);
-		free_tkn(tokens);
-		free(input);
-	}
-	return (0);
+int	lex_paren_cl(const char *input, int pos, t_token **tokens, t_token *new_tkn)
+{
+	new_tkn = create_tkn(TKN_PAREN_CL, &input[pos], 1, pos);
+	append_tkn(tokens, new_tkn);
+	pos++;
+	return (pos);
 }

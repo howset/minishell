@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/26 21:01:23 by reldahli         ###   ########.fr       */
+/*   Created: 2024/11/26 20:55:32 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/26 20:55:33 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef INCLUDES_H
+# define INCLUDES_H
 
-/**
- * currently the main function is still nothing
- */
+# include "./lib/src/ft_printf/ft_printf.h"
+# include "./lib/src/get_next_line/get_next_line.h"
+# include "./lib/src/libft/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdio.h>
+# include <stdlib.h>
 
-int	main(void)
-{
-	char	*input;
-	t_token	*tokens;
+// utils
+void	*malloc_perex(size_t bytes, char *msg);
 
-	while (1)
-	{
-		input = readline("wtf-shell> ");
-		add_history(input);
-		if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
-			exit(0);
-		}
-		tokens = lexer(input);
-		print_tkn(tokens);
-		free_tkn(tokens);
-		free(input);
-	}
-	return (0);
-}
+#endif
