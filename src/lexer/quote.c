@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 20:52:57 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/26 21:03:12 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
-int lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn)
+int	lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 {
 	int	start;
 	int	len;
@@ -24,7 +36,8 @@ int lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 	return (pos);
 }
 
-int lex_quo_dou(const char *input, int pos, t_token **tokens, t_token *new_tkn)
+int	lex_quo_dou(const char *input, int pos,
+		t_token **tokens, t_token *new_tkn)
 {
 	int	start;
 	int	len;

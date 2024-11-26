@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/26 21:05:45 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 /**This function creates a node for the list. The node is malloc'ed. The value
@@ -31,7 +43,6 @@ void	append_tkn(t_token **head, t_token *new_token)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_token;
-		// new_token->prev = temp; //doubly linked
 	}
 }
 
@@ -52,10 +63,13 @@ void	print_tkn(t_token *tokens)
 // direct copy
 void	free_tkn(t_token *tokens)
 {
-	t_token *current = tokens;
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
 	while (current)
 	{
-		t_token *next = current->next;
+		next = current->next;
 		free(current->value);
 		free(current);
 		current = next;
