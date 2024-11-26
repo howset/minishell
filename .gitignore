@@ -105,3 +105,6 @@ Temporary Items
 
 minishell
 test_runner
+
+## Valgrind
+valgrind-out.txt
