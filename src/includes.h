@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   includes.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 20:55:32 by reldahli          #+#    #+#             */
+/*   Updated: 2024/11/27 13:38:44 by hsetyamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INCLUDES_H
 # define INCLUDES_H
 
@@ -8,7 +20,6 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
-
 typedef enum e_tkntype
 {
 	TKN_OR, //0

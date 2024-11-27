@@ -1,6 +1,30 @@
 # Minishell
 
+## Install Dependencies
+### Macos
+```bash
+brew install readline
+brew install check
+brew install pkg-config
+```
+
+### Linux
+```bash
+sudo apt-get install libreadline-dev
+sudo apt-get install check
+sudo apt-get install pkg-config
+```
+
 ## Notes
+### 26.11.2024
+- fixed lex_word.
+- fixed a bug in when starting with a symbol. Like `()` would fail.
+- added automated unit tests for lexer. run `make test` to run tests for lexer.
+- refactored lexer to be more modular
+- cleaned up some code and removed unnecessary files
+- finished norminetting the lexer
+
+
 ### 25.11.2024
 - lex_word is faulty, why? -- must recheck
 - better way to handle quotes --> blocking operation?
@@ -27,6 +51,10 @@
 - best way to comment functions? --> ask reem
 - test further? --> seems ok though
 - doubly linked list?
+
+### 26.11.2024
+- start a parsing branch.
+- whooooo this is confusing. the code seems to work but i have no idea how.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
@@ -123,7 +151,7 @@ histdata_t data;
 | **isatty**			| `man isatty`		| `<unistd.h>`				| test whether a file descriptor refers to a terminal (returns 1 if yes)
 | **ttyname**			| `man ttyname`		| `<unistd.h>`				| returns a pointer to the null-terminated pathname of the terminal
 | **ttyslot**			| `man ttyslot`		| `<unistd.h>`				| find the slot of the current user's terminal in some file
-| **ioctl**				| `man 2/3 ioctl`	| `<stropts.h>`				| 
+| **ioctl**				| `man 2/3 ioctl`	| `<stropts.h>`				|
 | **getenv**			| `man getenv`		| `<stdlib.h>`				| get an environment variable
 | **tcsetattr**			| `man termios`		| `<unistd.h>`				| sets the parameters associated with the terminal
 | **tcgetattr**			| `man termios`		| `<unistd.h>`				| gets the parameters associated with the object referred by fd and stores them
