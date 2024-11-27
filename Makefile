@@ -51,7 +51,7 @@ re-bonus:			fclean bonus
 
 
 test:
-		@make -C tests -f makefile run
+		@make -C tests -f Makefile run
 		@echo "$(GREEN)Tests executed!$(COLOFF)"
 
 # test:				$(NAME-LIBFT) $(NAME-MS)
