@@ -48,18 +48,18 @@ fclean:				clean
 
 re:					fclean all
 
-re-bonus:			fclean bonus
+#re-bonus:			fclean bonus
 
 
 test:
-		@make -C tests -f makefile run
+		@make -C tests -f Makefile run
 		@echo "$(GREEN)Tests executed!$(COLOFF)"
 
-# test:				$(NAME-LIBFT) $(NAME-MS)
-# 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
+test_val:				$(NAME-LIBFT) $(NAME-MS)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
 
-# test_log:			$(NAME-LIBFT) $(NAME-MS)
-# 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
+test_vallog:			$(NAME-LIBFT) $(NAME-MS)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Targets

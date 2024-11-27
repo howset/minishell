@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/27 13:40:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:45:02 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*lexer(const char *input)
 	pos = 0;
 	while (input[pos])
 	{
-		while (ft_isspace(input[pos]))
+		if (ft_isspace(input[pos]))
 			pos++;
 		else
 			pos = handle_token(input, pos, &tokens);
