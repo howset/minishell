@@ -14,7 +14,7 @@ LIBS				= -lreadline
 UTILS 				= ./src/utils/malloc_perex.c
 
 ## Sources & header
-SRC-MS				= ./src/main.c \
+SRC-MS				= ./src/minishell.c \
 						./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
 						./src/lexer/operator.c \
@@ -67,7 +67,7 @@ $(NAME-LIBFT):
 		@make -C ./src/lib
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
-$(NAME-MS): ./src/main.c $(NAME-LIBFT)
+$(NAME-MS): ./src/minishell.c $(NAME-LIBFT)
 		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
