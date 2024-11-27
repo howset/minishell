@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/27 13:39:02 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:33:45 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ int	main(void)
 		tokens = lexer(input);
 		print_tkn(tokens);
 		//traverse_find(tokens, ">>"); //
-		
-		Parser parser = {tokens, tokens};
+/* 		Parser parser = {tokens, tokens};
 		ASTNode *tree = parse(&parser);
 		printf("\nAbstract Syntax Tree:\n");
 		print_ast(tree, 0);
-		free_ast(tree);
+		free_ast(tree); */
 		
 		free_tkn(tokens);
 		free(input);

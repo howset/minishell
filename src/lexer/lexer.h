@@ -6,14 +6,14 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:53:27 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/27 13:41:54 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:05:08 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "../includes.h"
+# include "../minishell.h"
 
 /* typedef enum e_tkntype
 {
