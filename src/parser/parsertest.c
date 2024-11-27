@@ -1,4 +1,14 @@
-#include "parser.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct s_command {
+	char **args;			//array of words
+	char *input_file;		//input redir
+	char *output_file;		//output redir
+	int append;				//flag (0=overwrite, 1=append)
+	struct s_command *next; //next node/command
+} t_command;
 
 char **tokenize(char *input) {
     char **tokens = malloc(1024 * sizeof(char *));
@@ -14,16 +24,15 @@ char **tokenize(char *input) {
     return tokens;
 }
 
-t_command *parse_tokens(t_token	*tokens) 
+t_command *parse_tokens(char **tokens) 
 {
-	t_command *head;
-	t_command *current;
+	t_command *head = NULL, *current = NULL;
+	char *input_file = NULL;
+	char *output_file = NULL;
+	int append = 0;
 
-	head = NULL;
-	current = NULL;
-	while (tokens) {
-		if (tokens->type == TKN_PIPE) 
-		{
+	while (*tokens) {
+		if (strcmp(*tokens, "|") == 0) {
 			// Handle pipeline: move to the next command
 			//current->next = malloc(sizeof(t_command));
 			//current = current->next;
