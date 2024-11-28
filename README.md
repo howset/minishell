@@ -15,46 +15,10 @@ sudo apt-get install check
 sudo apt-get install pkg-config
 ```
 
-## Notes
-### 26.11.2024
-- fixed lex_word.
-- fixed a bug in when starting with a symbol. Like `()` would fail.
-- added automated unit tests for lexer. run `make test` to run tests for lexer.
-- refactored lexer to be more modular
-- cleaned up some code and removed unnecessary files
-- finished norminetting the lexer
-
-
-### 25.11.2024
-- lex_word is faulty, why? -- must recheck
-- better way to handle quotes --> blocking operation?
-- best way to comment functions? --> ask reem
-- test further? --> seems ok though
-- doubly linked list?
-
-### 21.11.2024
-- tried to simplify lexer to tokenize string from readline to just words and metachars.
-- failed spectacularly in malloc-ing the array and free-ing them.
-- a frankenstein function now, but seems working.
-- next: categorize further (from TKN_WORDS) OR just tokenize further (to other TKN_s).
-
-### 22.11.2024
-- Keep makefile as it is, if there is a problem, change to use wildcards (?)
-- expand tokens to specify things further.
-- start with wrapper functions to save lines.
-- must recode the lexer to get rid of the fixed array tokens.
-- also a good idea to start specifying the tokens.
-
-### 25.11.2024
-- lex_word is faulty, why? -- must recheck
-- better way to handle quotes --> blocking operation?
-- best way to comment functions? --> ask reem
-- test further? --> seems ok though
-- doubly linked list?
-
-### 26.11.2024
-- start a parsing branch.
-- whooooo this is confusing. the code seems to work but i have no idea how.
+### 27.11.2024
+- Lexer: add equal/assignment
+- Continue the parser code, make it suitable for the token inputs (not an array, but linked list).
+- 
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
@@ -67,41 +31,14 @@ sudo apt-get install pkg-config
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 
 ## Scribbles
-### `readline`
-
-```
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-char *readline (const char *prompt);
-```
-- source: man 3
-- The line returned is allocated with malloc(3); the caller must free it when finished.
-
-### `history`
-
-```
-typedef void *histdata_t;
-
-typedef struct _hist_entry
-{
-char *line;
-char *timestamp;
-histdata_t data;
-} HIST_ENTRY;
-```
-- The history list itself might therefore be declared as `HIST_ENTRY ** the_history_list;`
-- The history list is an array of history entries.
-- `void add_history (const char *string)`
-	- Place string at the end of the history list.  The associated data field (if any) is set to NULL.  If the maximum number of history entries has been set using stifle_history(), and the new number of history entries would exceed that maximum, the oldest history entry is removed.
-
 ### Redirections & Pipes
-- `<`
-- `>`
+- `<` redir input
+- `>` redir output to a file (make a file/overwrite an existing one)
 - `<<` pass multiple lines of input to a command up to a certain delimiter
-- `>>`
-- `|`
+- `>>` append (make a new file/add line to a file)
+- `|` transfer output from one operation (command) to another as input
+- `;` perform operation/command in sequence (like && but does not check for success of prev command)
+- `||` like && but only executes the next if the previous fails.
 
 ### Allowed Funcs
 | Function				| Manual Page		| From lib					| Description
