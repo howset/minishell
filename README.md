@@ -56,6 +56,11 @@ sudo apt-get install pkg-config
 - start a parsing branch.
 - whooooo this is confusing. the code seems to work but i have no idea how.
 
+### 27.11.2024
+- got a more or less ok starting pont for the parser.
+- target is to make an ast?
+- hint from M&M: dont conflate execution with parsing. Remember the aim of parsing.
+
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell/blob/main/README.md
