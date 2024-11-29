@@ -31,14 +31,15 @@ sudo apt-get install pkg-config
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
-- https://github.com/appinha/42cursus-03-minishell/blob/main/README.md
+- https://github.com/appinha/42cursus-03-minishell
+- https://github.com/twagger/minishell
+- https://github.com/LeaYeh/minishell
 - https://github.com/Swoorup/mysh
 - https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 - https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 - https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
 - https://brennan.io/2015/01/16/write-a-shell-in-c/
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
-- https://github.com/LeaYeh/minishell
 - https://www.gnu.org/software/bash/manual/html_node/Definitions.html
 
 ## Scribbles
