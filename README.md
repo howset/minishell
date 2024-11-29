@@ -42,6 +42,9 @@ sudo apt-get install pkg-config
 - https://brennan.io/2015/01/16/write-a-shell-in-c/
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 - https://www.gnu.org/software/bash/manual/html_node/Definitions.html
+- https://www.youtube.com/watch?v=ZjzMdsTWF0U
+- https://www.youtube.com/watch?v=ubt-UjcQUYg
+- https://www.youtube.com/watch?v=SToUyjAsaFk
 
 ## Scribbles
 ### Redirections & Pipes
