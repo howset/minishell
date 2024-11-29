@@ -39,6 +39,7 @@ sudo apt-get install pkg-config
 - https://brennan.io/2015/01/16/write-a-shell-in-c/
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 - https://github.com/LeaYeh/minishell
+- https://www.gnu.org/software/bash/manual/html_node/Definitions.html
 
 ## Scribbles
 ### Redirections & Pipes
