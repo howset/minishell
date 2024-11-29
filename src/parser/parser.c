@@ -14,63 +14,55 @@ char **tokenize(char *input) {
     return tokens;
 }
 
-t_command *parse_tokens(t_token	*tokens) 
-{
-	t_command *head;
-	t_command *current;
+t_command *parse_tokens(char **tokens) {
+    t_command *head = NULL, *current = NULL;
+    char *input_file = NULL;
+    char *output_file = NULL;
+    int append = 0;
 
-	head = NULL;
-	current = NULL;
-	while (tokens) {
-		if (tokens->type == TKN_PIPE) 
-		{
-			// Handle pipeline: move to the next command
-			//current->next = malloc(sizeof(t_command));
-			//current = current->next;
-			if (current == NULL) {
-                current = malloc(sizeof(t_command));
-                head = current;
-            } else {
-                current->next = malloc(sizeof(t_command));
-                current = current->next;
+    while (*tokens) {
+        if (strcmp(*tokens, "|") == 0) {
+            // Handle pipeline: move to the next command
+            current->next = malloc(sizeof(t_command));
+            current = current->next;
+            current->args = NULL;
+            current->input_file = NULL;
+            current->output_file = NULL;
+            current->append = 0;
+            current->next = NULL;
+        } else if (strcmp(*tokens, "<") == 0) {
+            // Handle input redirection
+            tokens++;
+            current->input_file = strdup(*tokens);
+        } else if (strcmp(*tokens, ">") == 0) {
+            // Handle output redirection (overwrite)
+            tokens++;
+            current->output_file = strdup(*tokens);
+            current->append = 0;
+        } else if (strcmp(*tokens, ">>") == 0) {
+            // Handle output redirection (append)
+            tokens++;
+            current->output_file = strdup(*tokens);
+            current->append = 1;
+        } else {
+            // Handle arguments
+            int argc = 0;
+            while (tokens[argc] && strcmp(tokens[argc], "|") != 0 && strcmp(tokens[argc], "<") != 0 &&
+                   strcmp(tokens[argc], ">") != 0 && strcmp(tokens[argc], ">>") != 0) {
+                argc++;
             }
-			current->args = NULL;
-			current->input_file = NULL;
-			current->output_file = NULL;
-			current->append = 0;
-			current->next = NULL;
-		} else if (strcmp(*tokens, "<") == 0) {
-			// Handle input redirection
-			tokens++;
-			current->input_file = strdup(*tokens);
-		} else if (strcmp(*tokens, ">") == 0) {
-			// Handle output redirection (overwrite)
-			tokens++;
-			current->output_file = strdup(*tokens);
-			current->append = 0;
-		} else if (strcmp(*tokens, ">>") == 0) {
-			// Handle output redirection (append)
-			tokens++;
-			current->output_file = strdup(*tokens);
-			current->append = 1;
-		} else {
-			// Handle arguments
-			int argc = 0;
-			while (tokens[argc] && strcmp(tokens[argc], "|") != 0 && strcmp(tokens[argc], "<") != 0 &&
-				   strcmp(tokens[argc], ">") != 0 && strcmp(tokens[argc], ">>") != 0) {
-				argc++;
-			}
-			current->args = malloc((argc + 1) * sizeof(char *));
-			for (int i = 0; i < argc; i++) {
-				current->args[i] = strdup(tokens[i]);
-			}
-			current->args[argc] = NULL;
-			tokens += argc - 1; // Move to the last token processed
-		}
-		tokens++;
-	}
-	return head;
+            current->args = malloc((argc + 1) * sizeof(char *));
+            for (int i = 0; i < argc; i++) {
+                current->args[i] = strdup(tokens[i]);
+            }
+            current->args[argc] = NULL;
+            tokens += argc - 1; // Move to the last token processed
+        }
+        tokens++;
+    }
+    return head;
 }
+
 
 t_command *build_ast(char *input)
 {

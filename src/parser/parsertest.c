@@ -27,9 +27,9 @@ char **tokenize(char *input) {
 t_command *parse_tokens(char **tokens) 
 {
 	t_command *head = NULL, *current = NULL;
-	char *input_file = NULL;
-	char *output_file = NULL;
-	int append = 0;
+	//char *input_file = NULL;
+	//char *output_file = NULL;
+	//int append = 0;
 
 	while (*tokens) {
 		if (strcmp(*tokens, "|") == 0) {

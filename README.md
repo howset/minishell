@@ -18,7 +18,16 @@ sudo apt-get install pkg-config
 ### 27.11.2024
 - Lexer: add equal/assignment
 - Continue the parser code, make it suitable for the token inputs (not an array, but linked list).
-- 
+- read! read! read!
+
+## Slides
+![Parsing1](./slides/Ms_slide0.svg "Parsing")
+![Parsing2](./slides/Ms_slide1.svg "Lexer")
+![Parsing3](./slides/Ms_slide2.svg "Parser")
+![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
+![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
+![Parsing6](./slides/Ms_slide5.svg "Nodes")
+![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table")
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
@@ -29,6 +38,7 @@ sudo apt-get install pkg-config
 - https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
 - https://brennan.io/2015/01/16/write-a-shell-in-c/
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
+- https://github.com/LeaYeh/minishell
 
 ## Scribbles
 ### Redirections & Pipes

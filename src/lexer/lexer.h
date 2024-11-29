@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:53:27 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/27 18:05:08 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:58:54 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,6 @@
 # define LEXER_H
 
 # include "../minishell.h"
-
-/* typedef enum e_tkntype
-{
-	TKN_OR,
-	TKN_PIPE,
-	TKN_BG,
-	TKN_AND,
-	TKN_RDIR_IN,
-	TKN_HEREDOC,
-	TKN_RDIR_OUT,
-	TKN_APPEND,
-	TKN_SEMCOL,
-	TKN_PAREN_OP,
-	TKN_PAREN_CL,
-	TKN_QUO_SIN,
-	TKN_QUO_DOU,
-	TKN_VAR,
-	TKN_WORD,
-	TKN_EOF,
-}					t_tkntype;
-
-typedef struct s_token
-{
-	t_tkntype		type;
-	char			*value;
-	int				position;
-	struct s_token	*next;
-	//struct s_token	*prev; //doubly linked
-}	t_token; */
 
 // lexer.c
 t_token				*lexer(const char *input);
