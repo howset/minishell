@@ -1,118 +1,129 @@
-#include "parser.h"
+#include "./parser.h"
 
-char **tokenize(char *input) {
-    char **tokens = malloc(1024 * sizeof(char *));
-    char *token;
-    int i = 0;
-
-    token = strtok(input, " \t\n");
-    while (token != NULL) {
-        tokens[i++] = strdup(token);
-        token = strtok(NULL, " \t\n");
-    }
-    tokens[i] = NULL;
-    return tokens;
-}
-
-t_command *parse_tokens(char **tokens) {
-    t_command *head = NULL, *current = NULL;
-    char *input_file = NULL;
-    char *output_file = NULL;
-    int append = 0;
-
-    while (*tokens) {
-        if (strcmp(*tokens, "|") == 0) {
-            // Handle pipeline: move to the next command
-            current->next = malloc(sizeof(t_command));
-            current = current->next;
-            current->args = NULL;
-            current->input_file = NULL;
-            current->output_file = NULL;
-            current->append = 0;
-            current->next = NULL;
-        } else if (strcmp(*tokens, "<") == 0) {
-            // Handle input redirection
-            tokens++;
-            current->input_file = strdup(*tokens);
-        } else if (strcmp(*tokens, ">") == 0) {
-            // Handle output redirection (overwrite)
-            tokens++;
-            current->output_file = strdup(*tokens);
-            current->append = 0;
-        } else if (strcmp(*tokens, ">>") == 0) {
-            // Handle output redirection (append)
-            tokens++;
-            current->output_file = strdup(*tokens);
-            current->append = 1;
-        } else {
-            // Handle arguments
-            int argc = 0;
-            while (tokens[argc] && strcmp(tokens[argc], "|") != 0 && strcmp(tokens[argc], "<") != 0 &&
-                   strcmp(tokens[argc], ">") != 0 && strcmp(tokens[argc], ">>") != 0) {
-                argc++;
-            }
-            current->args = malloc((argc + 1) * sizeof(char *));
-            for (int i = 0; i < argc; i++) {
-                current->args[i] = strdup(tokens[i]);
-            }
-            current->args[argc] = NULL;
-            tokens += argc - 1; // Move to the last token processed
-        }
-        tokens++;
-    }
-    return head;
-}
-
-
-t_command *build_ast(char *input)
+t_ast	*parse_command(t_token **current)
 {
-	char **tokens = tokenize(input);
-	t_command *ast = malloc(sizeof(t_command));
+	t_ast	*node;
 
-	// Initialize the first command
-	ast->args = NULL;
-	ast->input_file = NULL;
-	ast->output_file = NULL;
-	ast->append = 0;
-	ast->next = NULL;
-
-	// Parse tokens
-	t_command *parsed_ast = parse_tokens(tokens);
-
-	// Free tokens
-	for (int i = 0; tokens[i]; i++) free(tokens[i]);
-	free(tokens);
-
-	return parsed_ast;
-}
-
-void print_ast(t_command *ast)
-{
-	while (ast) {
-		printf("Command: ");
-		for (int i = 0; ast->args && ast->args[i]; i++) {
-			printf("%s ", ast->args[i]);
-		}
-		printf("\n");
-
-		if (ast->input_file) {
-			printf("  Input: %s\n", ast->input_file);
-		}
-		if (ast->output_file) {
-			printf("  Output: %s (%s)\n", ast->output_file, ast->append ? "append" : "overwrite");
-		}
-		ast = ast->next;
+	node = create_ast_node(NODE_COMMAND);
+	if (!node)
+		return (NULL);
+	// Collect arguments until we hit an operator or EOF
+	while (*current && (*current)->type == TKN_WORD)
+	{
+		node->args_count++;
+		node->args = realloc(node->args, sizeof(char *) * (node->args_count
+					+ 1));
+		node->args[node->args_count - 1] = ft_strdup((*current)->value);
+		node->args[node->args_count] = NULL;
+		(*current) = (*current)->next;
 	}
+	return (node);
 }
+t_ast	*parse_factor(t_token **current)
+{
+	t_ast	*node;
 
-int main() {
-	char input[] = "cat file.txt | grep search > output.txt";
+	if ((*current)->type == TKN_PAREN_OP)
+	{
+		(*current) = (*current)->next; // Skip '('
+		node = parse_expression(current);
+		if ((*current)->type != TKN_PAREN_CL)
+		{
+			syntax_error_at((*current) ? (*current)->position : -1,
+				"Unmatched parenthesis");
+			return (NULL);
+		}
+		(*current) = (*current)->next; // Skip ')'
+	}
+	else if ((*current)->type == TKN_WORD)
+	{
+		node = parse_command(current);
+	}
+	else
+	{
+		// Handle syntax error
+		return (NULL);
+	}
+	return (node);
+}
+t_ast	*parse_term(t_token **current)
+{
+	t_ast	*node;
+	t_ast	*redir_node;
 
-	// Build AST
-	t_command *ast = build_ast(input);
+	node = parse_factor(current);
+	while (*current && ((*current)->type == TKN_RDIR_IN
+			|| (*current)->type == TKN_RDIR_OUT
+			|| (*current)->type == TKN_APPEND
+			|| (*current)->type == TKN_HEREDOC))
+	{
+		redir_node = create_ast_node(NODE_REDIRECTION);
+		redir_node->redirection_type = (*current)->type;
+		(*current) = (*current)->next;
+		if ((*current)->type != TKN_WORD)
+		{
+			syntax_error_at((*current) ? (*current)->position : -1,
+				"Expected a filename after redirection");
+			return (NULL);
+		}
+		redir_node->filename = ft_strdup((*current)->value);
+		(*current) = (*current)->next;
+		redir_node->left = node;
+		node = redir_node;
+	}
+	return (node);
+}
+t_ast	*parse_pipe(t_token **current)
+{
+	t_ast	*node;
+	t_ast	*pipe_node;
 
-	// Print AST
-	print_ast(ast);
+	node = parse_term(current);
+	while (*current && (*current)->type == TKN_PIPE)
+	{
+		pipe_node = create_ast_node(NODE_PIPE);
+		(*current) = (*current)->next; // Skip '|'
+		pipe_node->left = node;
+		pipe_node->right = parse_term(current);
+		node = pipe_node;
+	}
+	return (node);
+}
+t_ast	*parse_expression(t_token **current)
+{
+	t_ast		*node;
+	t_nodetype	type;
+	t_ast		*op_node;
 
-	return 0;
+	node = parse_pipe(current);
+	while (*current && ((*current)->type == TKN_AND
+			|| (*current)->type == TKN_OR || (*current)->type == TKN_SEMCOL))
+	{
+		if (node == NULL)
+		{
+			syntax_error_at((*current)->position,
+				"Unexpected logical operator without a preceding command");
+			return (NULL);
+		}
+		type = (*current)->type == TKN_AND ? NODE_AND : (*current)->type == TKN_OR ? NODE_OR : NODE_SEQUENCE;
+		op_node = create_ast_node(type);
+		(*current) = (*current)->next; // Skip '&&', '||', or ';'
+		op_node->left = node;
+		op_node->right = parse_pipe(current);
+		if (op_node->right == NULL)
+		{
+			syntax_error_at((*current) ? (*current)->position : -1,
+				"Expected a command after logical operator");
+			return (NULL);
+		}
+		node = op_node;
+	}
+	return (node);
+}
+t_ast	*parse(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	return (parse_expression(&current));
 }

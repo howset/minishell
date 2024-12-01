@@ -1,20 +1,18 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+// Function declarations and necessary includes go here
 # include "../minishell.h"
 
-/* ASTNode *create_ast_node(NodeType type, const char *value);
-t_token *advance(Parser *parser);
-t_token *peek(Parser *parser);
-ASTNode *parse_command(Parser *parser);
-ASTNode *parse_pipeline(Parser *parser);
-ASTNode *parse_redirect(Parser *parser, ASTNode *command);
-ASTNode *parse(Parser *parser);
-void print_ast(ASTNode *node, int depth);
-void free_ast(ASTNode *node); */
-
-t_command *parse_tokens(char **tokens);
-t_command *build_ast(char *input);
-void print_ast(t_command *ast);
-
-#endif
+t_ast	*create_ast_node(t_nodetype type);
+t_ast	*parse_command(t_token **current);
+t_ast	*parse_factor(t_token **current);
+t_ast	*parse_term(t_token **current);
+t_ast	*parse_pipe(t_token **current);
+t_ast	*parse_expression(t_token **current);
+t_ast	*parse(t_token *tokens);
+t_ast	*create_ast_node(t_nodetype type);
+void	print_ast(t_ast *node, int level);
+void	syntax_error(const char *message);
+void syntax_error_at(int position, const char *message);
+#endif // PARSER_H

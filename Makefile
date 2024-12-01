@@ -6,7 +6,7 @@ NAME-MS				= minishell
 NAME-LIBFT			= ./src/lib/libft.a
 ## Compiler, flags, & other commands
 CC 					= cc
-CFLAGS 				= -g -Wall -Werror -Wextra -I
+CFLAGS 				= -g -O0 -Wall -Werror -Wextra -I
 AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
@@ -14,16 +14,21 @@ LIBS				= -lreadline
 UTILS 				= ./src/utils/malloc_perex.c
 
 ## Sources & header
-SRC-MS				= ./src/minishell.c \
-						./src/lexer/grouping.c \
+SRC-MS				= ./src/minishell.c
+
+SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
 						./src/lexer/operator.c \
 						./src/lexer/quote.c \
 						./src/lexer/redirection.c \
 						./src/lexer/token.c \
-						./src/lexer/word.c \
-						./src/parser/parser.c \
-						
+						./src/lexer/word.c
+
+SRC-PARSER			= 	./src/parser/parser.c \
+						./src/parser/parser_utils.c \
+						./src/parser/ast.c
+
+
 HEADER				= ./src/
 
 ## Text colors
@@ -68,7 +73,7 @@ $(NAME-LIBFT):
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
 $(NAME-MS): ./src/minishell.c $(NAME-LIBFT)
-		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
+		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
 ##------------------------------------------------------------------##

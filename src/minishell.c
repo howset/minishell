@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/27 18:33:45 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/01 15:34:49 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 /**Traverse the list (forward only) and find a certain value
  * and print it to the terminal
-*/
+ */
 void	traverse_find(t_token *tokens, char *value)
 {
-	t_token *current_node;
-	int len;
+	t_token	*current_node;
+	int		len;
 
 	current_node = tokens;
 	len = ft_strlen(value);
-	while (current_node) 
+	while (current_node)
 	{
 		if (ft_strncmp(current_node->value, value, len) == 0)
-			printf("Val found: %s, %d\n", current_node->value, current_node->position);
+			printf("Val found: %s, %d\n", current_node->value,
+				current_node->position);
 		current_node = current_node->next;
 	}
 }
@@ -38,6 +39,7 @@ int	main(void)
 {
 	char	*input;
 	t_token	*tokens;
+	t_ast	*tree;
 
 	while (1)
 	{
@@ -49,16 +51,17 @@ int	main(void)
 			exit(0);
 		}
 		tokens = lexer(input);
-		print_tkn(tokens);
-		//traverse_find(tokens, ">>"); //
-/* 		Parser parser = {tokens, tokens};
-		ASTNode *tree = parse(&parser);
-		printf("\nAbstract Syntax Tree:\n");
+		// print_tkn(tokens);
+		tree = parse(tokens);
 		print_ast(tree, 0);
-		free_ast(tree); */
-		
-		free_tkn(tokens);
-		free(input);
+		// traverse_find(tokens, ">>"); //
+		/* 		Parser parser = {tokens, tokens};
+				tree = parse(&parser);
+				printf("\nAbstract Syntax Tree:\n");
+				print_ast(tree, 0);
+				free_ast(tree); */
+		// free_tkn(tokens);
+		// free(input);
 	}
 	return (0);
 }

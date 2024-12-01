@@ -6,11 +6,11 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/26 21:05:45 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/01 14:20:20 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "./lexer.h"
 
 /**This function creates a node for the list. The node is malloc'ed. The value
  * is also malloc'ed because the size changes.
