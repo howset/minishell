@@ -35,14 +35,14 @@ typedef struct s_token
 
 typedef enum e_nodetype
 {
-	NODE_COMMAND,
-	NODE_PIPE,
-	NODE_AND,
-	NODE_OR,
-	NODE_REDIRECTION,
-	NODE_SEQUENCE,
-	NODE_SUBSHELL,
-	NODE_INVALID
+	NODE_COMMAND,		// 0
+	NODE_PIPE,			// 1
+	NODE_AND,			// 2
+	NODE_OR,			// 3
+	NODE_REDIRECTION,	// 4
+	NODE_SEQUENCE,		// 5
+	NODE_SUBSHELL,		// 6
+	NODE_INVALID		// 7
 }					t_nodetype;
 
 typedef struct s_ast

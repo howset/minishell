@@ -29,6 +29,11 @@ sudo apt-get install pkg-config
 ![Parsing6](./slides/Ms_slide5.svg "Nodes")
 ![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table")
 ![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
+![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
+![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
+![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
+![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
+![Parsing13](./slides/Ms_slide12.svg "Parsing workflow")
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

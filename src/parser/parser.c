@@ -105,7 +105,7 @@ t_ast	*parse_expression(t_token **current)
 				"Unexpected logical operator without a preceding command");
 			return (NULL);
 		}
-		type = (*current)->type == TKN_AND ? NODE_AND : (*current)->type == TKN_OR ? NODE_OR : NODE_SEQUENCE;
+		type = (*current)->type == TKN_AND ? NODE_AND : (*current)->type == TKN_OR ? NODE_OR : NODE_SEQUENCE; //must change notation?
 		op_node = create_ast_node(type);
 		(*current) = (*current)->next; // Skip '&&', '||', or ';'
 		op_node->left = node;
