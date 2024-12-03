@@ -21,20 +21,22 @@ sudo apt-get install pkg-config
 - read! read! read!
 
 ### 3.12.2024
-- Reem finished the parser, just need to fix for norm
+- Reem successfully finished the parser, only have to conform to norm now
 	- input: rename the func `parse` to `parser`, uniform with `lexer`
-	- input: specify tkn_type & nd_type in the structs
-	- how to process heredoc?
-	- how about other brackets? '[', ']', '{', '}'?
-	- how about quotes?
+	- input: specify `tkn_type` & `nd_type` instead of just `type` in the corresponding structs, make them easier to identify in the functions
+	- ask: how to process heredoc?
+	- ask: how about other brackets? '[', ']', '{', '}'?
+	- ask: how about quotes?
 	- free the ast by the end of main?
 - Howard just made slides for selfish purposes
 	- Add one more slide with even shortened funcs for better flow
+	- Mess around with command tables
 - command table --> done but seems unuseful
-- builtins
+- builtins (echo, cd, pwd, export, unset, env, exit)
 - try execve/execvp
 - signals (ctrl-c)
-- 
+- read fork, dup, pipe
+- `ls -l >> output.txt | grep words > input.txt`
 
 
 ## Slides
