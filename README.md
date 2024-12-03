@@ -32,7 +32,14 @@ sudo apt-get install pkg-config
 	- Add one more slide with even shortened funcs for better flow
 	- Mess around with command tables
 - command table --> done but seems unuseful
-- builtins (echo, cd, pwd, export, unset, env, exit)
+- builtins 
+	- echo -n - display a line of text without the trailing newline
+	- cd
+	- pwd
+	- export
+	- unset
+	- env
+	- exit - cause the shell to exit with the exit status specified by the unsigned decimal integer n. The exit status shall be n, if specified, except that the behavior is unspecified if n is not an unsigned decimal integer or is greater than 255. Otherwise, the value shall be the exit value of the  last  command executed, or zero if no command was executed.
 - try execve/execvp
 - signals (ctrl-c)
 - read fork, dup, pipe
