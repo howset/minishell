@@ -20,6 +20,21 @@ sudo apt-get install pkg-config
 - Continue the parser code, make it suitable for the token inputs (not an array, but linked list).
 - read! read! read!
 
+### 3.12.2024
+- Reem finished the parser, just need to fix for norm
+	- input: rename the func `parse` to `parser`, uniform with `lexer`
+	- input: specify tkn_type & nd_type in the structs
+	- how to process heredoc?
+	- how about other brackets? '[', ']', '{', '}'?
+	- free the ast by the end of main?
+- Howard just made slides for selfish purposes
+	- Add one more slide with even shortened funcs for better flow
+- command table
+- builtins
+- try execve/execvp
+- signals (ctrl-c)
+
+
 ## Slides
 ![Parsing1](./slides/Ms_slide0.svg "Parsing")
 ![Parsing2](./slides/Ms_slide1.svg "Lexer")
@@ -33,7 +48,8 @@ sudo apt-get install pkg-config
 ![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
 ![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
 ![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
-![Parsing13](./slides/Ms_slide12.svg "Parsing workflow")
+![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
+![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
