@@ -56,4 +56,18 @@ typedef struct s_ast
 	char *filename;             // File for redirection
 }					t_ast;
 
+typedef struct s_simcomm
+{
+	char 	**args;				// Array of command + args
+	char	*in_redir;			// Input redirs
+	char	*out_redir;			// Output redirs
+	int		is_bg;		// FLag if command runs in background
+}					t_simcomm;	// Struct for *a* simple command
+
+typedef struct s_commtab
+{
+	t_simcomm *commands;		// Array of simple commands
+	int count;					// Count of simple commands
+}					t_commtab;
+
 #endif

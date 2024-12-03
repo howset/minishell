@@ -26,13 +26,15 @@ sudo apt-get install pkg-config
 	- input: specify tkn_type & nd_type in the structs
 	- how to process heredoc?
 	- how about other brackets? '[', ']', '{', '}'?
+	- how about quotes?
 	- free the ast by the end of main?
 - Howard just made slides for selfish purposes
 	- Add one more slide with even shortened funcs for better flow
-- command table
+- command table --> done but seems unuseful
 - builtins
 - try execve/execvp
 - signals (ctrl-c)
+- 
 
 
 ## Slides

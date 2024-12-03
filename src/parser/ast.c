@@ -11,6 +11,7 @@ t_ast	*create_ast_node(t_nodetype type)
 	node->left = NULL;
 	node->right = NULL;
 	node->args = malloc(sizeof(char *));
+	node->args[0] = NULL;
 	node->redirection_type = TKN_INVALID;
 	node->args_count = 0;
 	node->filename = NULL;

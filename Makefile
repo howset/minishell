@@ -26,7 +26,8 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 
 SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/parser_utils.c \
-						./src/parser/ast.c
+						./src/parser/ast.c \
+						./src/parser/comm_table.c
 
 
 HEADER				= ./src/

@@ -15,4 +15,10 @@ t_ast	*create_ast_node(t_nodetype type);
 void	print_ast(t_ast *node, int level);
 void	syntax_error(const char *message);
 void syntax_error_at(int position, const char *message);
+
+t_simcomm *create_simcomm(t_ast *node);
+void traverse_ast(t_ast *node, t_commtab *table);
+t_commtab *create_commtab();
+t_commtab *ast_to_commtab(t_ast *root);
+void print_commtab(t_commtab *table);
 #endif // PARSER_H
