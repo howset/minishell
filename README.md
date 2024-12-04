@@ -84,14 +84,24 @@ sudo apt-get install pkg-config
 - https://www.youtube.com/watch?v=SToUyjAsaFk
 
 ## Scribbles
-### Redirections & Pipes
-- `<` redir input
-- `>` redir output to a file (make a file/overwrite an existing one)
-- `<<` pass multiple lines of input to a command up to a certain delimiter
-- `>>` append (make a new file/add line to a file)
-- `|` transfer output from one operation (command) to another as input
-- `;` perform operation/command in sequence (like && but does not check for success of prev command)
-- `||` like && but only executes the next if the previous fails.
+### Slides
+Contains redundant content
+
+![Slide 0](./slides/Ms_slide0.svg)
+![Slide 1](./slides/Ms_slide1.svg)
+![Slide 2](./slides/Ms_slide2.svg)
+![Slide 3](./slides/Ms_slide3.svg)
+![Slide 4](./slides/Ms_slide4.svg)
+![Slide 5](./slides/Ms_slide5.svg)
+![Slide 6](./slides/Ms_slide6.svg)
+![Slide 7](./slides/Ms_slide7.svg)
+![Slide 8](./slides/Ms_slide8.svg)
+![Slide 9](./slides/Ms_slide9.svg)
+![Slide 10](./slides/Ms_slide10.svg)
+![Slide 11](./slides/Ms_slide11.svg)
+![Slide 12](./slides/Ms_slide12.svg)
+![Slide 13](./slides/Ms_slide13.svg)
+![Slide 14](./slides/Ms_slide14.svg)
 
 ### Allowed Funcs
 | Function				| Manual Page		| From lib					| Description
