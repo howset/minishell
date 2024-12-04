@@ -84,6 +84,27 @@ sudo apt-get install pkg-config
 - https://www.youtube.com/watch?v=SToUyjAsaFk
 
 ## Scribbles
+- dup vs dup2: duplicate a file descriptor. dup uses the lowest-numbered unused file descriptor, dup2 uses the file descriptor number specified in newfd.
+On  success, these system calls return the new file descriptor.  On error, -1 is returned, and
+       errno is set appropriately.
+```
+int dup(int oldfd);
+int dup2(int oldfd, int newfd);
+```
+
+- fork: creates a new process by duplicating the calling process. On success, the PID of the child process is returned in the parent, and 0 is returned in the child. On failure, -1 is returned in the parent, no child process is created, and errno is set appropriately.
+```
+pid_t fork(void);
+```
+- wait vs waitpid:  wait for state changes in a child of the calling process, and obtain information about the child whose state has changed (child termination, stopped by signal, resumed by signal). wait() suspends execution of calling thread until one of its children terminates (returns the process ID of the terminated child on success; on error, -1). waitpid() suspends execution of calling thread until a child specified by pid has changed state (can be modified) (returns 0 on success or if WNOHANG was specified and no child(ren) specified by id has yet changed state; on error, -1.).
+```
+#include <sys/types.h>
+#include <sys/wait.h>
+pid_t wait(int *wstatus);
+pid_t waitpid(pid_t pid, int *wstatus, int options);
+```
+
+
 ### Slides
 Contains redundant content
 
