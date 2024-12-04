@@ -15,11 +15,6 @@ sudo apt-get install check
 sudo apt-get install pkg-config
 ```
 
-### 27.11.2024
-- Lexer: add equal/assignment
-- Continue the parser code, make it suitable for the token inputs (not an array, but linked list).
-- read! read! read!
-
 ### 3.12.2024
 - Reem successfully finished the parser, only have to conform to norm now
 	- input: rename the func `parse` to `parser`, uniform with `lexer`
@@ -45,6 +40,9 @@ sudo apt-get install pkg-config
 - read fork, dup, pipe
 - `ls -l >> output.txt | grep words > input.txt`
 
+### 4.12.2024
+- Ask reem how to fix:
+	- Makefile: make does not recompile for minor change in source file
 
 ## Slides
 ![Parsing1](./slides/Ms_slide0.svg "Parsing")

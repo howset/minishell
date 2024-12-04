@@ -10,8 +10,6 @@ void echo(long long int arg_c, char *args[], int opt)
 		while (i < arg_c)
 		{
 			printf("%s ", args[i]);
-			if (i < arg_c - 1)
-				printf(" ");
 			i++;
 		}
 	}

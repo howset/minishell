@@ -88,6 +88,7 @@ void print_commtab(t_commtab *table)
 	i = 0;
 	while (i < table->count)
 	{
+		printf("\n");
 		printf("Command %d:\n", i + 1);
 		j = 0;
 		while (table->commands[i].args[j])
