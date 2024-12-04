@@ -15,58 +15,57 @@ sudo apt-get install check
 sudo apt-get install pkg-config
 ```
 
-### 3.12.2024
-- Reem successfully finished the parser, only have to conform to norm now
-	- input: rename the func `parse` to `parser`, uniform with `lexer`
-	- input: specify `tkn_type` & `nd_type` instead of just `type` in the corresponding structs, make them easier to identify in the functions
-	- ask: how to process heredoc?
-	- ask: how about other brackets? '[', ']', '{', '}'?
-	- ask: how about quotes?
-	- free the ast by the end of main?
-- Howard just made slides for selfish purposes
-	- Add one more slide with even shortened funcs for better flow
-	- Mess around with command tables
-- command table --> done but seems unuseful
-- builtins 
-	- echo -n - display a line of text without the trailing newline
-	- cd
-	- pwd
-	- export
-	- unset
-	- env
-	- exit - cause the shell to exit with the exit status specified by the unsigned decimal integer n. The exit status shall be n, if specified, except that the behavior is unspecified if n is not an unsigned decimal integer or is greater than 255. Otherwise, the value shall be the exit value of the  last  command executed, or zero if no command was executed.
-- try execve/execvp
-- signals (ctrl-c)
-- read fork, dup, pipe
-- `ls -l >> output.txt | grep words > input.txt`
+## Notes
+# To do
 
-### 4.12.2024
-- Ask reem:
-	- How to fix Makefile: make does not recompile for minor change in source file
-	- `consume_token` & `get_token_type` in parser_utils.c can be deleted?
-- To do:
-	- echo:
-		- Exit status on echo?
-		- More tests for echo
-		- Remove trailing space?
+## 🌎 General
+- Parsing:
+	- Handle quotes (double and single)
+	- Handle other brackets (?)
+	- What to do with heredoc (<<)?
+	- Handle `$?`?
+- Exec:
+	- Add builtins
+		- echo - half done. Functional but incomplete (exit status)
+		- cd
+		- pwd
+		- export
+		- unset
+		- env
+		- exit
+	- Exec non-builtins
+		- Read system calls: dup/dup2
+		- Read system calls: fork
+		- Read system calls: waitpid
+		- Read system calls: execve
+		- Read system calls: env
+- When to `free` what.
+- How to deal with `realloc`?
+- Makefile problem: does no recompile for minor changes
+- Make comments on functions. --> Take a day for streamlining & commenting?
 
+## 🌴 Main
+- stable
 
-## Slides
-![Parsing1](./slides/Ms_slide0.svg "Parsing")
-![Parsing2](./slides/Ms_slide1.svg "Lexer")
-![Parsing3](./slides/Ms_slide2.svg "Parser")
-![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
-![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
-![Parsing6](./slides/Ms_slide5.svg "Nodes")
-![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table Plan Overview")
-![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
-![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
-![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
-![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
-![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
-![Parsing13](./slides/Ms_slide12.svg "Shortened funcs overview")
-![Parsing14](./slides/Ms_slide13.svg "Parsing workflow")
-![Parsing15](./slides/Ms_slide14.svg "Command Table")
+### 🌿 Branch: tokens
+- 26.11.2024 - stable & merged to main
+
+### 🌿 Branch: h-parse
+- 3.12.2024 - add `comm_table.c` under src/parser/
+	- Maybe unnecessary, but works.
+	- If agreed, merge to main.
+
+### 🌿 Branch: r-parser
+- 1.12.2024 - parser done!
+	- Delete `consume_token`& `get_token_type`? 
+	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
+	- If agreed, change `parse()` to `parser()`.
+
+### 🌿 Branch: h-echo
+- 3.12.2024 - start with echo
+	- How to deal with exit status?
+	- How to remove trailing space?
+- Still have to polish exec.c
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
