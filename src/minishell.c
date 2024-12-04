@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/04 16:01:31 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:56:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(void)
 		add_history(input);
 		if (ft_strncmp(input, "exit", 4) == 0)
 		{
-			free_tkn(tokens);
 			free(input);
 			exit(0);
 		}
@@ -37,7 +36,7 @@ int	main(void)
 		// print_tkn(tokens);
 		tree = parse(tokens);
 		//printf("\n");
-		print_ast(tree, 0);
+		//print_ast(tree, 0);
 		printf("\n");
 		table = ast_to_commtab(tree);
 		exec_commtab(table);

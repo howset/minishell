@@ -1,17 +1,20 @@
 #include "./builtins.h"
 
-void echo(long long int arg_c, char *args[], int opt)
+/**This implementation of echo just printfs every string in the array args by
+ * iterating it one by one. If the opt is 1, then dont end with a newline,
+ * otherwise print it.
+ * 		Takes the args array as argument, including the boolean int opt.
+ * 		Returns nothing
+ */
+void echo(char *args[], int opt)
 {
 	int i;
 	
-	if (arg_c > 0)
+	i = 0;
+	while (args[i])
 	{
-		i = 0;
-		while (i < arg_c)
-		{
-			printf("%s ", args[i]);
-			i++;
-		}
+		printf("%s ", args[i]);
+		i++;
 	}
 	if (opt == 0)
 		printf("\n");

@@ -48,7 +48,7 @@ void exec_builtin(char *args[])
 		arg_cnt = 0;
 		while (args[i + arg_cnt])
 			arg_cnt++;
-		echo(arg_cnt, &args[i], opt);
+		echo(&args[i], opt);
 	}
 /* 	else if (ft_strncmp(args[0], "exit", 4) == 0)
 	{

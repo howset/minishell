@@ -10,7 +10,7 @@ void exec_singlecomm(t_simcomm *cmd);
 void exec_commtab(t_commtab *table);
 
 // echo.c
-void echo(long long int arg_c, char *args[], int opt);
+void echo(char *args[], int opt);
 
 // exit.c
 
