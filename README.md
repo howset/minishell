@@ -48,7 +48,7 @@ sudo apt-get install pkg-config
 - stable
 
 ### 🌿 Branch: tokens
-- stable & merged to main
+- 26.11.2024 - stable & merged to main
 
 ### 🌿 Branch: h-parse
 - 3.12.2024 - add `comm_table.c` under src/parser/
