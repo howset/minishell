@@ -41,8 +41,15 @@ sudo apt-get install pkg-config
 - `ls -l >> output.txt | grep words > input.txt`
 
 ### 4.12.2024
-- Ask reem how to fix:
-	- Makefile: make does not recompile for minor change in source file
+- Ask reem:
+	- How to fix Makefile: make does not recompile for minor change in source file
+	- `consume_token` & `get_token_type` in parser_utils.c can be deleted?
+- To do:
+	- echo:
+		- Exit status on echo?
+		- More tests for echo
+		- Remove trailing space?
+
 
 ## Slides
 ![Parsing1](./slides/Ms_slide0.svg "Parsing")
@@ -51,14 +58,15 @@ sudo apt-get install pkg-config
 ![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
 ![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
 ![Parsing6](./slides/Ms_slide5.svg "Nodes")
-![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table")
+![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table Plan Overview")
 ![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
 ![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
 ![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
 ![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
 ![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
-![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
-![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
+![Parsing13](./slides/Ms_slide12.svg "Shortened funcs overview")
+![Parsing14](./slides/Ms_slide13.svg "Parsing workflow")
+![Parsing15](./slides/Ms_slide14.svg "Command Table")
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

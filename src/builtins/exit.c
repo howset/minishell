@@ -1,6 +1,6 @@
 #include "./builtins.h"
 
-int	exit_cleanup(int n)
+int	exit(int n)
 {	
 	// free(input);
 	// free_tkn(tokens);

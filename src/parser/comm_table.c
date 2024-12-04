@@ -1,5 +1,10 @@
 #include "./parser.h"
 
+/**This function aims to convert a syntax tree to a command table.
+ * 		Takes the resulting t_ast tree from the parser.
+ * 		Returns a command table that contains (row-by-row) simple commands.
+ * 		These can then be executed sequentially.
+ */
 t_commtab *ast_to_commtab(t_ast *tree)
 {
 	t_commtab *table;
@@ -9,17 +14,31 @@ t_commtab *ast_to_commtab(t_ast *tree)
 	return (table);
 }
 
+/**This function initializes the t_commtab struct.
+ * 		Takes no args.
+ * 		Returns an empty initialized struct.
+ */
 t_commtab *create_commtab() {
 	t_commtab *table;
 	
-	table = malloc(sizeof(t_commtab));
-	if (!table)
-		return NULL;
+	table = malloc_perex(sizeof(t_commtab), "Malloc error on create_commtab");
 	table->commands = NULL;
 	table->count = 0;
 	return (table);
 }
 
+/**This function traverses the syntax tree and populates the command table.
+ * It checks the type of the (root) node, and whenever a pipe or operator node
+ * is found, the command table will be filled accordingly, i.e. left-side node
+ * from the root will be recursively traversed and discovered as 1st simple 
+ * command, and right-side node as the following command. Likewise for a redir
+ * node but recursive traversal only to the left-side.
+ * When a command node is found, the row of the command table (simple
+ * command) will be filled.
+ * 		Takes a node (the root) of the syntax tree as an argument as well as 
+ * 			an (empty) initialized command table.
+ * 		Returns a constructed command table.
+ */
 void traverse_ast(t_ast *node, t_commtab *table)
 {
 	t_simcomm *cmd;
@@ -58,21 +77,22 @@ void traverse_ast(t_ast *node, t_commtab *table)
 		traverse_ast(node->left, table);
 		traverse_ast(node->right, table);
 	}
-	else if (node->type == NODE_REDIRECTION)
-	{
-		traverse_ast(node->left, table);
-	}
 	else if (node->type == NODE_SUBSHELL)
 		traverse_ast(node->left, table);
 	else if (node->type == NODE_INVALID)
 		fprintf(stderr, "Invalid AST node detected.\n");
 }
 
+/**This function initializes the t_simmcom struct.
+ * 		Takes a node from the syntax tree as the argument.
+ * 		Returns an initialized struct where everything is empty except
+ * 		the args field.
+ */
 t_simcomm *create_simcomm(t_ast *node)
 {
-	t_simcomm *cmd = malloc(sizeof(t_simcomm));
-	if (!cmd)
-		return NULL;
+	t_simcomm *cmd;
+	
+	cmd = malloc_perex(sizeof(t_simcomm), "Malloc error on create_simcomm");
 	cmd->args = node->args;
 	cmd->in_redir = NULL;
 	cmd->out_redir = NULL;
@@ -80,6 +100,11 @@ t_simcomm *create_simcomm(t_ast *node)
 	return (cmd);
 }
 
+/**This function just prints the content of the created command table. It runs
+ * through the list/table row by row.
+ * 		Takes the command table as argument.
+ * 		Returns nothing.
+ */
 void print_commtab(t_commtab *table)
 {
 	int	i;
