@@ -16,50 +16,56 @@ sudo apt-get install pkg-config
 ```
 
 ## Notes
-### 26.11.2024
-- fixed lex_word.
-- fixed a bug in when starting with a symbol. Like `()` would fail.
-- added automated unit tests for lexer. run `make test` to run tests for lexer.
-- refactored lexer to be more modular
-- cleaned up some code and removed unnecessary files
-- finished norminetting the lexer
+# To do
 
+## 🌎 General
+- Parsing:
+	- Handle quotes (double and single)
+	- Handle other brackets (?)
+	- What to do with heredoc (<<)?
+	- Handle `$?`?
+- Exec:
+	- Add builtins
+		- echo - half done. Functional but incomplete (exit status)
+		- cd
+		- pwd
+		- export
+		- unset
+		- env
+		- exit
+	- Exec non-builtins
+		- Read system calls: dup/dup2
+		- Read system calls: fork
+		- Read system calls: waitpid
+		- Read system calls: execve
+		- Read system calls: env
+- When to `free` what.
+- How to deal with `realloc`?
+- Makefile problem: does no recompile for minor changes
+- Make comments on functions. --> Take a day for streamlining & commenting?
 
-### 25.11.2024
-- lex_word is faulty, why? -- must recheck
-- better way to handle quotes --> blocking operation?
-- best way to comment functions? --> ask reem
-- test further? --> seems ok though
-- doubly linked list?
+## 🌴 Main
+- stable
 
-### 21.11.2024
-- tried to simplify lexer to tokenize string from readline to just words and metachars.
-- failed spectacularly in malloc-ing the array and free-ing them.
-- a frankenstein function now, but seems working.
-- next: categorize further (from TKN_WORDS) OR just tokenize further (to other TKN_s).
+### 🌿 Branch: tokens
+- stable & merged to main
 
-### 22.11.2024
-- Keep makefile as it is, if there is a problem, change to use wildcards (?)
-- expand tokens to specify things further.
-- start with wrapper functions to save lines.
-- must recode the lexer to get rid of the fixed array tokens.
-- also a good idea to start specifying the tokens.
+### 🌿 Branch: h-parse
+- 3.12.2024 - add `comm_table.c` under src/parser/
+	- Maybe unnecessary, but works.
+	- If agreed, merge to main.
 
-### 25.11.2024
-- lex_word is faulty, why? -- must recheck
-- better way to handle quotes --> blocking operation?
-- best way to comment functions? --> ask reem
-- test further? --> seems ok though
-- doubly linked list?
+### 🌿 Branch: r-parser
+- 1.12.2024 - parser done!
+	- Delete `consume_token`& `get_token_type`? 
+	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
+	- If agreed, change `parse()` to `parser()`.
 
-### 26.11.2024
-- start a parsing branch.
-- whooooo this is confusing. the code seems to work but i have no idea how.
-
-### 27.11.2024
-- got a more or less ok starting pont for the parser.
-- target is to make an ast?
-- hint from M&M: dont conflate execution with parsing. Remember the aim of parsing.
+### 🌿 Branch: h-echo
+- 3.12.2024 - start with echo
+	- How to deal with exit status?
+	- How to remove trailing space?
+- Still have to polish exec.c
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
