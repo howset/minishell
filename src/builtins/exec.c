@@ -26,7 +26,7 @@ int is_builtin(char *cmd)
 }
 
 /**This function calls the corresponding built-in functions. Cuurently only
- * echo is operational (still WIP). The haven't begun on the others yet.
+ * echo is operational (still WIP). Haven't begun on the others yet.
  * 		Takes the field args from a t_simmcom (row on t_commtab).
  * 		Returns nothing. (??)
  */

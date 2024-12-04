@@ -3,7 +3,7 @@
 /**This function aims to convert a syntax tree to a command table.
  * 		Takes the resulting t_ast tree from the parser.
  * 		Returns a command table that contains (row-by-row) simple commands.
- * 		These can then be executed sequentially.
+ * 			These can then be executed sequentially.
  */
 t_commtab *ast_to_commtab(t_ast *tree)
 {
@@ -86,7 +86,7 @@ void traverse_ast(t_ast *node, t_commtab *table)
 /**This function initializes the t_simmcom struct.
  * 		Takes a node from the syntax tree as the argument.
  * 		Returns an initialized struct where everything is empty except
- * 		the args field.
+ * 			the args field.
  */
 t_simcomm *create_simcomm(t_ast *node)
 {
