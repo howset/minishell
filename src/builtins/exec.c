@@ -34,7 +34,6 @@ void exec_builtin(char *args[])
 {
 	int	opt;
 	int	i;
-	int	arg_cnt;
 
 	if (ft_strncmp(args[0], "echo", 4) == 0)
 	{
@@ -45,9 +44,6 @@ void exec_builtin(char *args[])
 			opt = 1;
 			i++;
 		}
-		arg_cnt = 0;
-		while (args[i + arg_cnt])
-			arg_cnt++;
 		echo(&args[i], opt);
 	}
 /* 	else if (ft_strncmp(args[0], "exit", 4) == 0)
@@ -108,5 +104,5 @@ void exec_commtab(t_commtab *table)
 			exec_prog; */
 		i++;
 	}
-	print_commtab(table);
+	//print_commtab(table);
 }
