@@ -59,18 +59,21 @@ sudo apt-get install pkg-config
 ### 🌿 Branch: h-parse
 - 3.12.2024 - add `comm_table.c` under src/parser/
 	- Maybe unnecessary, but works.
-	- If agreed, merge to main.
+- Pull from main the stable ast parser.
+- Then merge to main the command table parser.
 
 ### 🌿 Branch: r-parser
 - 1.12.2024 - parser done!
 	- Delete `consume_token`& `get_token_type`? 
 	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
 	- If agreed, change `parse()` to `parser()`.
+- Merge the stable ast parser to main.
 
 ### 🌿 Branch: h-echo
 - 3.12.2024 - start with echo
 	- How to deal with exit status?
 	- How to remove trailing space?
+- Pull from main the stable ast and comm table parser
 - Still have to polish exec.c
 
 ## Collected materials:
