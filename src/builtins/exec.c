@@ -62,21 +62,22 @@ void exec_builtin(char *args[])
 		perror("Fork failed");
 		exit(1);
 	}
-	else if (pid == 0)  // Child process
+	else if (pid == 0) // child
 	{
-		setup_redirections(cmd);  // Handle redirections
+		setup_redirections(cmd); // deal with redirs
 
-		// Execute the command
-		if (execvp(cmd->args[0], cmd->args) == -1)
+		// Use execve
+		//if (execvp(cmd->args[0], cmd->args) == -1)
+		if (execve(cmd->args[0], cmd->args) == -1)
 		{
 			perror("Command execution failed");
 			exit(1);
 		}
 	}
-	else  // Parent process
+	else  // parent
 	{
 		if (!cmd->is_background)
-			waitpid(pid, NULL, 0);  // Wait for child if not background
+			waitpid(pid, NULL, 0);  // wqqqqqqqqait for child if not background
 		else
 			printf("Process running in background: PID %d\n", pid);
 	} 
