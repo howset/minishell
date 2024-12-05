@@ -47,7 +47,7 @@ sudo apt-get install pkg-config
 		- Read system calls: env
 - When to `free` what.
 - How to deal with `realloc`?
-- Makefile problem: does no recompile for minor changes
+- Makefile problem: does no recompile for minor changes -> fixed
 - Make comments on functions. --> Take a day for streamlining & commenting?
 
 ## 🌴 Main
@@ -72,7 +72,7 @@ sudo apt-get install pkg-config
 ### 🌿 Branch: h-echo
 - 3.12.2024 - start with echo
 	- How to deal with exit status?
-	- How to remove trailing space?
+	- How to remove trailing space? -> fixed
 - Pull from main the stable ast and comm table parser
 - Still have to polish exec.c
 

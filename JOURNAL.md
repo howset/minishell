@@ -69,3 +69,13 @@
 		- Exit status on echo?
 		- More tests for echo
 		- Remove trailing space?
+
+### 5.12.2024
+- Plan:
+	- Make comments, then next time read each other's
+	- Fix problems with makefile:
+		- recompilation --> done
+		- re rule
+	- make/add ft_realloc to work around realloc
+	- start with `free` --> Howard will NOT touch this until kingdom comes
+	- handle quotes properly in parser

@@ -13,9 +13,9 @@ void echo(char *args[], int opt)
 	i = 0;
 	while (args[i])
 	{
-		if (i == 0)
-			printf("%s", args[i++]);
-		printf(" %s", args[i]);
+		if (i > 0)
+			printf(" ");
+		printf("%s", args[i]);
 		i++;
 	}
 	if (opt == 0)
