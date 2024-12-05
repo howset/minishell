@@ -78,41 +78,24 @@ sudo apt-get install pkg-config
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 
 ## Scribbles
-### `readline`
+### Slides
+Contains redundant content
 
-```
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-char *readline (const char *prompt);
-```
-- source: man 3
-- The line returned is allocated with malloc(3); the caller must free it when finished.
-
-### `history`
-
-```
-typedef void *histdata_t;
-
-typedef struct _hist_entry
-{
-char *line;
-char *timestamp;
-histdata_t data;
-} HIST_ENTRY;
-```
-- The history list itself might therefore be declared as `HIST_ENTRY ** the_history_list;`
-- The history list is an array of history entries.
-- `void add_history (const char *string)`
-	- Place string at the end of the history list.  The associated data field (if any) is set to NULL.  If the maximum number of history entries has been set using stifle_history(), and the new number of history entries would exceed that maximum, the oldest history entry is removed.
-
-### Redirections & Pipes
-- `<`
-- `>`
-- `<<` pass multiple lines of input to a command up to a certain delimiter
-- `>>`
-- `|`
+![Parsing1](./slides/Ms_slide0.svg "Parsing")
+![Parsing2](./slides/Ms_slide1.svg "Lexer")
+![Parsing3](./slides/Ms_slide2.svg "Parser")
+![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
+![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
+![Parsing6](./slides/Ms_slide5.svg "Nodes")
+![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table plan")
+![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
+![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
+![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
+![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
+![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
+![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
+![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
+![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
 
 ### Allowed Funcs
 | Function				| Manual Page		| From lib					| Description
