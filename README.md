@@ -20,10 +20,16 @@ sudo apt-get install pkg-config
 
 ## 🌎 General
 - Parsing:
-	- Handle quotes (double and single)
+	- Handle quotes
+		- single: literal interpretation 
+			- no variable & command substitution, no interpretation of special chars
+		- double: partial interpretation ($)
+			- Variable substitution: $VAR
+			- Command substitution: $(command)
+			- Limited interpretation of special chars
 	- Handle other brackets (?)
 	- What to do with heredoc (<<)?
-	- Handle `$?`?
+	- Handle `$?` -> expand to the exit status of the most recently executed foreground pipeline
 - Exec:
 	- Add builtins
 		- echo - half done. Functional but incomplete (exit status)
