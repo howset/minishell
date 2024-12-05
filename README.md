@@ -108,21 +108,21 @@ pid_t waitpid(pid_t pid, int *wstatus, int options);
 ### Slides
 Contains redundant content
 
-![Slide 0](./slides/Ms_slide0.svg)
-![Slide 1](./slides/Ms_slide1.svg)
-![Slide 2](./slides/Ms_slide2.svg)
-![Slide 3](./slides/Ms_slide3.svg)
-![Slide 4](./slides/Ms_slide4.svg)
-![Slide 5](./slides/Ms_slide5.svg)
-![Slide 6](./slides/Ms_slide6.svg)
-![Slide 7](./slides/Ms_slide7.svg)
-![Slide 8](./slides/Ms_slide8.svg)
-![Slide 9](./slides/Ms_slide9.svg)
-![Slide 10](./slides/Ms_slide10.svg)
-![Slide 11](./slides/Ms_slide11.svg)
-![Slide 12](./slides/Ms_slide12.svg)
-![Slide 13](./slides/Ms_slide13.svg)
-![Slide 14](./slides/Ms_slide14.svg)
+![Parsing1](./slides/Ms_slide0.svg "Parsing")
+![Parsing2](./slides/Ms_slide1.svg "Lexer")
+![Parsing3](./slides/Ms_slide2.svg "Parser")
+![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
+![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
+![Parsing6](./slides/Ms_slide5.svg "Nodes")
+![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table plan")
+![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
+![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
+![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
+![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
+![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
+![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
+![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
+![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
 
 ### Allowed Funcs
 | Function				| Manual Page		| From lib					| Description
