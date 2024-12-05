@@ -78,24 +78,6 @@ sudo apt-get install pkg-config
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
 
 ## Scribbles
-### Slides
-Contains redundant content
-
-![Parsing1](./slides/Ms_slide0.svg "Parsing")
-![Parsing2](./slides/Ms_slide1.svg "Lexer")
-![Parsing3](./slides/Ms_slide2.svg "Parser")
-![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
-![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
-![Parsing6](./slides/Ms_slide5.svg "Nodes")
-![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table plan")
-![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
-![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
-![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
-![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
-![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
-![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
-![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
-![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
 
 ### Allowed Funcs
 | Function				| Manual Page		| From lib					| Description
