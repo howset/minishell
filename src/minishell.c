@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/05 16:36:30 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:38:34 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 		// print_tkn(tokens);
 		tree = parse(tokens);
 		//printf("\n");
-		//print_ast(tree, 0);
+		print_ast(tree, 0);
 		printf("\n");
 		table = ast_to_commtab(tree);
 		exec_commtab(table);
