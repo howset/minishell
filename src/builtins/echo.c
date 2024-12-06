@@ -6,6 +6,23 @@
  * 		Takes the args array as argument, including the boolean int opt.
  * 		Returns nothing
  */
+/* int echo(char *args[], int opt)
+{
+	int i;
+	
+	i = 0;
+	while (args[i])
+	{
+		if (i > 0)
+			printf(" ");
+		printf("%s", args[i]);
+		i++;
+	}
+	if (opt == 0)
+		printf("\n");
+	return (0);
+} */
+
 int echo(char *args[], int opt)
 {
 	int i;
