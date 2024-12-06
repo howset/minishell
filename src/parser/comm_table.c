@@ -48,7 +48,7 @@ void traverse_ast(t_ast *node, t_commtab *table)
 		return;
 	if (node->type == NODE_COMMAND) 
 	{
-		table->commands = realloc(table->commands, sizeof(t_simcomm) * (table->count + 1));
+		table->commands = ft_realloc(table->commands, sizeof(t_simcomm) * (table->count + 1));
 		if (!table->commands)
 			return;
 		cmd = create_simcomm(node);
