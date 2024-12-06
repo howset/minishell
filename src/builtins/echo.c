@@ -23,12 +23,11 @@
 	return (0);
 } */
 
-/**This implementation of echo now writes every string in the array args by
+/**This implementation of echo now *writes* every string in the array args by
  * iterating it one by one. This is more useful as control to make sure that 
- * echo ONLY goes to stdout. If somehow it is redirected somewhere else, it
- * should return a different exit_status (1) instead of the default (0).
- * If the opt is 1, then dont end with a newline,
- * otherwise print it.
+ * echo ONLY goes to stdout. If somehow it fails, it should return a different
+ * exit_status (1) instead of the default (0).
+ * If the opt is 1, then dont end with a newline, otherwise print it.
  * 		Takes the args array as argument, including the boolean int opt.
  * 		Returns the exit_status 0 as the default, if somehow writing to stdout
  * 			fails, returns exit_status 1.
@@ -45,17 +44,17 @@ int rh_echo(char *args[], int opt)
 			if (write(STDOUT_FILENO, " ", 1) == -1)
 			{
 				perror("echo: write error");
-				return (1);
+				return (EXIT_FAILURE);
 			}
 		}
 		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
 		{
 			perror("echo: write error");
-			return (1);
+			return (EXIT_FAILURE);
 		}
 		i++;
 	}
 	if (opt == 0)
 		printf("\n");
-	return (0);
+	return (EXIT_SUCCESS);
 }
