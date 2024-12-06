@@ -21,6 +21,7 @@ SRC-PARSER			= 	../src/parser/parser.c \
 						../src/parser/parser_utils.c \
 						../src/parser/ast.c
 
+SRC-CMDTABLE		= 	../src/command_table/command_table.c
 
 HEADER  = ../src/
 LIBFT   = ../src/lib/libft.a
@@ -37,9 +38,12 @@ PARSER_TESTS = ./parser/parser_simple_command_test.c \
                ./parser/parser_redirection_test.c \
                ./parser/parser_logical_test.c
 
+# Add command table tests
+CMDTABLE_TESTS = ./command_table/command_table_test.c
+
 ## Test sources
-# Update TEST_SRCS to include parser tests
-TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS)
+# Update TEST_SRCS to include command table tests
+TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS) $(CMDTABLE_TESTS)
 TEST_EXEC   = test_runner
 
 ##------------------------------------------------------------------##
@@ -57,7 +61,7 @@ clean:
 CHECK_LIBS = $(shell pkg-config --cflags --libs check)
 
 $(TEST_EXEC): $(TEST_SRCS) $(SRC_LEXER) $(UTILS) $(LIBFT)
-	$(CC) $(CFLAGS) $(TEST_SRCS) $(SRC_LEXER) $(SRC-PARSER) $(UTILS) $(LIBFT) -o $(TEST_EXEC) $(CHECK_LIBS) $(LIBS)
+	$(CC) $(CFLAGS) $(TEST_SRCS) $(SRC_LEXER) $(SRC-PARSER) $(SRC-CMDTABLE) $(UTILS) $(LIBFT) -o $(TEST_EXEC) $(CHECK_LIBS) $(LIBS)
 
 run:    $(TEST_EXEC)
 	./$(TEST_EXEC)

@@ -8,11 +8,14 @@ Suite *lexer_quote_suite(void);
 Suite *lexer_redirection_suite(void);
 Suite *lexer_word_suite(void);
 
-// New parser suite declarations
+// Parser suite declarations
 Suite *parser_simple_command_suite(void);
 Suite *parser_pipe_suite(void);
 Suite *parser_redirection_suite(void);
 Suite *parser_logical_suite(void);
+
+// Command table suite declaration
+Suite *command_table_suite(void);
 
 int main(void)
 {
@@ -31,6 +34,9 @@ int main(void)
     srunner_add_suite(sr, parser_pipe_suite());
     srunner_add_suite(sr, parser_redirection_suite());
     srunner_add_suite(sr, parser_logical_suite());
+
+    // Add command table suite
+    srunner_add_suite(sr, command_table_suite());
 
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);

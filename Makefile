@@ -28,6 +28,7 @@ SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/parser_utils.c \
 						./src/parser/ast.c
 
+SRC-CMDTABLE		= 	./src/command_table/command_table.c
 
 HEADER				= ./src/
 
@@ -73,7 +74,7 @@ $(NAME-LIBFT):
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
 $(NAME-MS): ./src/minishell.c $(NAME-LIBFT)
-		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
+		@$(CC) $(CFLAGS) $(HEADER) $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-CMDTABLE) $(UTILS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
 ##------------------------------------------------------------------##
