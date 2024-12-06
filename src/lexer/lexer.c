@@ -6,19 +6,19 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/11/27 13:53:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:21:23 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-/**The lexer function just iterates over the input string and whenever a defined
+/**The lexer function iterates over the input string and whenever a defined
  * symbol is encountered, a corresponding function is called to create a node
- * that contains an appropriate token. This will be appended to the list.
- * The (singly/doubly linked) list will contain all the tokens (the type, value,
- * and position).
- * Currently I have no idea why the TKN_WORD cant be wrapped properly in the
- * lex_word function. So I left it as it is.
+ * that contains an appropriate token, jumping over whitespaces. This will be 
+ * appended to the list. The list will contain all the tokens (the type, value,
+ *  and position).
+ * 		Takes the input from readline as the parameter.
+ * 		Returns the tokens.
  */
 t_token	*lexer(const char *input)
 {
@@ -38,6 +38,7 @@ t_token	*lexer(const char *input)
 	return (tokens);
 }
 
+/** */
 int	handle_token(const char *input, int pos, t_token **tokens)
 {
 	t_token	*new_tkn;
