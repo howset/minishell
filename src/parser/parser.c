@@ -8,7 +8,11 @@ t_ast	*parse_command(t_token **current)
 	if (!node)
 		return (NULL);
 	// Collect arguments until we hit an operator or EOF
-	while (*current && (*current)->type == TKN_WORD)
+//	while (*current && ((*current)->type == TKN_WORD)
+	while (*current && ((*current)->type == TKN_WORD || 
+						(*current)->type == TKN_QUO_SIN ||
+						(*current)->type == TKN_QUO_DOU ||
+						(*current)->type == TKN_BG))
 	{
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count

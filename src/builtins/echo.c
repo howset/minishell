@@ -6,7 +6,7 @@
  * 		Takes the args array as argument, including the boolean int opt.
  * 		Returns nothing
  */
-void echo(char *args[], int opt)
+int echo(char *args[], int opt)
 {
 	int i;
 	
@@ -20,5 +20,5 @@ void echo(char *args[], int opt)
 	}
 	if (opt == 0)
 		printf("\n");
-	return;
+	return (0);
 }

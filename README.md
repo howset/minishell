@@ -54,7 +54,7 @@ sudo apt-get install pkg-config
 - stable
 
 ### 🌿 Branch: tokens
-- 26.11.2024 - stable & merged to main
+- 26.11.2024 - stable & merged to main.
 
 ### 🌿 Branch: h-parse
 - 3.12.2024 - add `comm_table.c` under src/parser/
@@ -75,6 +75,12 @@ sudo apt-get install pkg-config
 	- How to remove trailing space? -> fixed
 - Pull from main the stable ast and comm table parser
 - Still have to polish exec.c
+- 6.12.2024
+	- Lexer: Not exit the shell when unterminated quotes error are met.
+	- Parser: parse_command collects args for TKN_WORD, TKN_QUO_SIN, TKN_QUO_DOU, & TKN_BG.
+	- Comm Table: create_simcomm looks for "&" and sets is_bg on/off.
+	- Echo: Early experiment with returning exit status.
+	- Exit: Moved from main to builtins, otherwise wont accomodate spaces before exit.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

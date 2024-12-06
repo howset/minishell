@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/06 13:18:53 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:44:08 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	print_tkn(t_token *tokens)
 {
 	t_token	*current;
 
+	printf("\n");
+	printf("Tokens:\n");
 	current = tokens;
 	while (current)
 	{

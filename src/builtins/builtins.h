@@ -5,12 +5,12 @@
 
 // exec.c
 int is_builtin(char *cmd);
-void exec_builtin(char *args[]);
-void exec_singlecomm(t_simcomm *cmd);
-void exec_commtab(t_commtab *table);
+int exec_builtin(char *args[]);
+int exec_singlecomm(t_simcomm *cmd);
+int exec_commtab(t_commtab *table);
 
 // echo.c
-void echo(char *args[], int opt);
+int echo(char *args[], int opt);
 
 // exit.c
 

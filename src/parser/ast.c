@@ -20,6 +20,11 @@ t_ast	*create_ast_node(t_nodetype type)
 
 void	print_ast(t_ast *node, int level)
 {
+	if(level == 0)
+	{
+		printf("\n");
+		printf("Syntax Tree:\n");
+	}
 	if (!node)
 		return ;
 	for (int i = 0; i < level; i++)

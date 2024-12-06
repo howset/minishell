@@ -18,9 +18,9 @@ int is_builtin(char *cmd)
 	else if (ft_strncmp(cmd, "unset", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "env", 3) == 0)
-		return (1);
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
 		return (1); */
+	else if (ft_strncmp(cmd, "exit", 4) == 0)
+		return (1);
 	else
 		return (0);
 }
@@ -30,10 +30,11 @@ int is_builtin(char *cmd)
  * 		Takes the field args from a t_simmcom (row on t_commtab).
  * 		Returns nothing. (??)
  */
-void exec_builtin(char *args[])
+int exec_builtin(char *args[])
 {
 	int	opt;
 	int	i;
+	int	exit_stat = -1;
 
 	if (ft_strncmp(args[0], "echo", 4) == 0)
 	{
@@ -44,14 +45,16 @@ void exec_builtin(char *args[])
 			opt = 1;
 			i++;
 		}
-		echo(&args[i], opt);
+		exit_stat = echo(&args[i], opt);
 	}
-/* 	else if (ft_strncmp(args[0], "exit", 4) == 0)
+	else if (ft_strncmp(args[0], "exit", 4) == 0)
 	{
-		exit_cleanup();
-		free(input);
+		printf("exit\n");
 		exit(0);
-	} */
+	}
+	else
+		exit_stat = 1;
+	return (exit_stat);
 }
 
 /*	void exec_prog(t_simcomm *cmd)
@@ -90,20 +93,21 @@ void exec_builtin(char *args[])
  * 		Takes the command table as an argument.
  * 		Returns nothing.
  */
-void exec_commtab(t_commtab *table)
+int exec_commtab(t_commtab *table)
 {
 	int	i;
 	t_simcomm *cmd;
+	int	exit_stat;
 	
 	i = 0;
 	while (i < table->count)
 	{
 		cmd = &table->commands[i];
 		if (is_builtin(cmd->args[0]))
-			exec_builtin(cmd->args);
+			exit_stat = exec_builtin(cmd->args);
 		/* else
 			exec_prog; */
 		i++;
 	}
-	print_commtab(table);
+	return (exit_stat);
 }

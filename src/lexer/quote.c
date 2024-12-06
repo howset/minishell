@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:57 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/26 21:03:12 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:22:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 	else
 	{
 		perror("Unterminated single quote");
-		exit(EXIT_FAILURE);
 	}
 	return (pos);
 }
@@ -56,7 +55,6 @@ int	lex_quo_dou(const char *input, int pos,
 	else
 	{
 		perror("Unterminated double quote");
-		exit(EXIT_FAILURE);
 	}
 	return (pos);
 }

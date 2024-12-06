@@ -79,3 +79,12 @@
 	- make/add ft_realloc to work around realloc
 	- start with `free` --> Howard will NOT touch this until kingdom comes
 	- handle quotes properly in parser
+
+### 6.12.2024
+- pushed ft_realloc to main
+- lexer: unexit the shell for unterminated quotes --> push to main?
+- parser: command node accepts quotes, not just words --> push to main?
+- parser: takes TK_BG as args
+- comm tab: if "&" by the end of args, set is_bg to 1.
+- maybe reem pulls from h-echo to r-parser before working because there are already a couple of changes on parser and lexer.
+- input for streamlining & norms: how to print errors? fprintfs (e.g. syntax_error_at) or perrors (malloc_perex)? 

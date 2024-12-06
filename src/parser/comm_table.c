@@ -91,12 +91,15 @@ void traverse_ast(t_ast *node, t_commtab *table)
 t_simcomm *create_simcomm(t_ast *node)
 {
 	t_simcomm *cmd;
-	
+
 	cmd = malloc_perex(sizeof(t_simcomm), "Malloc error on create_simcomm");
 	cmd->args = node->args;
 	cmd->in_redir = NULL;
 	cmd->out_redir = NULL;
-	cmd->is_bg = 0;
+	if (ft_strncmp(node->args[node->args_count - 1], "&", 1) == 0)
+		cmd->is_bg = 1;
+	else
+		cmd->is_bg = 0;
 	return (cmd);
 }
 
@@ -110,10 +113,11 @@ void print_commtab(t_commtab *table)
 	int	i;
 	int j;
 
+	printf("\n");
+	printf("Command Table:\n");
 	i = 0;
 	while (i < table->count)
 	{
-		printf("\n");
 		printf("Command %d:\n", i + 1);
 		j = 0;
 		while (table->commands[i].args[j])
@@ -125,7 +129,7 @@ void print_commtab(t_commtab *table)
 			printf("  Input Redirection: %s\n", table->commands[i].in_redir);
 		if (table->commands[i].out_redir)
 			printf("  Output Redirection: %s\n", table->commands[i].out_redir);
-		if (table->commands[i].is_bg)
+		if (table->commands[i].is_bg == 1)
 			printf("  Background: Yes\n");
 		else
 			printf("  Background: No\n");
