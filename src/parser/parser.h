@@ -14,5 +14,7 @@ t_ast	*parse(t_token *tokens);
 t_ast	*create_ast_node(t_nodetype type);
 void	print_ast(t_ast *node, int level);
 void	syntax_error(const char *message);
-void syntax_error_at(int position, const char *message);
+void	syntax_error_at(int position, const char *message);
+void	free_ast(t_ast *ast);
+
 #endif // PARSER_H

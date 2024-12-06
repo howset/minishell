@@ -9,13 +9,18 @@ LIBS    = -lreadline
 
 ## Sources & headers
 UTILS   = ../src/utils/malloc_perex.c
-SRC_MS  = ../src/lexer/grouping.c \
+SRC_LEXER  = ../src/lexer/grouping.c \
 		  ../src/lexer/lexer.c \
 		  ../src/lexer/operator.c \
 		  ../src/lexer/quote.c \
 		  ../src/lexer/redirection.c \
 		  ../src/lexer/token.c \
 		  ../src/lexer/word.c
+
+SRC-PARSER			= 	../src/parser/parser.c \
+						../src/parser/parser_utils.c \
+						../src/parser/ast.c
+
 
 HEADER  = ../src/
 LIBFT   = ../src/lib/libft.a
@@ -24,9 +29,17 @@ LEXER_TESTS = ./lexer/lexer_grouping_test.c \
 			  ./lexer/lexer_operator_test.c \
 			  ./lexer/lexer_quote_test.c \
 			  ./lexer/lexer_redirection_test.c \
-			  ./lexer/lexer_word_test.c 
+			  ./lexer/lexer_word_test.c
+
+# Add parser tests to PARSER_TESTS variable
+PARSER_TESTS = ./parser/parser_simple_command_test.c \
+               ./parser/parser_pipe_test.c \
+               ./parser/parser_redirection_test.c \
+               ./parser/parser_logical_test.c
+
 ## Test sources
-TEST_SRCS   = main_test.c $(LEXER_TESTS)
+# Update TEST_SRCS to include parser tests
+TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS)
 TEST_EXEC   = test_runner
 
 ##------------------------------------------------------------------##
@@ -43,8 +56,8 @@ clean:
 
 CHECK_LIBS = $(shell pkg-config --cflags --libs check)
 
-$(TEST_EXEC): $(TEST_SRCS) $(SRC_MS) $(UTILS) $(LIBFT)
-	$(CC) $(CFLAGS) $(TEST_SRCS) $(SRC_MS) $(UTILS) $(LIBFT) -o $(TEST_EXEC) $(CHECK_LIBS) $(LIBS)
+$(TEST_EXEC): $(TEST_SRCS) $(SRC_LEXER) $(UTILS) $(LIBFT)
+	$(CC) $(CFLAGS) $(TEST_SRCS) $(SRC_LEXER) $(SRC-PARSER) $(UTILS) $(LIBFT) -o $(TEST_EXEC) $(CHECK_LIBS) $(LIBS)
 
 run:    $(TEST_EXEC)
 	./$(TEST_EXEC)

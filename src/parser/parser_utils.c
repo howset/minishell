@@ -1,5 +1,24 @@
 #include "./parser.h"
 
+void	free_ast(t_ast *ast)
+{
+	if (ast == NULL)
+		return ;
+	if (ast->args)
+	{
+		for (int i = 0; i < ast->args_count; i++)
+		{
+			free(ast->args[i]);
+		}
+		free(ast->args);
+	}
+	if (ast->filename)
+		free(ast->filename);
+	free_ast(ast->left);
+	free_ast(ast->right);
+	free(ast);
+}
+
 void	consume_token(t_token **current)
 {
 	if (*current != NULL)
@@ -36,8 +55,7 @@ void	syntax_error(const char *message)
 	fprintf(stderr, "Syntax error: %s\n", message);
 }
 
-void syntax_error_at(int position, const char *message)
+void	syntax_error_at(int position, const char *message)
 {
-    fprintf(stderr, "Syntax error at position %d: %s\n", position, message);
+	fprintf(stderr, "Syntax error at position %d: %s\n", position, message);
 }
-
