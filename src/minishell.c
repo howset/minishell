@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/05 19:38:38 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:44:44 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	main(void)
 			exit(0);
 		}
 		tokens = lexer(input);
-		// print_tkn(tokens);
+		print_tkn(tokens);
 		tree = parse(tokens);
 		//printf("\n");
-		//print_ast(tree, 0);
+		print_ast(tree, 0);
 		//printf("\n");
 		table = ast_to_commtab(tree);
 		exec_commtab(table);

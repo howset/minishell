@@ -91,6 +91,7 @@ sudo apt-get install pkg-config
 - https://www.youtube.com/watch?v=ZjzMdsTWF0U
 - https://www.youtube.com/watch?v=ubt-UjcQUYg
 - https://www.youtube.com/watch?v=SToUyjAsaFk
+- https://www.cs.uleth.ca/~holzmann/C/system/shell_does_pipeline.pdf
 
 ## Scribbles
 - dup vs dup2: duplicate a file descriptor. dup uses the lowest-numbered unused file descriptor, dup2 uses the file descriptor number specified in newfd.

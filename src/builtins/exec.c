@@ -105,5 +105,5 @@ void exec_commtab(t_commtab *table)
 			exec_prog; */
 		i++;
 	}
-	//print_commtab(table);
+	print_commtab(table);
 }
