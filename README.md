@@ -77,10 +77,13 @@ sudo apt-get install pkg-config
 - Still have to polish exec.c
 - 6.12.2024
 	- Lexer: Not exit the shell when unterminated quotes error are met.
-	- Parser: parse_command collects args for TKN_WORD, TKN_QUO_SIN, TKN_QUO_DOU, & TKN_BG.
-	- Comm Table: create_simcomm looks for "&" and sets is_bg on/off.
+	- Parser: `parse_command` collects args for TKN_WORD, TKN_QUO_SIN, TKN_QUO_DOU, & TKN_BG.
+	- Comm Table: `create_simcomm` looks for "&" and sets is_bg on/off.
 	- Echo: Early experiment with returning exit status.
-	- Exit: Moved from main to builtins, otherwise wont accomodate spaces before exit.
+		- Ditched printf and goes for write directly.
+		- Observed: may have in-line problem if history is checked after echo -n
+	- Exit: Moved from main to builtins, otherwise wont accomodate accident spaces before typing exit.
+	- Env: Early implementation to print env var to stdout.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

@@ -5,13 +5,13 @@
 
 // exec.c
 int is_builtin(char *cmd);
-int exec_builtin(char *args[]);
-int exec_singlecomm(t_simcomm *cmd);
-int exec_commtab(t_commtab *table);
+int exec_builtin(char *args[], char *envp[]);
+int exec_commtab(t_commtab *table, char *envp[]);
 
 // echo.c
-int echo(char *args[], int opt);
+int rh_echo(char *args[], int opt);
 
-// exit.c
+// env.c
+int	rh_env(char *envp[]);
 
 #endif

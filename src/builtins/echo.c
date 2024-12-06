@@ -23,7 +23,17 @@
 	return (0);
 } */
 
-int echo(char *args[], int opt)
+/**This implementation of echo now writes every string in the array args by
+ * iterating it one by one. This is more useful as control to make sure that 
+ * echo ONLY goes to stdout. If somehow it is redirected somewhere else, it
+ * should return a different exit_status (1) instead of the default (0).
+ * If the opt is 1, then dont end with a newline,
+ * otherwise print it.
+ * 		Takes the args array as argument, including the boolean int opt.
+ * 		Returns the exit_status 0 as the default, if somehow writing to stdout
+ * 			fails, returns exit_status 1.
+ */
+int rh_echo(char *args[], int opt)
 {
 	int i;
 	
@@ -31,8 +41,18 @@ int echo(char *args[], int opt)
 	while (args[i])
 	{
 		if (i > 0)
-			printf(" ");
-		printf("%s", args[i]);
+		{
+			if (write(STDOUT_FILENO, " ", 1) == -1)
+			{
+				perror("echo: write error");
+				return (1);
+			}
+		}
+		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
+		{
+			perror("echo: write error");
+			return (1);
+		}
 		i++;
 	}
 	if (opt == 0)

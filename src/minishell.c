@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/06 17:54:13 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:39:32 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * currently the main function is still nothing
  */
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*input;
 	t_token	*tokens;
@@ -24,7 +24,10 @@ int	main(void)
 	t_commtab *table;
 	int		exit_stat;
 	
-	while (1)
+	if (argc > 1)
+		perror("Too many args");
+	(void) argv;
+		while (1)
 	{
 		input = readline("wtf-shell> ");
 		add_history(input);
@@ -36,7 +39,7 @@ int	main(void)
 		//print_ast(tree, 0);
 		table = ast_to_commtab(tree);
 		//print_commtab(table);
-		exit_stat = exec_commtab(table);
+		exit_stat = exec_commtab(table, envp);
 		free_tkn(tokens);
 		free(input);
 	}

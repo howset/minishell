@@ -88,3 +88,4 @@
 - comm tab: if "&" by the end of args, set is_bg to 1.
 - maybe reem pulls from h-echo to r-parser before working because there are already a couple of changes on parser and lexer.
 - input for streamlining & norms: how to print errors? fprintfs (e.g. syntax_error_at) or perrors (malloc_perex)? 
+- early implementation of env.
