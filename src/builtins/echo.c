@@ -23,6 +23,47 @@
 	return (0);
 } */
 
+static int	removeq_print(char *arg)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	if (arg[i] == '"' || arg[i] == '\'')
+	{
+		quote = arg[i];
+		i++;
+	}
+	while (arg[i])
+	{
+		if (arg[i] == quote)
+		{
+			i++;
+			continue;
+		}
+		if (quote == '"' && arg[i] == '\\')
+		{
+			i++;
+			if (!arg[i])
+				break;
+			if (arg[i] == 'n')
+				write(STDOUT_FILENO, "\n", 1);
+			else if (arg[i] == 't')
+				write(STDOUT_FILENO, "\t", 1);
+			else if (arg[i] == '\\')
+				write(STDOUT_FILENO, "\\", 1);
+			else if (arg[i] == '"')
+				write(STDOUT_FILENO, "\"", 1);
+			else if (arg[i] == '\'')
+				write(STDOUT_FILENO, "'", 1);
+		}
+		else
+			write(STDOUT_FILENO, &arg[i], 1);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 /**This implementation of echo now *writes* every string in the array args by
  * iterating it one by one. This is more useful as control to make sure that 
  * echo ONLY goes to stdout. If somehow it fails, it should return a different
@@ -32,7 +73,7 @@
  * 		Returns the exit_status 0 as the default, if somehow writing to stdout
  * 			fails, returns exit_status 1.
  */
-int rh_echo(char *args[], int opt)
+int	rh_echo(char *args[], int opt)
 {
 	int i;
 	
@@ -47,7 +88,8 @@ int rh_echo(char *args[], int opt)
 				return (EXIT_FAILURE);
 			}
 		}
-		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
+		//if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
+		if (removeq_print(args[i]) != EXIT_SUCCESS)
 		{
 			perror("echo: write error");
 			return (EXIT_FAILURE);
@@ -55,6 +97,6 @@ int rh_echo(char *args[], int opt)
 		i++;
 	}
 	if (opt == 0)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
 }

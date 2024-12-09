@@ -37,20 +37,20 @@ t_commtab *create_commtab() {
  * command) will be filled.
  * 		Takes a node (the root) of the syntax tree as an argument as well as 
  * 			an (empty) initialized command table.
- * 		Returns a constructed command table.
+ * 		Returns a 0 on success .
  */
-void traverse_ast(t_ast *node, t_commtab *table)
+int traverse_ast(t_ast *node, t_commtab *table)
 {
 	t_simcomm *cmd;
 	t_simcomm *last_cmd;
 
 	if (!node)
-		return;
+		return (1);
 	if (node->type == NODE_COMMAND) 
 	{
 		table->commands = ft_realloc(table->commands, sizeof(t_simcomm) * (table->count + 1));
 		if (!table->commands)
-			return;
+			return (1);
 		cmd = create_simcomm(node);
 		if (node->redirection_type == TKN_RDIR_IN)
 			cmd->in_redir = ft_strdup(node->filename);
@@ -58,6 +58,7 @@ void traverse_ast(t_ast *node, t_commtab *table)
 			cmd->out_redir = ft_strdup(node->filename);
 		table->commands[table->count] = *cmd;
 		table->count++;
+		return (0);
 	}
 	else if (node->type == NODE_REDIRECTION)
 	{
@@ -71,16 +72,43 @@ void traverse_ast(t_ast *node, t_commtab *table)
 			else if (node->redirection_type == TKN_RDIR_OUT || node->redirection_type == TKN_APPEND)
 				last_cmd->out_redir = ft_strdup(node->filename);
 		}
+		return (0);
 	}
-	else if (node->type == NODE_PIPE || node->type == NODE_AND || node->type == NODE_OR || node->type == NODE_SEQUENCE) 
+	else if (node->type == NODE_SEQUENCE) 
+	{
+		traverse_ast(node->left, table);
+		traverse_ast(node->right, table);
+		return (0);
+	}
+	else if (node->type == NODE_AND ) 
+	{
+		if (traverse_ast(node->left, table) == 0)
+			traverse_ast(node->right, table);
+		return (0);
+	}
+	else if (node->type == NODE_OR) 
+	{
+		if (traverse_ast(node->left, table) == 1)
+			traverse_ast(node->right, table);
+		return (0);
+	}
+	else if (node->type == NODE_PIPE) 
 	{ // '&&' '||' ';' actually *executes* differently
 		traverse_ast(node->left, table);
 		traverse_ast(node->right, table);
+		return (0);
 	}
 	else if (node->type == NODE_SUBSHELL)
+	{
 		traverse_ast(node->left, table);
+		return (0);
+	}
 	else if (node->type == NODE_INVALID)
+	{
 		fprintf(stderr, "Invalid AST node detected.\n");
+		return (1);
+	}
+	return (0);
 }
 
 /**This function initializes the t_simmcom struct.
