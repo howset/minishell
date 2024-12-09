@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/09 13:01:52 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:12:08 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,23 @@ int	main(int argc, char *argv[], char *envp[])
 	int		exit_stat;
 	
 	if (argc > 1)
+	{
 		perror("Too many args");
+		exit(127);
+	}
 	(void) argv;
-		while (1)
+	while (1)
 	{
 		input = readline("wtf-shell> ");
 		add_history(input);
 		if (ft_strncmp(input, "$?", 2) == 0)
 			printf("%d\n", exit_stat);
 		tokens = lexer(input);
-		print_tkn(tokens);
+		//print_tkn(tokens);
 		tree = parse(tokens);
-		print_ast(tree, 0);
+		//print_ast(tree, 0);
 		table = ast_to_commtab(tree);
-		print_commtab(table);
+		//print_commtab(table);
 		exit_stat = exec_commtab(table, envp);
 		free_tkn(tokens);
 		free(input);

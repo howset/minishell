@@ -50,7 +50,16 @@ int exec_builtin(char *args[], char *envp[])
 	else if (ft_strncmp(args[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
-		exit(0);
+		if (!args[2])
+		{
+			if (args[1] == 0 || !args[1])
+			{
+				exit (0);
+			}
+			exit_stat = rh_exit(args[1]);
+		}
+		else
+			perror("exit: too many arguments");
 	}
 	else if (ft_strncmp(args[0], "env", 3) == 0)
 	{

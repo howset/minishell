@@ -32,7 +32,8 @@ SRC-PARSER			= 	./src/parser/parser.c \
 
 SRC-BUILTINS		= 	./src/builtins/exec.c \
 						./src/builtins/echo.c \
-						./src/builtins/env.c
+						./src/builtins/env.c \
+						./src/builtins/exit.c
 
 HEADER				= ./src/
 ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-BUILTINS) $(UTILS)

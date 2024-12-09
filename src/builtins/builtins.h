@@ -14,4 +14,7 @@ int rh_echo(char *args[], int opt);
 // env.c
 int	rh_env(char *envp[]);
 
+// exit.c
+int	rh_exit(char *args);
+
 #endif

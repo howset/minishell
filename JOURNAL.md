@@ -90,4 +90,10 @@
 - input for streamlining & norms: how to print errors? fprintfs (e.g. syntax_error_at) or perrors (malloc_perex)? 
 - early implementation of env.
 - overhauled echo to use write instead of printf.
-- trying exit status & $?
+- trying exit status &$?
+
+### 9.12.2024
+- Extend `echo` to manage quotes
+- Not sure how to consolidate command table from 2 different branches.
+	- Maybe take the more sophisticated one?
+- 

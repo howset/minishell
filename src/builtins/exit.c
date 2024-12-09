@@ -1,10 +1,14 @@
 #include "./builtins.h"
 
-int	exit(int n)
-{	
-	// free(input);
-	// free_tkn(tokens);
-	// free_ast(tree);
-	// free_commtab(table);
-	exit(n);
+int	rh_exit(char *args)
+{
+	int ex_stat;
+
+	ex_stat = ft_atoi(args);
+	if (ex_stat == 0)
+	{
+		perror("exit: numeric argument required");
+		exit (2);
+	}
+	exit(ex_stat);
 }
