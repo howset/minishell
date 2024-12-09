@@ -1,29 +1,11 @@
 #include "./builtins.h"
 
-/**This implementation of echo just printfs every string in the array args by
- * iterating it one by one. If the opt is 1, then dont end with a newline,
- * otherwise print it.
- * 		Takes the args array as argument, including the boolean int opt.
- * 		Returns nothing
- */
-/* int echo(char *args[], int opt)
-{
-	int i;
-	
-	i = 0;
-	while (args[i])
-	{
-		if (i > 0)
-			printf(" ");
-		printf("%s", args[i]);
-		i++;
-	}
-	if (opt == 0)
-		printf("\n");
-	return (0);
-} */
-
-static int	removeq_print(char *arg)
+/**This function deals with quotes. First, check which quote (single/double).
+ * Then if quote is double, then \t or \n will be interpreted as such.
+ * 		Takes a word.
+ * 		Returns success.
+*/
+static int	print_quotedstr(char *arg)
 {
 	int		i;
 	char	quote;
@@ -88,8 +70,7 @@ int	rh_echo(char *args[], int opt)
 				return (EXIT_FAILURE);
 			}
 		}
-		//if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
-		if (removeq_print(args[i]) != EXIT_SUCCESS)
+		if (print_quotedstr(args[i]) != EXIT_SUCCESS)
 		{
 			perror("echo: write error");
 			return (EXIT_FAILURE);
