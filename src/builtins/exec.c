@@ -9,14 +9,14 @@ int	is_builtin(char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (1);
-/* 	else if (ft_strncmp(cmd, "cd", 2) == 0)
+	else if (ft_strncmp(cmd, "cd", 2) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "export", 6) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "unset", 5) == 0)
-		return (1); */
+		return (1);
 	else if (ft_strncmp(cmd, "env", 3) == 0)
 		return (1); 
 	else if (ft_strncmp(cmd, "exit", 4) == 0)
@@ -30,7 +30,8 @@ int	is_builtin(char *cmd)
  * 		Takes the field args from a t_simmcom (row on t_commtab).
  * 		Returns nothing. (??)
  */
-int	exec_builtin(char *args[], char *envp[])
+//int	exec_builtin(char *args[], char *envp[])
+int exec_builtin(char *args[], t_env **env_list, char *envp[])
 {
 	int	opt;
 	int	i;
@@ -54,9 +55,9 @@ int	exec_builtin(char *args[], char *envp[])
 		exit_stat = rh_exit(args);
 	}
 	else if (ft_strncmp(args[0], "env", 3) == 0)
-	{
 		exit_stat = rh_env(envp);
-	}
+	else if (ft_strncmp(args[0], "export", 6) == 0)
+		exit_stat = rh_export(args, env_list);
 	else
 		exit_stat = 1;
 	return (exit_stat);
@@ -98,7 +99,7 @@ int	exec_builtin(char *args[], char *envp[])
  * 		Takes the command table as an argument.
  * 		Returns nothing.
  */
-int	exec_commtab(t_commtab *table, char *envp[])
+int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 {
 	int			i;
 	t_simcomm	*cmd;
@@ -109,7 +110,7 @@ int	exec_commtab(t_commtab *table, char *envp[])
 	{
 		cmd = &table->commands[i];
 		if (is_builtin(cmd->args[0]))
-			exit_stat = exec_builtin(cmd->args, envp);
+			exit_stat = exec_builtin(cmd->args, env_list, envp);
 		/* else
 			exec_prog; */
 		i++;

@@ -107,3 +107,8 @@
 - echo: now works properly
 - env: now works properly
 - implement `ft_fprintf` separately in src/utils
+- make new branch to start export & unset: h-export_unset
+- unset: ???
+- export: 
+	- has list/table of system envvar
+	- still has to work it though

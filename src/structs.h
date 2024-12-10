@@ -70,4 +70,11 @@ typedef struct s_commtab
 	int count;					// Count of simple commands
 }					t_commtab;
 
+typedef struct s_env
+{
+	char *key;
+	char *val;
+	struct s_env *next;
+} t_env;
+
 #endif

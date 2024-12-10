@@ -12,11 +12,11 @@ AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
 
-UTILS 				= ./src/utils/malloc_perex.c\
+UTILS 				= 	./src/utils/malloc_perex.c\
 						./src/utils/ft_fprintf.c
 
 ## Sources & header
-SRC-MS				= ./src/minishell.c
+SRC-MS				= 	./src/minishell.c
 
 SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
@@ -34,7 +34,9 @@ SRC-PARSER			= 	./src/parser/parser.c \
 SRC-BUILTINS		= 	./src/builtins/exec.c \
 						./src/builtins/echo.c \
 						./src/builtins/env.c \
-						./src/builtins/exit.c
+						./src/builtins/exit.c \
+						./src/builtins/export.c
+
 
 HEADER				= ./src/
 ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-BUILTINS) $(UTILS)
