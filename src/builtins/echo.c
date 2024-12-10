@@ -21,13 +21,13 @@ static int	print_quotedstr(char *arg)
 		if (arg[i] == quote)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (quote == '"' && arg[i] == '\\')
 		{
 			i++;
 			if (!arg[i])
-				break;
+				break ;
 			if (arg[i] == 'n')
 				write(STDOUT_FILENO, "\n", 1);
 			else if (arg[i] == 't')
@@ -57,8 +57,8 @@ static int	print_quotedstr(char *arg)
  */
 int	rh_echo(char *args[], int opt)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (args[i])
 	{

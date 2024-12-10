@@ -103,4 +103,6 @@
 	- the rest seems okay
 
 ### 10.12.2024
-- exit:
+- exit: now works properly
+- echo: now works properly
+- env: now works properly

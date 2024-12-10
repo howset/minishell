@@ -2,7 +2,7 @@
 
 int	rh_env(char *envp[])
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])

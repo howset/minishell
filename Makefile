@@ -12,7 +12,8 @@ AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
 
-UTILS 				= ./src/utils/malloc_perex.c
+UTILS 				= ./src/utils/malloc_perex.c\
+						./src/utils/ft_fprintf.c
 
 ## Sources & header
 SRC-MS				= ./src/minishell.c

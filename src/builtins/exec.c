@@ -5,7 +5,7 @@
  * 		Takes the command (args[0] in the t_simmcom struct) as an argument.
  * 		Returns a true/false (1/0 -bool)
 */
-int is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (1);
@@ -30,12 +30,13 @@ int is_builtin(char *cmd)
  * 		Takes the field args from a t_simmcom (row on t_commtab).
  * 		Returns nothing. (??)
  */
-int exec_builtin(char *args[], char *envp[])
+int	exec_builtin(char *args[], char *envp[])
 {
 	int	opt;
 	int	i;
-	int	exit_stat = -1;
+	int	exit_stat;
 
+	exit_stat = -1;
 	if (ft_strncmp(args[0], "echo", 4) == 0)
 	{
 		opt = 0;
@@ -50,14 +51,7 @@ int exec_builtin(char *args[], char *envp[])
 	else if (ft_strncmp(args[0], "exit", 4) == 0)
 	{
 		printf("exit\n");
-		if (!args[2])
-		{
-			if (args[1] == 0 || !args[1])
-				exit (0);
-			exit_stat = rh_exit(args[1]);
-		}
-		else
-			perror("exit: too many arguments");
+		exit_stat = rh_exit(args);
 	}
 	else if (ft_strncmp(args[0], "env", 3) == 0)
 	{
@@ -104,12 +98,12 @@ int exec_builtin(char *args[], char *envp[])
  * 		Takes the command table as an argument.
  * 		Returns nothing.
  */
-int exec_commtab(t_commtab *table, char *envp[])
+int	exec_commtab(t_commtab *table, char *envp[])
 {
-	int	i;
-	t_simcomm *cmd;
-	int	exit_stat;
-	
+	int			i;
+	t_simcomm	*cmd;
+	int			exit_stat;
+
 	i = 0;
 	while (i < table->count)
 	{
