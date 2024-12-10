@@ -106,3 +106,4 @@
 - exit: now works properly
 - echo: now works properly
 - env: now works properly
+- implement `ft_fprintf` separately in src/utils
