@@ -80,7 +80,7 @@ int traverse_ast(t_ast *node, t_commtab *table)
 		traverse_ast(node->right, table);
 		return (0);
 	}
-	else if (node->type == NODE_AND ) 
+	else if (node->type == NODE_AND) 
 	{
 		if (traverse_ast(node->left, table) == 0)
 			traverse_ast(node->right, table);
@@ -93,7 +93,7 @@ int traverse_ast(t_ast *node, t_commtab *table)
 		return (0);
 	}
 	else if (node->type == NODE_PIPE) 
-	{ // '&&' '||' ';' actually *executes* differently
+	{
 		traverse_ast(node->left, table);
 		traverse_ast(node->right, table);
 		return (0);

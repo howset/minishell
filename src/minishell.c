@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/09 18:12:08 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:24:39 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ast	*tree;
 	t_commtab *table;
 	int		exit_stat;
-	
+
 	if (argc > 1)
 	{
-		perror("Too many args");
+		ft_fprintf(STDERR_FILENO, "Too many args");
 		exit(127);
 	}
 	(void) argv;
