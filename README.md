@@ -20,35 +20,31 @@ sudo apt-get install pkg-config
 
 ## 🌎 General
 - Parsing:
-	- Handle quotes
-		- single: literal interpretation 
-			- no variable & command substitution, no interpretation of special chars
-		- double: partial interpretation ($)
-			- Variable substitution: $VAR
-			- Command substitution: $(command)
-			- Limited interpretation of special chars
-	- Handle other brackets (?)
-	- What to do with heredoc (<<)?
-	- Handle `$?` -> expand to the exit status of the most recently executed foreground pipeline
 - Exec:
 	- Add builtins
-		- echo - More than half done.
+		- echo - Done.
 		- cd
 		- pwd
 		- export
 		- unset
-		- env - Basically done i guess.
-		- exit - Seems done but some dissimilar behaviour, need to revamp.
+		- env - Done.
+		- exit - Done.
 	- Exec non-builtins
 		- Read system calls: dup/dup2
 		- Read system calls: fork
 		- Read system calls: waitpid
 		- Read system calls: execve
 		- Read system calls: env
-- When to `free` what.
-- How to deal with `realloc`? --> have already ft_realloc
-- Makefile problem: does no recompile for minor changes -> fixed
-- Make comments on functions. --> Take a day for streamlining & commenting?
+- Free:
+	- AST: done in reem's branch
+	- Comm tab: 
+		- howard's version isnt yet done
+		- reems's version is complete
+			- free_redirection
+			- free_command
+			- free_command_table
+- Now have `ft_realloc` in libft.
+- Now have `ft_fprintf` in utils to circumvent fprintf.
 
 ## 🌴 Main
 - stable
@@ -75,15 +71,12 @@ sudo apt-get install pkg-config
 	- How to remove trailing space? -> fixed
 - Pull from main the stable ast and comm table parser
 - Still have to polish exec.c
-- 6.12.2024
-	- Lexer: Not exit the shell when unterminated quotes error are met.
-	- Parser: `parse_command` collects args for TKN_WORD, TKN_QUO_SIN, TKN_QUO_DOU, & TKN_BG.
-	- Comm Table: `create_simcomm` looks for "&" and sets is_bg on/off.
-	- Echo: Early experiment with returning exit status.
-		- Ditched printf and goes for write directly.
-		- Observed: may have in-line problem if history is checked after echo -n
-	- Exit: Moved from main to builtins, otherwise wont accomodate accident spaces before typing exit.
-	- Env: Early implementation to print env var to stdout.
+- 10.12.2024
+	- echo seems ok, but not closing/pushing. Wait for confirmation.
+
+### 🌿 Branch: h-env_exit
+- 10.12.2024
+	- env & exit seem fine.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
@@ -156,60 +149,4 @@ Contains redundant content
 ![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
 
 ### Allowed Funcs
-| Function				| Manual Page		| From lib					| Description
-| :--					| :--				| :--						| :--
-| **printf**			| `man 3 printf`	| `<stdio.h>`				| write output to stdout
-| **malloc**			| `man malloc`		| `<stdlib.h>`				| allocate dynamic memory
-| **free**				| `man 3 free`		| `<stdlib.h>`				| free dynamic memory
-| **read**				| `man 2 read`		| `<unistd.h>`				| read from a file descriptor
-| **write**				| `man 2 write`		| `<unistd.h>`				| write to a file descriptor
-| **open**				| `man 2 open`		| `<fcntl.h>`				| open and possibly create a file
-| **close**				| `man 2 open`		| `<unistd.h>`				| close a file descriptor
-| **fork**				| `man fork`		| `<unistd.h>`				| create a child process
-| **wait**				| `man wait`		| `<sys/wait.h>`			| wait for process to change state
-| **waitpid**			| `man waitpid`		| `<sys/wait.h>`			| wait for process to change state
-| **wait3**				| `man wait3`		| `<sys/wait.h>`			| (obsolete) wait for process to change state, BSD style
-| **wait4**				| `man wait4`		| `<sys/wait.h>`			| (obsolete) wait for process to change state, BSD style
-| **signal**			| `man signal`		| `<signal.h>`				| ANSI C signal handling
-| **kill**				| `man 2 kill`		| `<signal.h>`				| send signal to a process
-| **exit**				| `man exit`		| `<stdlib.h>`				| cause normal process termination
-| **getcwd**			| `man getcwd`		| `<unistd.h>`				| get current working directory
-| **chdir**				| `man chdir`		| `<unistd.h>`				| change working directory
-| **stat**				| `man 2 stat`		| `<sys/stat.h>`			| get file status by pathname
-| **lstat**				| `man lstat`		| `<sys/stat.h>`			| get file status by pathname (for symlinks)
-| **fstat**				| `man fstat`		| `<sys/stat.h>`			| get file status by fd
-| **execve**			| `man execve`		| `<unistd.h>`				| execute program
-| **dup**				| `man dup`			| `<unistd.h>`				| duplicate a file descriptor
-| **dup2**				| `man dup2`		| `<unistd.h>`				| duplicate a file descriptor
-| **pipe**				| `man pipe`		| `<unistd.h>`				| create pipe
-| **opendir**			| `man opendir`		| `<dirent.h>`				| open a directory
-| **readdir**			| `man readdir`		| `<dirent.h>`				| read a directory
-| **closedir**			| `man closedir`	| `<dirent.h>`				| close a directory
-| **strerror**			| `man strerror`	| `<string.h>`				| return string describing error number
-| **errno**				| `man errno`		| `<errno.h>`				| number of last error
-| **termcap**			| `man termcap`		| `<term.h>`				| direct curses interface to the terminfo capability database
-| **readline**			| `man readline`	| `<readline/readline.h>`	| get a line from a user with editing
-| **rl_clear_history**	| Readline Library	| `<readline/readline.h>`	| clear the history list by deleting all of the entries
-| **rl_on_new_line**	| Readline Library	| `<readline/readline.h>`	| tell the update functions that we have moved onto a new (empty) line
-| **rl_replace_line**	| Readline Library	| `<readline/readline.h>`	| replace the contents of rl_line_buffer with text
-| **rl_redisplay**		| Readline Library	| `<readline/readline.h>`	| change what’s displayed on screen to reflect the current contents of rl_line_buffer
-| **add_history**		| `man history`		| `<readline/history.h>`	| place string at the end of the history list.
-| **access**			| `man 3 access`	| `<unistd.h>`				| checks whether the calling process can access the file pathname
-| **sigaction**			| `man 3 sigaction`	| `<signal.h>`				| allows calling process to examine &/ specify action to be associated with a specific signal
-| **sigemptyset**		| `man 3 sigsetops`	| `<signal.h>`				| initializes the signal set given by set to empty, with all signals excluded from the set
-| **sigaddset**			| `man 3 sigsetops`	| `<signal.h>`				| add signal signum from set
-| **unlink**			| `man 3 unlink`	| `<unistd.h>`				| remove a link to a file
-| **perror**			| `man perror`		| `<stdio.h>`				| produces a message on std err describing the last error encountered
-| **isatty**			| `man isatty`		| `<unistd.h>`				| test whether a file descriptor refers to a terminal (returns 1 if yes)
-| **ttyname**			| `man ttyname`		| `<unistd.h>`				| returns a pointer to the null-terminated pathname of the terminal
-| **ttyslot**			| `man ttyslot`		| `<unistd.h>`				| find the slot of the current user's terminal in some file
-| **ioctl**				| `man 2/3 ioctl`	| `<stropts.h>`				|
-| **getenv**			| `man getenv`		| `<stdlib.h>`				| get an environment variable
-| **tcsetattr**			| `man termios`		| `<unistd.h>`				| sets the parameters associated with the terminal
-| **tcgetattr**			| `man termios`		| `<unistd.h>`				| gets the parameters associated with the object referred by fd and stores them
-| **tgetent**			| https://linux.die.net/man/3/tgetent	| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
-| **tgetflag**			| https://linux.die.net/man/3/tgetflag	| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
-| **tgetnum**			| https://linux.die.net/man/3/tgetnum	| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
-| **tgetstr**			| https://linux.die.net/man/3/tgetstr	| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
-| **tgoto**				| https://linux.die.net/man/3/tgoto		| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
-| **tputs**				| https://linux.die.net/man/3/tputs		| `<curses.h>` & `<term.h>`	| conversion aid for programs that use the termcap library
+- ugly table removed.
