@@ -32,13 +32,13 @@ sudo apt-get install pkg-config
 	- Handle `$?` -> expand to the exit status of the most recently executed foreground pipeline
 - Exec:
 	- Add builtins
-		- echo - half done. Functional but incomplete (exit status)
+		- echo - More than half done.
 		- cd
 		- pwd
 		- export
 		- unset
-		- env
-		- exit
+		- env - Basically done i guess.
+		- exit - Seems done but some dissimilar behaviour, need to revamp.
 	- Exec non-builtins
 		- Read system calls: dup/dup2
 		- Read system calls: fork
@@ -46,7 +46,7 @@ sudo apt-get install pkg-config
 		- Read system calls: execve
 		- Read system calls: env
 - When to `free` what.
-- How to deal with `realloc`?
+- How to deal with `realloc`? --> have already ft_realloc
 - Makefile problem: does no recompile for minor changes -> fixed
 - Make comments on functions. --> Take a day for streamlining & commenting?
 
@@ -124,6 +124,17 @@ pid_t wait(int *wstatus);
 pid_t waitpid(pid_t pid, int *wstatus, int options);
 ```
 
+- termios
+Ctrl+C: Should interrupt the current process but not exit the shell itself.
+Ctrl+Z: Should suspend the current process.
+Ctrl+D: Should exit the shell only if no input is provided.
+By default, these signals terminate or suspend the terminal session, but with termios, their behavior can be overridden.
+
+When implementing job control (e.g., handling background and foreground processes), one might need to:
+	- Suspend processes (Ctrl+Z).
+	- Resume stopped jobs.
+	- Assign terminal control to a foreground process.
+The termios library can help by allowing the manipulation of the terminal's foreground process group with tcgetpgrp() and tcsetpgrp(). This ensures that when a process is in the foreground, it can read from and write to the terminal.
 
 ### Slides
 Contains redundant content

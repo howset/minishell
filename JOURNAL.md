@@ -96,4 +96,11 @@
 - Extend `echo` to manage quotes
 - Not sure how to consolidate command table from 2 different branches.
 	- Maybe take the more sophisticated one?
-- 
+- exit: 
+	- exit bb 35: 
+		- bash: angry with numeric argument & then exit
+		- minishell: too many args & exit
+	- the rest seems okay
+
+### 10.12.2024
+- exit:

@@ -53,9 +53,7 @@ int exec_builtin(char *args[], char *envp[])
 		if (!args[2])
 		{
 			if (args[1] == 0 || !args[1])
-			{
 				exit (0);
-			}
 			exit_stat = rh_exit(args[1]);
 		}
 		else
