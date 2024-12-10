@@ -78,6 +78,12 @@ sudo apt-get install pkg-config
 - 10.12.2024
 	- env & exit seem fine.
 
+### 🌿 Branch: h-export_unset
+- 10.12.2024
+	- unset postponed.
+	- export can load a list and populated by the envvar
+		- the list is initialized in main (has to be freed!)
+
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell
