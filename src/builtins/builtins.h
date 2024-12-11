@@ -26,4 +26,7 @@ t_env	*find_envvar(t_env *env_list, const char *key);
 void	print_envlist(t_env *env_list);
 int	rh_export(char *args[], t_env **env_list);
 
+// unset.c
+int	rh_unset(char *args[], t_env **env_list);
+
 #endif

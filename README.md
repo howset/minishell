@@ -86,7 +86,9 @@ sudo apt-get install pkg-config
 - 11.12.2024
 	- export seems working
 		- should print alphabetically?
-		- can not `setenv`? `export` prints new var, but `env` does not.
+	- env: fixed problem where LS_COLORS cant print properly
+		- has options to print which environmental variables
+	- unset seems working
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

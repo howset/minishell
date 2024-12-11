@@ -114,8 +114,9 @@
 	- still has to work it though
 
 ### 11.12.2024
-- export seems to be working now. The functions are scattered though between env.c, and export.c. Copied ft_freearr from ft_split to env.c. The main (in minishell.c) is a mess.
+- export: seems to be working now. The functions are scattered though between env.c, and export.c. The main (in minishell.c) is a mess.
 	- should the printed out vars be sorted alphabetically?
-	- setenv?
+- env: fix env where LS_COLORS cant be printed out properly due to having multiple '=' in the val (no more ft_split).
+	- added option -g to print the envp. The default prints the env_list.
 - tried to make it consistent, perror for failed system calls, custom errors with ft_fprintf.
-- 
+- unset: seems working.

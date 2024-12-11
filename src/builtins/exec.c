@@ -58,6 +58,8 @@ int exec_builtin(char *args[], t_env **env_list, char *envp[])
 		exit_stat = rh_env(args, envp, env_list);
 	else if (ft_strncmp(args[0], "export", 6) == 0)
 		exit_stat = rh_export(args, env_list);
+	else if (ft_strncmp(args[0], "unset", 5) == 0)
+		exit_stat = rh_unset(args, env_list);
 	else
 		exit_stat = 1;
 	return (exit_stat);
