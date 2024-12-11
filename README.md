@@ -83,6 +83,10 @@ sudo apt-get install pkg-config
 	- unset postponed.
 	- export can load a list and populated by the envvar
 		- the list is initialized in main (has to be freed!)
+- 11.12.2024
+	- export seems working
+		- should print alphabetically?
+		- can not `setenv`? `export` prints new var, but `env` does not.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

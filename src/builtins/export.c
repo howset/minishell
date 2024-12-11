@@ -23,11 +23,11 @@ void add_or_update_env(t_env **env_list, const char *key, const char *val)
 		new_var->next = *env_list;
 		*env_list = new_var;
 	}
-	if (val)
+/* 	if (val)
 	{
 		if (setenv(key, val, 1) != 0)
 			perror("setenv");
-	}
+	} */
 }
 
 //createnew environment variable node
@@ -89,7 +89,7 @@ int rh_export(char *args[], t_env **env_list)
 	i = 1;
 	while (args[i])
 	{
-		eq_sign = strchr(args[i], '=');
+		eq_sign = ft_strchr(args[i], '=');
 		if (eq_sign)
 		{
 			*eq_sign = '\0'; //temporarily split key and value

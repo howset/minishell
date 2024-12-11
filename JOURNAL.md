@@ -115,3 +115,7 @@
 
 ### 11.12.2024
 - export seems to be working now. The functions are scattered though between env.c, and export.c. Copied ft_freearr from ft_split to env.c. The main (in minishell.c) is a mess.
+	- should the printed out vars be sorted alphabetically?
+	- setenv?
+- tried to make it consistent, perror for failed system calls, custom errors with ft_fprintf.
+- 
