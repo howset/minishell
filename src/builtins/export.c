@@ -95,7 +95,8 @@ void	print_envlist(t_env *env_list)
  * called without val.
  * 		Takes the whole args in simple command (incl args[0] --> the command, 
  * 			has to be skipped, hence the check for args[1]), and env_list.
- * 		Returns 0 because always success.
+ * 		Returns 0 because always success that will be transferred to the
+ * 			calling executor.
 */
 int	rh_export(char *args[], t_env **env_list)
 {

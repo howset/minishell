@@ -1,15 +1,39 @@
 #include "./builtins.h"
 
-int	rh_env(char *envp[])
+/**Iterates the envp that is passed from the calling terminal (environ) and 
+ * prints row by row. If the -ms option is given then prints the environmental
+ * variables of **this** minishell.
+ * 		Takes basically everything (args for the option, envp, and env_list).
+ * 		Returns a zero because always success.
+ * */
+int	rh_env(char *args[], char *envp[], t_env **env_list)
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	if (!args[1])
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		printf("-->The following are the variables in minishell.<--\n");
+		while (*env_list)
+		{
+			if ((*env_list)->val)
+				printf("%s=\"%s\"\n", (*env_list)->key, (*env_list)->val);
+			else
+				printf("%s=\"\"\n", (*env_list)->key);
+			env_list = &(*env_list)->next;
+		}
 	}
+	else if (ft_strncmp(args[1], "-g", 2) == 0)
+	{
+		printf("-->The following are the global variables environ.<--\n");
+		while (envp[i])
+		{
+			printf("%s\n", envp[i]);
+			i++;
+		}
+	}
+	else
+		printf("No option or option -g only");
 	return (0);
 }
 
@@ -28,40 +52,40 @@ int	rh_env(char *envp[])
 	}
 } */
 
-//the one from ft_split
-static void ft_freearr(char **arr, size_t count)
-{
-	while (count > 0)
-	{
-		count--;
-		free(arr[count]);
-	}
-	free(arr);
-}
-
+/**Ditched the ft_split because it fails to recognize val that contains other
+ * equal signs. Now just find the first occurence of '=', and split to key and 
+ * val. 
+ * */
 void init_envlist(t_env **env_list, char *envp[])
 {
 	int i;
 	char *key;
 	char *val;
-	char **keyval_arr;
+	char *equal_sign;
 
 	i = 0;
 	while (envp[i])
 	{
-		keyval_arr = ft_split(envp[i], '=');
-		if (!keyval_arr || !keyval_arr[0])
+		equal_sign = ft_strchr(envp[i], '=');
+		if (!equal_sign)
 		{
-			ft_freearr(keyval_arr, 2);
-			ft_fprintf(STDERR_FILENO, "Failed to parse environment variable");
+			ft_fprintf(STDERR_FILENO, "Failed to find equal sign.\n");
+			i++;
+			continue;
+		}
+		key = ft_substr(envp[i], 0, equal_sign - envp[i]);
+		if (!key)
+		{
+			perror("Memory allocation failed for key");
 			return;
 		}
-		key = ft_strdup(keyval_arr[0]);
-		if (keyval_arr[1])
-			val = ft_strdup(keyval_arr[1]);
-		else
-			val = NULL;
-		ft_freearr(keyval_arr, 2);
+		val = ft_strdup(equal_sign + 1);
+		if (!val)
+		{
+			perror("Memory allocation failed for val");
+			free(key);
+			return;
+		}
 		add_envvar(env_list, key, val);
 		free(key);
 		free(val);

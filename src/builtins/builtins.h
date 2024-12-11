@@ -12,7 +12,7 @@ int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[]);
 int	rh_echo(char *args[], int opt);
 
 // env.c
-int		rh_env(char *envp[]);
+int		rh_env(char *args[], char *envp[], t_env **env_list);
 void	init_envlist(t_env **env_list, char *envp[]);
 void	free_envlist(t_env *env_list);
 

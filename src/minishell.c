@@ -6,14 +6,14 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/10 19:15:21 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:59:16 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * currently the main function is getting confusing
+ * currently the main function is getting confusing.
  */
 
 int	main(int argc, char *argv[], char *envp[])

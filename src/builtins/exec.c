@@ -27,10 +27,10 @@ int	is_builtin(char *cmd)
 
 /**This function calls the corresponding built-in functions. Cuurently only
  * echo is operational (still WIP). Haven't begun on the others yet.
- * 		Takes the field args from a t_simmcom (row on t_commtab).
- * 		Returns nothing. (??)
+ * 		Takes the field args from a t_simmcom (row on t_commtab). And now also
+ * 			env_list and envp for functions that required them (e.g. export).
+ * 		Returns an exit status.
  */
-//int	exec_builtin(char *args[], char *envp[])
 int exec_builtin(char *args[], t_env **env_list, char *envp[])
 {
 	int	opt;
@@ -55,7 +55,7 @@ int exec_builtin(char *args[], t_env **env_list, char *envp[])
 		exit_stat = rh_exit(args);
 	}
 	else if (ft_strncmp(args[0], "env", 3) == 0)
-		exit_stat = rh_env(envp);
+		exit_stat = rh_env(args, envp, env_list);
 	else if (ft_strncmp(args[0], "export", 6) == 0)
 		exit_stat = rh_export(args, env_list);
 	else
