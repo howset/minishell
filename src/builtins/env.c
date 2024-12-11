@@ -62,7 +62,7 @@ void init_envlist(t_env **env_list, char *envp[])
 		else
 			val = NULL;
 		ft_freearr(keyval_arr, 2);
-		add_or_update_env(env_list, key, val);
+		add_envvar(env_list, key, val);
 		free(key);
 		free(val);
 		i++;
