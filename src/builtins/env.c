@@ -13,7 +13,7 @@ int	rh_env(char *envp[])
 	return (0);
 }
 
-//this can be confusing, but this frees the mallocs in create_envvar
+//this can be confusing, but this aims to free the mallocs in create_envvar
 /* void free_envlist(t_env *env_list)
 {
 	t_env *tmp;
@@ -28,30 +28,43 @@ int	rh_env(char *envp[])
 	}
 } */
 
+//the one from ft_split
+static void ft_freearr(char **arr, size_t count)
+{
+	while (count > 0)
+	{
+		count--;
+		free(arr[count]);
+	}
+	free(arr);
+}
+
 void init_envlist(t_env **env_list, char *envp[])
 {
 	int i;
-	char *eq;
 	char *key;
 	char *val;
-	char	**keyval_arr;
+	char **keyval_arr;
 
 	i = 0;
 	while (envp[i])
 	{
-		printf("envp[%d]: %s\n", i, envp[i]);
-		eq = ft_strchr(envp[i], '=');
-		if (eq)
+		keyval_arr = ft_split(envp[i], '=');
+		if (!keyval_arr || !keyval_arr[0])
 		{
-			keyval_arr = ft_split(envp[i], '=');
-			key = ft_strdup(keyval_arr[0]);
-			if (val)
-				val = ft_strdup(keyval_arr[1]);
-			free(keyval_arr);
-			add_or_update_env(env_list, key, val);
-			free(key);
-			free(val);
+			ft_freearr(keyval_arr, 2);
+			ft_fprintf(STDERR_FILENO, "Failed to parse environment variable");
+			return;
 		}
+		key = ft_strdup(keyval_arr[0]);
+		if (keyval_arr[1])
+			val = ft_strdup(keyval_arr[1]);
+		else
+			val = NULL;
+		ft_freearr(keyval_arr, 2);
+		add_or_update_env(env_list, key, val);
+		free(key);
+		free(val);
 		i++;
 	}
 }

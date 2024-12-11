@@ -112,3 +112,6 @@
 - export: 
 	- has list/table of system envvar
 	- still has to work it though
+
+### 11.12.2024
+- export seems to be working now. The functions are scattered though between env.c, and export.c. Copied ft_freearr from ft_split to env.c. The main (in minishell.c) is a mess.

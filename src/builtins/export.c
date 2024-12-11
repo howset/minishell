@@ -1,6 +1,35 @@
 #include "./builtins.h"
 #include <string.h>
 
+
+//add /update environment variable, setenv adds to system environ (remove?)
+void add_or_update_env(t_env **env_list, const char *key, const char *val)
+{
+	t_env *existing;
+	t_env *new_var;
+
+	existing = find_envvar(*env_list, key);
+	if (existing)
+	{
+		free(existing->val);
+		if (val)
+			existing->val = strdup(val);
+		else
+			existing->val = NULL;
+	}
+	else
+	{
+		new_var = create_envvar(key, val);
+		new_var->next = *env_list;
+		*env_list = new_var;
+	}
+	if (val)
+	{
+		if (setenv(key, val, 1) != 0)
+			perror("setenv");
+	}
+}
+
 //createnew environment variable node
 t_env *create_envvar(const char *key, const char *val)
 {
@@ -31,34 +60,6 @@ t_env *find_envvar(t_env *env_list, const char *key)
 		env_list = env_list->next;
 	}
 	return (NULL);
-}
-
-//add /update environment variable, setenv adds to system environ (remove?)
-void add_or_update_env(t_env **env_list, const char *key, const char *val)
-{
-	t_env *existing;
-	t_env *new_var;
-
-	existing = find_envvar(*env_list, key);
-	if (existing)
-	{
-		free(existing->val);
-		if (val)
-			existing->val = strdup(val);
-		else
-			existing->val = NULL;
-	}
-	else
-	{
-		new_var = create_envvar(key, val);
-		new_var->next = *env_list;
-		*env_list = new_var;
-	}
-	if (val)
-	{
-		if (setenv(key, val, 1) != 0)
-			perror("setenv");
-	}
 }
 
 //print all environment variables
@@ -98,6 +99,6 @@ int rh_export(char *args[], t_env **env_list)
 		else
 			add_or_update_env(env_list, args[i], NULL);
 		i++;
-}
+	}
 	return (0);
 }
