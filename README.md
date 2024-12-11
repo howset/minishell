@@ -16,9 +16,8 @@ sudo apt-get install pkg-config
 ```
 
 ## Notes
-# To do
 
-## 🌎 General
+### 🌎 General
 - Parsing:
 - Exec:
 	- Add builtins
@@ -46,26 +45,26 @@ sudo apt-get install pkg-config
 - Now have `ft_realloc` in libft.
 - Now have `ft_fprintf` in utils to circumvent fprintf.
 
-## 🌴 Main
+### 🌴 Main
 - stable
 
-### 🌿 Branch: tokens
+#### 🌿 Branch: tokens
 - 26.11.2024 - stable & merged to main.
 
-### 🌿 Branch: h-parse
+#### 🌿 Branch: h-parse
 - 3.12.2024 - add `comm_table.c` under src/parser/
 	- Maybe unnecessary, but works.
 - Pull from main the stable ast parser.
 - Then merge to main the command table parser.
 
-### 🌿 Branch: r-parser
+#### 🌿 Branch: r-parser
 - 1.12.2024 - parser done!
 	- Delete `consume_token`& `get_token_type`? 
 	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
 	- If agreed, change `parse()` to `parser()`.
 - Merge the stable ast parser to main.
 
-### 🌿 Branch: h-echo
+#### 🌿 Branch: h-echo
 - 3.12.2024 - start with echo
 	- How to deal with exit status?
 	- How to remove trailing space? -> fixed
@@ -74,11 +73,11 @@ sudo apt-get install pkg-config
 - 10.12.2024
 	- echo seems ok, but not closing/pushing. Wait for confirmation.
 
-### 🌿 Branch: h-env_exit
+#### 🌿 Branch: h-env_exit
 - 10.12.2024
 	- env & exit seem fine.
 
-### 🌿 Branch: h-export_unset
+#### 🌿 Branch: h-export_unset
 - 10.12.2024
 	- unset postponed.
 	- export can load a list and populated by the envvar
@@ -89,6 +88,7 @@ sudo apt-get install pkg-config
 	- env: fixed problem where LS_COLORS cant print properly
 		- has options to print which environmental variables
 	- unset seems working
+	- just remembered, exit probably has to free stuffs up.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

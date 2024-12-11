@@ -14,7 +14,7 @@ int	rh_echo(char *args[], int opt);
 // env.c
 int		rh_env(char *args[], char *envp[], t_env **env_list);
 void	init_envlist(t_env **env_list, char *envp[]);
-void	free_envlist(t_env *env_list);
+//void	free_envlist(t_env *env_list);
 
 // exit.c
 int	rh_exit(char *args[]);
