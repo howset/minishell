@@ -123,4 +123,7 @@
 - A new branch h-fork to experiment with forking. Deletes h-echo & h-env_exit from the remote to avoid a mess. 
 
 ### 12.12.2024
-- The forking and execve seems working, but the generated fucntion seems very messy. 
+- The forking and execve seems working, but the generated fucntion seems very messy.
+- Next: 
+	- seems like a good idea to pause and review, then shorten the ones with too many lines. It's already quite a lot at this point.
+	- or just make efforts to valgrind stuffs up.
