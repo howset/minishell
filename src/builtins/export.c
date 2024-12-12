@@ -9,8 +9,8 @@
  */
 void	add_envvar(t_env **env_list, const char *key, const char *val)
 {
-	t_env *existing;
-	t_env *new_node;
+	t_env	*existing;
+	t_env	*new_node;
 
 	existing = find_envvar(*env_list, key);
 	if (existing)
@@ -36,7 +36,7 @@ void	add_envvar(t_env **env_list, const char *key, const char *val)
  */
 t_env	*create_envvar(const char *key, const char *val)
 {
-	t_env *new_node;
+	t_env	*new_node;
 
 	new_node = malloc_perex(sizeof(t_env), "Malloc error on create_env_var");
 	new_node->key = ft_strdup(key);

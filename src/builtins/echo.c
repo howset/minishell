@@ -66,13 +66,13 @@ int	rh_echo(char *args[], int opt)
 		{
 			if (write(STDOUT_FILENO, " ", 1) == -1)
 			{
-				perror("echo: write error");
+				perror("Echo: write error");
 				return (EXIT_FAILURE);
 			}
 		}
 		if (print_quotedstr(args[i]) != EXIT_SUCCESS)
 		{
-			perror("echo: write error");
+			perror("Echo: write error");
 			return (EXIT_FAILURE);
 		}
 		i++;

@@ -56,12 +56,12 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
  * equal signs. Now just find the first occurence of '=', and split to key and 
  * val. 
  * */
-void init_envlist(t_env **env_list, char *envp[])
+void	init_envlist(t_env **env_list, char *envp[])
 {
-	int i;
-	char *key;
-	char *val;
-	char *equal_sign;
+	int		i;
+	char	*key;
+	char	*val;
+	char	*equal_sign;
 
 	i = 0;
 	while (envp[i])
@@ -71,20 +71,20 @@ void init_envlist(t_env **env_list, char *envp[])
 		{
 			ft_fprintf(STDERR_FILENO, "Failed to find equal sign.\n");
 			i++;
-			continue;
+			continue ;
 		}
 		key = ft_substr(envp[i], 0, equal_sign - envp[i]);
 		if (!key)
 		{
 			perror("Memory allocation failed for key");
-			return;
+			return ;
 		}
 		val = ft_strdup(equal_sign + 1);
 		if (!val)
 		{
 			perror("Memory allocation failed for val");
 			free(key);
-			return;
+			return ;
 		}
 		add_envvar(env_list, key, val);
 		free(key);

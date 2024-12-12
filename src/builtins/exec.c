@@ -62,10 +62,10 @@ int exec_builtin(char *args[], t_env **env_list, char *envp[])
 		exit_stat = rh_export(args, env_list);
 	else if (ft_strncmp(args[0], "unset", 5) == 0)
 		exit_stat = rh_unset(args, env_list);
-	/* else if (ft_strncmp(args[0], "cd", 5) == 0)
-		exit_stat = rh_unset(args, env_list);
-	else if (ft_strncmp(args[0], "pwd", 5) == 0)
-		exit_stat = rh_unset(args, env_list); */
+	/* else if (ft_strncmp(args[0], "cd", 2) == 0)
+		exit_stat = rh_cd(args, envp, env_list);
+	else if (ft_strncmp(args[0], "pwd", 3) == 0)
+		exit_stat = rh_pwd(args, envp, env_list); */
 	else
 		exit_stat = 1;
 	return (exit_stat);
@@ -97,11 +97,10 @@ int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-char *find_path(char *cmd, t_env *env_list)
+char	*find_path(char *cmd, t_env *env_list)
 {
 	char	*path;
 	char	*full_path;
-	struct stat stat_buf;
 	size_t	cmd_len;
 	char	*start;
 	char	*end;
@@ -113,7 +112,7 @@ char *find_path(char *cmd, t_env *env_list)
 		if (ft_strncmp(env_list->key, "PATH", 4) == 0)
 		{
 			path = env_list->val;
-			break;
+			break ;
 		}
 		env_list = env_list->next;
 	}
@@ -121,7 +120,7 @@ char *find_path(char *cmd, t_env *env_list)
 		return (NULL);
 	cmd_len = ft_strlen(cmd);
 	path_len = ft_strlen(env_list->val);
-	full_path = malloc_perex(path_len, "Malloc full_path fails");
+	full_path = malloc_perex(path_len, "Malloc error on full_path");
 	start = path;
 	end = NULL;
 	while ((end = ft_strchr(start, ':')) || (*start != '\0'))
@@ -142,9 +141,12 @@ char *find_path(char *cmd, t_env *env_list)
 		}
 		else
 			ft_strlcpy(full_path + dir_len, cmd, path_len - dir_len);
-		//check if file exists and is executable using `stat`
-		if (stat(full_path, &stat_buf) == 0 && (stat_buf.st_mode & S_IXUSR))
+		if (access(full_path, X_OK) == 0)
+		{
+			if (end)
+				*end = ':';
 			return (full_path);
+		}
 		if (!end)
 			break;
 		start = end + 1;
@@ -152,7 +154,6 @@ char *find_path(char *cmd, t_env *env_list)
 	free(full_path);
 	return (NULL);
 }
-
 
 int exec_prog(char **args, t_env *env_list, char *envp[])
 {
@@ -171,14 +172,14 @@ int exec_prog(char **args, t_env *env_list, char *envp[])
 		cmd_path = find_path(args[0], env_list);
 		if (!cmd_path)
 		{
-			ft_fprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
-			return (127);
+			ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);
+			exit (127);
 		}
 		execve(cmd_path, args, envp);
-		// If execve fails
-		perror("execve");
+		//if execve succeeds, the following will not be executed
+		perror("Execve fails");
 		free(cmd_path);
-		exit(1); // Exit with error
+		exit(1);
 	}
 	else
 	{

@@ -7,7 +7,7 @@
  * 		Takes *str.
  * 		Returns 0 if no numeric char is found, 1 if found.
  */
-int	ft_isnumber(const char *str)
+static int	ft_isnumber(const char *str)
 {
 	if (!str || !*str)
 		return (0);

@@ -8,10 +8,10 @@
 */
 int	rh_unset(char *args[], t_env **env_list)
 {
-	int	i;
-	int	len;
-	t_env *prev;
-	t_env *current;
+	int		i;
+	int		len;
+	t_env	*prev;
+	t_env	*current;
 
 	if (!args[1])
 	{

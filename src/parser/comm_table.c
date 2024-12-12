@@ -5,9 +5,9 @@
  * 		Returns a command table that contains (row-by-row) simple commands.
  * 			These can then be executed sequentially.
  */
-t_commtab *ast_to_commtab(t_ast *tree)
+t_commtab	*ast_to_commtab(t_ast *tree)
 {
-	t_commtab *table;
+	t_commtab	*table;
 
 	table = create_commtab();
 	traverse_ast(tree, table);
@@ -18,9 +18,10 @@ t_commtab *ast_to_commtab(t_ast *tree)
  * 		Takes no args.
  * 		Returns an empty initialized struct.
  */
-t_commtab *create_commtab() {
-	t_commtab *table;
-	
+t_commtab	*create_commtab()
+{
+	t_commtab	*table;
+
 	table = malloc_perex(sizeof(t_commtab), "Malloc error on create_commtab");
 	table->commands = NULL;
 	table->count = 0;
@@ -39,22 +40,24 @@ t_commtab *create_commtab() {
  * 			an (empty) initialized command table.
  * 		Returns a 0 on success .
  */
-int traverse_ast(t_ast *node, t_commtab *table)
+int	traverse_ast(t_ast *node, t_commtab *table)
 {
-	t_simcomm *cmd;
-	t_simcomm *last_cmd;
+	t_simcomm	*cmd;
+	t_simcomm	*last_cmd;
 
 	if (!node)
 		return (1);
 	if (node->type == NODE_COMMAND) 
 	{
-		table->commands = ft_realloc(table->commands, sizeof(t_simcomm) * (table->count + 1));
+		table->commands = ft_realloc(table->commands,
+			sizeof(t_simcomm) * (table->count + 1));
 		if (!table->commands)
 			return (1);
 		cmd = create_simcomm(node);
 		if (node->redirection_type == TKN_RDIR_IN)
 			cmd->in_redir = ft_strdup(node->filename);
-		else if (node->redirection_type == TKN_RDIR_OUT || node->redirection_type == TKN_APPEND)
+		else if (node->redirection_type == TKN_RDIR_OUT
+			|| node->redirection_type == TKN_APPEND)
 			cmd->out_redir = ft_strdup(node->filename);
 		table->commands[table->count] = *cmd;
 		table->count++;
@@ -69,7 +72,8 @@ int traverse_ast(t_ast *node, t_commtab *table)
 
 			if (node->redirection_type == TKN_RDIR_IN)
 				last_cmd->in_redir = ft_strdup(node->filename);
-			else if (node->redirection_type == TKN_RDIR_OUT || node->redirection_type == TKN_APPEND)
+			else if (node->redirection_type == TKN_RDIR_OUT
+				|| node->redirection_type == TKN_APPEND)
 				last_cmd->out_redir = ft_strdup(node->filename);
 		}
 		return (0);
@@ -116,9 +120,9 @@ int traverse_ast(t_ast *node, t_commtab *table)
  * 		Returns an initialized struct where everything is empty except
  * 			the args field.
  */
-t_simcomm *create_simcomm(t_ast *node)
+t_simcomm	*create_simcomm(t_ast *node)
 {
-	t_simcomm *cmd;
+	t_simcomm	*cmd;
 
 	cmd = malloc_perex(sizeof(t_simcomm), "Malloc error on create_simcomm");
 	cmd->args = node->args;
@@ -136,10 +140,10 @@ t_simcomm *create_simcomm(t_ast *node)
  * 		Takes the command table as argument.
  * 		Returns nothing.
  */
-void print_commtab(t_commtab *table)
+void	print_commtab(t_commtab *table)
 {
 	int	i;
-	int j;
+	int	j;
 
 	printf("\n");
 	printf("Command Table:\n");
