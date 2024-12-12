@@ -121,3 +121,6 @@
 - tried to make it consistent, perror for failed system calls, custom errors with ft_fprintf.
 - unset: seems working.
 - A new branch h-fork to experiment with forking. Deletes h-echo & h-env_exit from the remote to avoid a mess. 
+
+### 12.12.2024
+- The forking and execve seems working, but the generated fucntion seems very messy. 

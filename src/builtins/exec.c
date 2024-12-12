@@ -1,6 +1,5 @@
 #include "./builtins.h"
 #include <sys/wait.h>
-#include <sys/stat.h> // for stat
 
 /**This function just serves as a check if the given simple command is included
  * as one of the built-in functions or not.
@@ -176,7 +175,7 @@ int exec_prog(char **args, t_env *env_list, char *envp[])
 			exit (127);
 		}
 		execve(cmd_path, args, envp);
-		//if execve succeeds, the following will not be executed
+		//if execve succeeds, the following will **not** be executed
 		perror("Execve fails");
 		free(cmd_path);
 		exit(1);

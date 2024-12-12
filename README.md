@@ -33,7 +33,6 @@ sudo apt-get install pkg-config
 		- Read system calls: fork
 		- Read system calls: waitpid
 		- Read system calls: execve
-		- Read system calls: env
 - Free:
 	- AST: done in reem's branch
 	- Comm tab: 
@@ -42,6 +41,7 @@ sudo apt-get install pkg-config
 			- free_redirection
 			- free_command
 			- free_command_table
+	- env_list
 - Now have `ft_realloc` in libft.
 - Now have `ft_fprintf` in utils to circumvent fprintf.
 
@@ -92,8 +92,9 @@ sudo apt-get install pkg-config
 	- unset seems working
 	- just remembered, exit probably has to free stuffs up.
 
-#### 🌿 Branch: h-export_unset
+#### 🌿 Branch: h-fork
 - 11.12.2024 preliminary experiment with forks and executing non built-in functions.
+- 12.12.2024 can execute ls, which. not sure what else.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
