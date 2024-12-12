@@ -120,3 +120,4 @@
 	- added option -g to print the envp. The default prints the env_list.
 - tried to make it consistent, perror for failed system calls, custom errors with ft_fprintf.
 - unset: seems working.
+- A new branch h-fork to experiment with forking. Deletes h-echo & h-env_exit from the remote to avoid a mess. 

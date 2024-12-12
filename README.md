@@ -21,13 +21,13 @@ sudo apt-get install pkg-config
 - Parsing:
 - Exec:
 	- Add builtins
-		- echo - Done.
+		- echo - Done, minor probs with -n.
 		- cd
 		- pwd
-		- export
-		- unset
+		- export - Done, except maybe sorting out the prints. 
+		- unset - Done.
 		- env - Done.
-		- exit - Done.
+		- exit - Done, but no frees.
 	- Exec non-builtins
 		- Read system calls: dup/dup2
 		- Read system calls: fork
@@ -72,10 +72,12 @@ sudo apt-get install pkg-config
 - Still have to polish exec.c
 - 10.12.2024
 	- echo seems ok, but not closing/pushing. Wait for confirmation.
+- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
 
 #### 🌿 Branch: h-env_exit
 - 10.12.2024
 	- env & exit seem fine.
+- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
 
 #### 🌿 Branch: h-export_unset
 - 10.12.2024
@@ -89,6 +91,9 @@ sudo apt-get install pkg-config
 		- has options to print which environmental variables
 	- unset seems working
 	- just remembered, exit probably has to free stuffs up.
+
+#### 🌿 Branch: h-export_unset
+- 11.12.2024 preliminary experiment with forks and executing non built-in functions.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
