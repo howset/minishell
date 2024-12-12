@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/11 15:59:16 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:47:55 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 	init_envlist(env_list, envp); //this function is momentarily in env.c
 	while (1)
 	{
-		input = readline("wtf-shell> ");
+		input = readline("rh-shell> ");
 		add_history(input);
 		if (ft_strncmp(input, "$?", 2) == 0)
 			printf("%d\n", exit_stat);

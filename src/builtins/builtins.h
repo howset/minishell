@@ -7,6 +7,8 @@
 int	is_builtin(char *cmd);
 int	exec_builtin(char *args[], t_env **env_list, char *envp[]);
 int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[]);
+char *find_path(char *cmd, t_env *env_list);
+int exec_prog(char **args, t_env *env_list, char *envp[]);
 
 // echo.c
 int	rh_echo(char *args[], int opt);

@@ -66,7 +66,6 @@ t_env	*find_envvar(t_env *env_list, const char *key)
 			return (env_list);
 		env_list = env_list->next;
 	}
-	//printf("%s=\"%s\"\n", env_list->key, env_list->val);
 	return (NULL);
 }
 
