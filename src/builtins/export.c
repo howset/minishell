@@ -72,7 +72,7 @@ t_env	*find_envvar(t_env *env_list, const char *key)
 /**This function printfs env_list by iterating it. Some key may not have val, 
  * hence the if-else. 
  * 		Takes the env_list.
- * 		Returns nothing, it's a void function.
+ * 		Returns nothing, it's a void function that prints.
  */
 void	print_envlist(t_env *env_list)
 {
@@ -107,7 +107,7 @@ int	rh_export(char *args[], t_env **env_list)
 	if (!args[1])
 	{
 		print_envlist(*env_list);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	i = 1;
 	while (args[i])
@@ -124,5 +124,5 @@ int	rh_export(char *args[], t_env **env_list)
 			add_envvar(env_list, args[i], NULL);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -34,7 +34,7 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 	}
 	else
 		printf("No option or option -g only");
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 //this can be confusing, but this aims to free the mallocs in create_envvar

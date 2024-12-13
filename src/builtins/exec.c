@@ -1,5 +1,5 @@
 #include "./builtins.h"
-#include <sys/wait.h>
+#include <sys/wait.h> //move to minishell.h(?)
 
 /**This function just serves as a check if the given simple command is included
  * as one of the built-in functions or not.
@@ -75,7 +75,7 @@ int exec_builtin(char *args[], t_env **env_list, char *envp[])
  * and the corresponding function will be called appropriately (exec_prog for
  * non-built-ins). 
  * 		Takes the command table as an argument.
- * 		Returns nothing.
+ * 		Returns the exit status of the executed commands.
  */
 int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 {
@@ -164,7 +164,7 @@ int exec_prog(char **args, t_env *env_list, char *envp[])
 	if (pid < 0)
 	{
 		perror("Forking error");
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
@@ -178,7 +178,7 @@ int exec_prog(char **args, t_env *env_list, char *envp[])
 		//if execve succeeds, the following will **not** be executed
 		perror("Execve fails");
 		free(cmd_path);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
