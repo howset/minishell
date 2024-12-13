@@ -1,11 +1,12 @@
 #include "./builtins.h"
 
 /**Iterates the envp that is passed from the calling terminal (environ) and 
- * prints row by row. If the -ms option is given then prints the environmental
- * variables of **this** minishell.
+ * prints row by row. When no option is given, then prints the variables in 
+ * **this** minishell, when `-g` is given, then prints the global environ
+ * variables.
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
- * */
+ */
 int	rh_env(char *args[], char *envp[], t_env **env_list)
 {
 	int	i;
@@ -55,7 +56,12 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 /**Ditched the ft_split because it fails to recognize val that contains other
  * equal signs. Now just find the first occurence of '=', and split to key and 
  * val. 
- * */
+ * This function initializes the env_list by going over envp row-by-row, finds
+ * the `=`, then separates the string before and after the eq sign as key and 
+ * val. Both key and val are then put into env_list via `add_envvar`.
+ * 		Takes the envp from main and declared env_list in main.
+ * 		Returns nothing because void func, but initializes the env_list.
+ */
 void	init_envlist(t_env **env_list, char *envp[])
 {
 	int		i;

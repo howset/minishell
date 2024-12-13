@@ -1,7 +1,8 @@
 #include "./builtins.h"
 
 /**This function deals with quotes. First, check which quote (single/double).
- * Then if quote is double, then \t or \n will be interpreted as such.
+ * Then if quote is double, then \t or \n will be interpreted as such. --> 
+ * this is wrong!! must be fixed!!!!
  * 		Takes a word.
  * 		Returns success.
 */
