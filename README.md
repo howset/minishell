@@ -16,66 +16,102 @@ sudo apt-get install pkg-config
 ```
 
 ## Notes
-# To do
 
-## 🌎 General
+### 🌎 General
 - Parsing:
-	- Handle quotes (double and single)
-	- Handle other brackets (?)
-	- What to do with heredoc (<<)?
-	- Handle `$?`?
 - Exec:
 	- Add builtins
-		- echo - half done. Functional but incomplete (exit status)
+		- echo - Done, minor probs with -n.
 		- cd
 		- pwd
-		- export
-		- unset
-		- env
-		- exit
+		- export - Done, except maybe sorting out the prints.
+		- unset - Done.
+		- env - Done.
+		- exit - Done, but no frees.
 	- Exec non-builtins
-		- Read system calls: dup/dup2
-		- Read system calls: fork
-		- Read system calls: waitpid
-		- Read system calls: execve
-		- Read system calls: env
-- When to `free` what.
-- How to deal with `realloc`?
-- Makefile problem: does no recompile for minor changes
-- Make comments on functions. --> Take a day for streamlining & commenting?
+		- fork, waitpid, execve --> can now use non builtins in `$PATH`
+		- Read system calls: dup/dup2 --> for redirections
+- Free:
+	- AST: done in reem's branch
+	- Comm tab:
+		- howard's version isnt yet done
+		- reems's version is complete
+			- free_redirection
+			- free_command
+			- free_command_table
+	- env_list
+- Now have `ft_realloc` in libft.
+- Now have `ft_fprintf` in utils to circumvent fprintf.
 
-## 🌴 Main
+### 🌴 Main
 - stable
 
-### 🌿 Branch: tokens
-- 26.11.2024 - stable & merged to main
+#### 🌿 Branch: tokens
+- 26.11.2024 - stable & merged to main.
 
-### 🌿 Branch: h-parse
+#### 🌿 Branch: h-parse
 - 3.12.2024 - add `comm_table.c` under src/parser/
 	- Maybe unnecessary, but works.
-	- If agreed, merge to main.
+- Pull from main the stable ast parser.
+- Then merge to main the command table parser.
 
-### 🌿 Branch: r-parser
+#### 🌿 Branch: r-parser
 - 1.12.2024 - parser done!
-	- Delete `consume_token`& `get_token_type`? 
+	- Delete `consume_token`& `get_token_type`?
 	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
 	- If agreed, change `parse()` to `parser()`.
+- Merge the stable ast parser to main.
 
-### 🌿 Branch: h-echo
+#### 🌿 Branch: h-echo
 - 3.12.2024 - start with echo
 	- How to deal with exit status?
-	- How to remove trailing space?
+	- How to remove trailing space? -> fixed
+- Pull from main the stable ast and comm table parser
 - Still have to polish exec.c
+- 10.12.2024
+	- echo seems ok, but not closing/pushing. Wait for confirmation.
+- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
+
+#### 🌿 Branch: h-env_exit
+- 10.12.2024
+	- env & exit seem fine.
+- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
+
+#### 🌿 Branch: h-export_unset
+- 10.12.2024
+	- unset postponed.
+	- export can load a list and populated by the envvar
+		- the list is initialized in main (has to be freed!)
+- 11.12.2024
+	- export seems working
+		- should print alphabetically?
+	- env: fixed problem where LS_COLORS cant print properly
+		- has options to print which environmental variables
+	- unset seems working
+	- just remembered, exit probably has to free stuffs up.
+
+#### 🌿 Branch: h-fork
+- 11.12.2024 preliminary experiment with forks and executing non built-in functions.
+- 12.12.2024 can execute ls, which, bash, zsh, ./minishell, cat. not sure what else.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell
-- https://github.com/appinha/42cursus-03-minishell/blob/main/README.md
+- https://github.com/appinha/42cursus-03-minishell
+- https://github.com/twagger/minishell
+- https://github.com/LeaYeh/minishell
 - https://github.com/Swoorup/mysh
 - https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 - https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 - https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
 - https://brennan.io/2015/01/16/write-a-shell-in-c/
 - https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
+- https://www.gnu.org/software/bash/manual/html_node/Definitions.html
+- https://www.youtube.com/watch?v=ZjzMdsTWF0U
+- https://www.youtube.com/watch?v=ubt-UjcQUYg
+- https://www.youtube.com/watch?v=SToUyjAsaFk
+- https://www.cs.uleth.ca/~holzmann/C/system/shell_does_pipeline.pdf
+- https://github.com/coreutils/coreutils
+
 
 ## Scribbles
 
