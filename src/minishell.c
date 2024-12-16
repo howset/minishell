@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/16 16:51:55 by hsetya           ###   ########.fr       */
+/*   Updated: 2024/12/16 18:22:26 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		input = readline("rh-shell> ");
-		add_history(input);
+		if (input && *input)
+			add_history(input);
 		if (ft_strncmp(input, "$?", 2) == 0)
 			printf("%d\n", exit_stat);
 		tokens = lexer(input);
