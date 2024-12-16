@@ -19,7 +19,7 @@ int	is_builtin(char *cmd)
 	else if (ft_strncmp(cmd, "unset", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "env", 3) == 0)
-		return (1); 
+		return (1);
 	else if (ft_strncmp(cmd, "exit", 4) == 0)
 		return (1);
 	else
@@ -70,10 +70,10 @@ int exec_builtin(char *args[], t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-/**This function executes the simple commands from the command table 
+/**This function executes the simple commands from the command table
  * sequentially, row-by-row. A check for built-in functions is performed
  * and the corresponding function will be called appropriately (exec_prog for
- * non-built-ins). 
+ * non-built-ins).
  * 		Takes the command table as an argument.
  * 		Returns the exit status of the executed commands.
  */
@@ -96,6 +96,7 @@ int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
+//Still wip, just experimenting
 char	*find_path(char *cmd, t_env *env_list)
 {
 	char	*path;
@@ -154,6 +155,7 @@ char	*find_path(char *cmd, t_env *env_list)
 	return (NULL);
 }
 
+//Still wip, just experimenting
 int exec_prog(char **args, t_env *env_list, char *envp[])
 {
 	pid_t	pid;
