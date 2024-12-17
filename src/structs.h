@@ -75,6 +75,17 @@ typedef struct s_env
 	char *key;
 	char *val;
 	struct s_env *next;
-} t_env;
+}					t_env;
+
+typedef struct s_alldata
+{
+	char 		*input;
+	t_token 	*tokens;
+	t_ast 		*tree;
+	t_commtab 	*table;
+	int			exit_stat;
+	t_env		*env_head;
+	t_env		**env_list;
+}					t_alldata;
 
 #endif

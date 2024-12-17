@@ -4,6 +4,7 @@
  * prints row by row. When no option is given, then prints the variables in
  * **this** minishell, when `-g` is given, then prints the global environ
  * variables.
+ * 
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
  */
@@ -18,9 +19,9 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 		while (*env_list)
 		{
 			if ((*env_list)->val)
-				printf("%s=\"%s\"\n", (*env_list)->key, (*env_list)->val);
+				printf("%s=%s\n", (*env_list)->key, (*env_list)->val);
 			else
-				printf("%s=\"\"\n", (*env_list)->key);
+				printf("%s=\n", (*env_list)->key);
 			env_list = &(*env_list)->next;
 		}
 	}

@@ -48,7 +48,7 @@ t_env	*create_envvar(const char *key, const char *val)
 	return (new_node);
 }
 
-/**Find a variable name (key) in the env_list. Iterates over the nodes in the 
+/**Find a variable name (key) in the env_list. Iterates over the nodes in the
  * list, if found, return the node, if not, return NULL.
  * 		Takes env_list to search for key.
  * 		Returns the node in which key is found, otherwise NULL.
@@ -69,8 +69,8 @@ t_env	*find_envvar(t_env *env_list, const char *key)
 	return (NULL);
 }
 
-/**This function printfs env_list by iterating it. Some key may not have val, 
- * hence the if-else. 
+/**This function printfs env_list by iterating it. Some key may not have val,
+ * hence the if-else.
  * 		Takes the env_list.
  * 		Returns nothing, it's a void function that prints.
  */
@@ -88,12 +88,12 @@ void	print_envlist(t_env *env_list)
 
 /**This is the implementation of export. It either prints env_list when no args
  * are given in the simple command, or add/update the env_list if there is one.
- * When that happens, the func loops over the args and finds the eq sign. The 
+ * When that happens, the func loops over the args and finds the eq sign. The
  * eq_sign is then replaced with a null terminator to split the string to key
- * (args[i]) and value (eq_sign+1) which then are passed to add_envvar. The 
+ * (args[i]) and value (eq_sign+1) which then are passed to add_envvar. The
  * eq_sign is then restored to =. If no eq sign is found, then add_envvar is
  * called without val.
- * 		Takes the whole args in simple command (incl args[0] --> the command, 
+ * 		Takes the whole args in simple command (incl args[0] --> the command,
  * 			has to be skipped, hence the check for args[1]), and env_list.
  * 		Returns 0 because always success that will be transferred to the
  * 			calling executor.

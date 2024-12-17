@@ -24,7 +24,7 @@ sudo apt-get install pkg-config
 		- echo - Done, minor probs with -n.
 		- cd
 		- pwd
-		- export - Done, except maybe sorting out the prints. 
+		- export - Done, except maybe sorting out the prints.
 		- unset - Done.
 		- env - Done.
 		- exit - Done, but no frees.
@@ -35,7 +35,7 @@ sudo apt-get install pkg-config
 		- Read system calls: execve
 - Free:
 	- AST: done in reem's branch
-	- Comm tab: 
+	- Comm tab:
 		- howard's version isnt yet done
 		- reems's version is complete
 			- free_redirection
@@ -59,7 +59,7 @@ sudo apt-get install pkg-config
 
 #### 🌿 Branch: r-parser
 - 1.12.2024 - parser done!
-	- Delete `consume_token`& `get_token_type`? 
+	- Delete `consume_token`& `get_token_type`?
 	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
 	- If agreed, change `parse()` to `parser()`.
 - Merge the stable ast parser to main.

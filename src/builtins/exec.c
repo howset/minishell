@@ -97,6 +97,7 @@ int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 }
 
 //Still wip, just experimenting
+/**Looks for command in the $PATH in env_list. Uses access to check whether the calling process can access the file pathname*/
 char	*find_path(char *cmd, t_env *env_list)
 {
 	char	*path;
