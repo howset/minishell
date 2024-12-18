@@ -167,6 +167,8 @@ int	rh_echo(char *args[])
 	}
 	if (opt == 0)
 		write(STDOUT_FILENO, "\n", 1);
+	else
+		write(STDOUT_FILENO, "\0", 0);
 	return (EXIT_SUCCESS);
 }
 

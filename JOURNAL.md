@@ -147,4 +147,6 @@
 - separate `find_path` in exec.c to a couple of smaller functions.
 - separate `exec_prog` in exec.c to a couple of smaller functions.
 - shorten `exec_builtin` in exec.c, transfer lines to `rh_echo` in echo.c.
-- echo now deals with edge case `echo -nnnn -n -n teststr`. 
+- echo now deals with edge case `echo -nnnn -n -n teststr`.
+- it seems that nobody handles the issue with echo -n something and readline/history.
+- before forget: the handling of quotes in echo is wrong!!! --> fix!!!!
