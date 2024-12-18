@@ -4,7 +4,7 @@
  * prints row by row. When no option is given, then prints the variables in
  * **this** minishell, when `-g` is given, then prints the global environ
  * variables.
- * 
+ *
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
  */
@@ -40,7 +40,7 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 }
 
 //this can be confusing, but this aims to free the mallocs from create_envvar
-/* void free_envlist(t_env *env_list)
+void free_envlist(t_env *env_list)
 {
 	t_env *tmp;
 
@@ -48,11 +48,13 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 	{
 		tmp = env_list;
 		env_list = env_list->next;
-		free(tmp->key);
-		free(tmp->val);
+		if (tmp->key)
+			free(tmp->key);
+		if (tmp->val)
+			free(tmp->val);
 		free(tmp);
 	}
-} */
+}
 
 /**Ditched the ft_split because it fails to recognize val that contains other
  * equal signs. Now just find the first occurence of '=', and split to key and

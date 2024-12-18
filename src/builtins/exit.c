@@ -2,7 +2,7 @@
 #include <limits.h>
 
 /**An extension of ft_isdigit but includes checks to *str if its empty or NULL.
- * As well, to skip (-). Hate to use pointers to iterate the str, but have to 
+ * As well, to skip (-). Hate to use pointers to iterate the str, but have to
  * because of ft_isdigit -___-
  * 		Takes *str.
  * 		Returns 0 if no numeric char is found, 1 if found.
@@ -35,6 +35,7 @@ int	rh_exit(char *args[])
 {
 	int	exit_stat;
 
+	printf("exit\n");
 	if (!args[1])
 		exit(0);
 	if (!ft_isnumber(args[1]))
@@ -44,7 +45,7 @@ int	rh_exit(char *args[])
 		exit(2);
 	}
 	exit_stat = atoi(args[1]);
-	if ((exit_stat == 0 && ft_strncmp(args[1], "0", 1) != 0) 
+	if ((exit_stat == 0 && ft_strncmp(args[1], "0", 1) != 0)
 		|| exit_stat > INT_MAX || exit_stat < INT_MIN)
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required\n",

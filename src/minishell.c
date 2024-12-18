@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/17 14:42:07 by hsetya           ###   ########.fr       */
+/*   Updated: 2024/12/18 15:01:32 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 char	*prompt_hist(char *input)
 {
 	input = readline("rh-shell> ");
-	if (input && *input)
+	if (ft_strlen(input) > 0)
 		add_history(input);
 	return(input);
 }
@@ -71,6 +71,8 @@ int	main(int argc, char *argv[], char *envp[])
 		free_tkn(all_data->tokens);
 		free(all_data->input);
 	}
-	//free_envlist(env_list);
+	free_envlist(*all_data->env_list);
+	free(all_data->env_list);
+	free(all_data);
 	return (0);
 }

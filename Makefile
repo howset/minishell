@@ -36,6 +36,7 @@ SRC-BUILTINS		= 	./src/builtins/exec.c \
 						./src/builtins/env.c \
 						./src/builtins/exit.c \
 						./src/builtins/export.c \
+						./src/builtins/export_sort.c \
 						./src/builtins/unset.c
 
 

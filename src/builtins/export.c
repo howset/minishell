@@ -7,7 +7,7 @@
  * 		Takes env_list from the main, and a key-value pair (KEY=value).
  * 		Returns nothing (but modifies env_list).
  */
-void	add_envvar(t_env **env_list, const char *key, const char *val)
+void	add_envvar(t_env **env_list, char *key, char *val)
 {
 	t_env	*existing;
 	t_env	*new_node;
@@ -34,7 +34,7 @@ void	add_envvar(t_env **env_list, const char *key, const char *val)
  * 		Takes a key-value pair (KEY=value).
  * 		Returns the node.
  */
-t_env	*create_envvar(const char *key, const char *val)
+t_env	*create_envvar(char *key, char *val)
 {
 	t_env	*new_node;
 
@@ -53,7 +53,7 @@ t_env	*create_envvar(const char *key, const char *val)
  * 		Takes env_list to search for key.
  * 		Returns the node in which key is found, otherwise NULL.
  */
-t_env	*find_envvar(t_env *env_list, const char *key)
+t_env	*find_envvar(t_env *env_list, char *key)
 {
 	int	i;
 
@@ -74,7 +74,7 @@ t_env	*find_envvar(t_env *env_list, const char *key)
  * 		Takes the env_list.
  * 		Returns nothing, it's a void function that prints.
  */
-void	print_envlist(t_env *env_list)
+/* void	print_envlist(t_env *env_list)
 {
 	while (env_list)
 	{
@@ -84,7 +84,7 @@ void	print_envlist(t_env *env_list)
 			printf("declare -x %s=\"\"\n", env_list->key);
 		env_list = env_list->next;
 	}
-}
+} */
 
 /**This is the implementation of export. It either prints env_list when no args
  * are given in the simple command, or add/update the env_list if there is one.
@@ -106,7 +106,7 @@ int	rh_export(char *args[], t_env **env_list)
 
 	if (!args[1])
 	{
-		print_envlist(*env_list);
+		print_envlist_sorted(*env_list);
 		return (EXIT_SUCCESS);
 	}
 	i = 1;

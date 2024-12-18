@@ -87,7 +87,7 @@
 - parser: takes TK_BG as args
 - comm tab: if "&" by the end of args, set is_bg to 1.
 - maybe reem pulls from h-echo to r-parser before working because there are already a couple of changes on parser and lexer.
-- input for streamlining & norms: how to print errors? fprintfs (e.g. syntax_error_at) or perrors (malloc_perex)? 
+- input for streamlining & norms: how to print errors? fprintfs (e.g. syntax_error_at) or perrors (malloc_perex)?
 - early implementation of env.
 - overhauled echo to use write instead of printf.
 - trying exit status &$?
@@ -96,8 +96,8 @@
 - Extend `echo` to manage quotes
 - Not sure how to consolidate command table from 2 different branches.
 	- Maybe take the more sophisticated one?
-- exit: 
-	- exit bb 35: 
+- exit:
+	- exit bb 35:
 		- bash: angry with numeric argument & then exit
 		- minishell: too many args & exit
 	- the rest seems okay
@@ -109,7 +109,7 @@
 - implement `ft_fprintf` separately in src/utils
 - make new branch to start export & unset: h-export_unset
 - unset: ???
-- export: 
+- export:
 	- has list/table of system envvar
 	- still has to work it though
 
@@ -120,10 +120,31 @@
 	- added option -g to print the envp. The default prints the env_list.
 - tried to make it consistent, perror for failed system calls, custom errors with ft_fprintf.
 - unset: seems working.
-- A new branch h-fork to experiment with forking. Deletes h-echo & h-env_exit from the remote to avoid a mess. 
+- A new branch h-fork to experiment with forking. Deletes h-echo & h-env_exit from the remote to avoid a mess.
 
 ### 12.12.2024
 - The forking and execve seems working, but the generated fucntion seems very messy.
-- Next: 
+- Next:
 	- seems like a good idea to pause and review, then shorten the ones with too many lines. It's already quite a lot at this point.
 	- or just make efforts to valgrind stuffs up.
+
+### 16.12.2024
+- Consolidation Reem & Howard: review & next agenda
+
+### 17.12.2024
+- Revamp main in minishell.c & struct.h.
+	- Have a t_alldata struct that contains all other structs to make the code looks cleaner.
+	- all functionalities seems preserved.
+- Changes in rh_env, remove quotes in printing.
+- Got some idea to implement autocompletion, but only for path and directories, not for non-builtin commands.
+	- Scratch this, autocompletion for path and dirs is somehow already baked-in inside readline.
+	- nonbuilt-in commands require forbidden funct (rl_attempted_completion_function, rl_completion_matches()).
+- history now dont save empty lines
+
+### 18.12.2024
+- make `export` prints out sorted env.
+- free `env_list` in main.
+- separate `find_path` in exec.c to a couple of smaller functions.
+- separate `exec_prog` in exec.c to a couple of smaller functions.
+- shorten `exec_builtin` in exec.c, transfer lines to `rh_echo` in echo.c.
+- echo now deals with edge case `echo -nnnn -n -n teststr`. 

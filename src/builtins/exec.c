@@ -32,29 +32,14 @@ int	is_builtin(char *cmd)
  * 			env_list and envp for functions that required them (e.g. export).
  * 		Returns an exit status.
  */
-int exec_builtin(char *args[], t_env **env_list, char *envp[])
+int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 {
-	int	opt;
-	int	i;
 	int	exit_stat;
 
-	exit_stat = -1;
 	if (ft_strncmp(args[0], "echo", 4) == 0)
-	{
-		opt = 0;
-		i = 1;
-		if (args[1] && ft_strncmp(args[1], "-n", 2) == 0)
-		{
-			opt = 1;
-			i++;
-		}
-		exit_stat = rh_echo(&args[i], opt);
-	}
+		exit_stat = rh_echo(args);
 	else if (ft_strncmp(args[0], "exit", 4) == 0)
-	{
-		printf("exit\n");
 		exit_stat = rh_exit(args);
-	}
 	else if (ft_strncmp(args[0], "env", 3) == 0)
 		exit_stat = rh_env(args, envp, env_list);
 	else if (ft_strncmp(args[0], "export", 6) == 0)
@@ -96,99 +81,168 @@ int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-//Still wip, just experimenting
-/**Looks for command in the $PATH in env_list. Uses access to check whether the calling process can access the file pathname*/
-char	*find_path(char *cmd, t_env *env_list)
+/**This function basically initializes (malloc) full_path.
+ * 		Takes the env_list, and the length of the path
+ * 		Returns malloc'ed full_path.
+ */
+char	*init_fullpath(t_env *env_list, size_t *path_len)
 {
+	t_env	*node;
 	char	*path;
 	char	*full_path;
+
+	node = find_envvar(env_list, "PATH");
+	if (!node || !node->val)
+		return (NULL);
+	path = node->val;
+	*path_len = ft_strlen(path);
+	full_path = malloc_perex(*path_len, "Malloc error on full_path");
+	if (!full_path)
+		return (NULL);
+	return (full_path);
+}
+
+/**This function builds (puts together) the dirs leading to the command
+ * 		Takes the full_path, the dir, the cmd, and the length of the path.
+ * 		Returns the directories leading to the command.
+ */
+char	*build_fullpath(char *full_path, char *dir, char *cmd, size_t path_len)
+{
+	size_t	dir_len;
 	size_t	cmd_len;
+
+	dir_len = ft_strlen(dir);
+	cmd_len = ft_strlen(cmd);
+	if (dir_len + cmd_len + 2 > path_len)
+		return (NULL);
+	ft_strlcpy(full_path, dir, path_len);
+	if (full_path[dir_len - 1] != '/')
+	{
+		full_path[dir_len] = '/';
+		ft_strlcpy(full_path + dir_len + 1, cmd, path_len - dir_len - 1);
+	}
+	else
+		ft_strlcpy(full_path + dir_len, cmd, path_len - dir_len);
+	return (full_path);
+}
+
+/**This function iterates over the directoriess in PATH (separated by :)and
+ * tries to find the command in each of them (by means of `build_fullpath`
+ * and then verification by `access`). If the command is found, it returns the
+ * full path to the command.
+ * 		Takes PATH, the command, the full_path and the length of the path.
+ * 		Returns the full path to the command if it is found, otherwise NULL.
+ */
+char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len)
+{
 	char	*start;
 	char	*end;
-	size_t	dir_len;
-	size_t	path_len;
+	char	*result;
 
-	while (env_list)
-	{
-		if (ft_strncmp(env_list->key, "PATH", 4) == 0)
-		{
-			path = env_list->val;
-			break ;
-		}
-		env_list = env_list->next;
-	}
-	if (!path)
-		return (NULL);
-	cmd_len = ft_strlen(cmd);
-	path_len = ft_strlen(env_list->val);
-	full_path = malloc_perex(path_len, "Malloc error on full_path");
 	start = path;
-	end = NULL;
 	while ((end = ft_strchr(start, ':')) || (*start != '\0'))
 	{
 		if (end)
 			*end = '\0';
-		dir_len = ft_strlen(start);
-		if (dir_len + cmd_len + 2 > path_len)
-		{
-			free(full_path);
-			return (NULL);
-		}
-		ft_strlcpy(full_path, start, path_len);
-		if (full_path[dir_len - 1] != '/')
-		{
-			full_path[dir_len] = '/';
-			ft_strlcpy(full_path + dir_len + 1, cmd, path_len - dir_len - 1);
-		}
-		else
-			ft_strlcpy(full_path + dir_len, cmd, path_len - dir_len);
-		if (access(full_path, X_OK) == 0)
+		result = build_fullpath(full_path, start, cmd, path_len);
+		if (result && access(full_path, X_OK) == 0)
 		{
 			if (end)
 				*end = ':';
 			return (full_path);
 		}
+		if (end)
+			*end = ':';
 		if (!end)
-			break;
+			break ;
 		start = end + 1;
 	}
-	free(full_path);
 	return (NULL);
 }
 
-//Still wip, just experimenting
-int exec_prog(char **args, t_env *env_list, char *envp[])
+/**This function looks now a bit weird because it is now forced to be divided
+ * into several parts to meet the norm reqs, but somehow ended up a bit more
+ * digestible. First, the initialization of full_path by malloc, then find
+ * PATH in env_list via find_envvar and store it in path. Then `process_dirs`
+ * "builds" the complete path of the cmd.
+ * 		Takes a cmd (e.g. ls, or cat) and the env_list that contains PATH
+ * 		Returns the complete path to the command (e.g. /dir/dir/cmd)
+ */
+char	*find_path(char *cmd, t_env *env_list)
 {
-	pid_t	pid;
-	int		status;
+	char	*path;
+	char	*full_path;
+	size_t	path_len;
+
+	full_path = init_fullpath(env_list, &path_len);
+	if (!full_path)
+		return (NULL);
+	path = find_envvar(env_list, "PATH")->val;
+	full_path = process_dirs(path, cmd, full_path, path_len);
+	if (!full_path)
+		free(full_path);
+	return (full_path);
+}
+
+/**This func is executed by the child process. `cmd_path` is the complete path
+ * to  a command by `find_path`. The execution of the command by execve.
+ * 		Takes the command (args[0]), other args, the env_list and the envp.
+ * 		Returns exit status of the executed command.
+ */
+int	exec_chprocess(char **args, t_env *env_list, char *envp[])
+{
 	char	*cmd_path;
 
-	pid = fork();
-	if (pid < 0)
+	cmd_path = find_path(args[0], env_list);
+	if (!cmd_path)
+	{
+		ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);
+		exit(127);
+	}
+	execve(cmd_path, args, envp);
+	perror("Execve fails");
+	free(cmd_path);
+	exit(EXIT_FAILURE);
+}
+
+/**This function is executed by the parent process. It makes the parent waits
+ * until the child finished executing and takes the exit status of the child.
+ * 		Takes the pid of the child process.
+ * 		Returns the exit status of the child process.
+ */
+int	wait_chprocess(pid_t p_id)
+{
+	int	status;
+
+	waitpid(p_id, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else
+		return (1);
+}
+
+/**Similar to `find_path`, this func is separated into a couple other funcs.
+ * This func is called for non-builtins. It forks a child process that inherits
+ * everything from the parent including this function. If the child process
+ * executes this function, it will evaluate p_id == 0 and this func will go to
+ * exec_chprocess. Whereas the parent process (p_id != 0) will wait for the
+ * child process to finish (via the func wait_chprocess).
+ * 		Takes the simple command row, env_list and envp.
+ * 		Returns the exit status of the executed command via waitpid.
+ */
+int	exec_prog(char **args, t_env *env_list, char *envp[])
+{
+	pid_t	p_id;
+
+	p_id = fork();
+	if (p_id < 0)
 	{
 		perror("Forking error");
 		return (EXIT_FAILURE);
 	}
-	if (pid == 0)
-	{
-		cmd_path = find_path(args[0], env_list);
-		if (!cmd_path)
-		{
-			ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);
-			exit (127);
-		}
-		execve(cmd_path, args, envp);
-		//if execve succeeds, the following will **not** be executed
-		perror("Execve fails");
-		free(cmd_path);
-		exit(EXIT_FAILURE);
-	}
+	if (p_id == 0)
+		exec_chprocess(args, env_list, envp);
 	else
-	{
-		waitpid(pid, &status, 0); // Wait for the child to finish
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status)); // Return the child's exit status
-		else
-			return (1); // Return a generic error if the child didn't exit normally
-	}
+		return (wait_chprocess(p_id));
+	return (EXIT_FAILURE);
 }
