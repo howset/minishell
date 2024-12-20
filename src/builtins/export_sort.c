@@ -44,7 +44,7 @@ void	sort_envlist(t_env **env_list)
 }
 
 //Print the sorted environment list
-void	print_envlist_sorted(t_env *env_list)
+void	print_sortedenvlist(t_env *env_list)
 {
 	t_env	*current;
 
