@@ -69,24 +69,6 @@ t_env	*find_envvar(t_env *env_list, char *key)
 	return (NULL);
 }
 
-//now obsolete, replaced by print_envlist_sorted in export_sort.c
-/**This function printfs env_list by iterating it. Some key may not have val,
- * hence the if-else.
- * 		Takes the env_list.
- * 		Returns nothing, it's a void function that prints.
- */
-/* void	print_envlist(t_env *env_list)
-{
-	while (env_list)
-	{
-		if (env_list->val)
-			printf("declare -x %s=\"%s\"\n", env_list->key, env_list->val);
-		else
-			printf("declare -x %s=\"\"\n", env_list->key);
-		env_list = env_list->next;
-	}
-} */
-
 /**This is the implementation of export. It either prints env_list when no args
  * are given in the simple command, or add/update the env_list if there is one.
  * When that happens, the func loops over the args and finds the eq sign. The
@@ -107,7 +89,7 @@ int	rh_export(char *args[], t_env **env_list)
 
 	if (!args[1])
 	{
-		print_envlist_sorted(*env_list);
+		print_sortedenvlist(*env_list);
 		return (EXIT_SUCCESS);
 	}
 	i = 1;
