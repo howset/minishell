@@ -1,6 +1,6 @@
 #include "./builtins.h"
 
-int rh_echo(char *args[])
+int	rh_echo(char *args[])
 {
 	int	i;
 	int	opt;
