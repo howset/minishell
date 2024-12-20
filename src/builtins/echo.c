@@ -1,49 +1,37 @@
 #include "./builtins.h"
 
-/**This function deals with quotes. First, check which quote (single/double).
- * Then if quote is double, then \t or \n will be interpreted as such. -->
- * this is wrong!! must be fixed!!!!
- * 		Takes a word.
- * 		Returns success.
-*/
-static int	print_quotedstr(char *arg)
+int	rh_echo(char *args[])
 {
-	int		i;
-	char	quote;
+	int	i;
+	int	opt;
 
-	i = 0;
-	if (arg[i] == '"' || arg[i] == '\'')
+	opt = 0;
+	i = 1;
+	while (args[i] && check_n(args[i]))
 	{
-		quote = arg[i];
+		opt = 1;
 		i++;
 	}
-	while (arg[i])
+	while (args[i])
 	{
-		if (arg[i] == quote)
+		if (i > 1)
 		{
-			i++;
-			continue ;
+			if (write(STDOUT_FILENO, " ", 1) == -1)
+			{
+				perror("Echo: write error");
+				return (EXIT_FAILURE);
+			}
 		}
-		if (quote == '"' && arg[i] == '\\')
+		//if (print_quotedstr(args[i]) != EXIT_SUCCESS)
+		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
 		{
-			i++;
-			if (!arg[i])
-				break ;
-			if (arg[i] == 'n')
-				write(STDOUT_FILENO, "\n", 1);
-			else if (arg[i] == 't')
-				write(STDOUT_FILENO, "\t", 1);
-			else if (arg[i] == '\\')
-				write(STDOUT_FILENO, "\\", 1);
-			else if (arg[i] == '"')
-				write(STDOUT_FILENO, "\"", 1);
-			else if (arg[i] == '\'')
-				write(STDOUT_FILENO, "'", 1);
+			perror("Echo: write error");
+			return (EXIT_FAILURE);
 		}
-		else
-			write(STDOUT_FILENO, &arg[i], 1);
 		i++;
 	}
+	if (opt == 0)
+		write(STDOUT_FILENO, "\n", 1);
 	return (EXIT_SUCCESS);
 }
 
@@ -62,40 +50,3 @@ int	check_n(char *arg)
 	}
 	return (1);
 }
-
-int	rh_echo(char *args[])
-{
-	int	i;
-	int	opt;
-
-	opt = 0;
-	i = 1;
-	while (args[i] && check_n(args[i]))
-	{
-		opt = 1;
-		i++;
-	}
-	while (args[i])
-	{
-		if (i > 2)
-		{
-			if (write(STDOUT_FILENO, " ", 1) == -1)
-			{
-				perror("Echo: write error");
-				return (EXIT_FAILURE);
-			}
-		}
-		if (print_quotedstr(args[i]) != EXIT_SUCCESS)
-		{
-			perror("Echo: write error");
-			return (EXIT_FAILURE);
-		}
-		i++;
-	}
-	if (opt == 0)
-		write(STDOUT_FILENO, "\n", 1);
-	else
-		write(STDOUT_FILENO, "\0", 0);
-	return (EXIT_SUCCESS);
-}
-
