@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/19 16:22:25 by hsetya           ###   ########.fr       */
+/*   Updated: 2024/12/20 14:07:29 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ft_strncmp(all_data->input, "$?", 2) == 0)
 			printf("%d\n", all_data->exit_stat);
 		all_data->tokens = lexer(all_data->input);
-		print_tkn(all_data->tokens);
 		all_data->tree = parse(all_data->tokens);
 		all_data->table = ast_to_commtab(all_data->tree);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list, envp);
