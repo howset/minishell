@@ -29,7 +29,8 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/parser_utils.c \
 						./src/parser/ast.c \
-						./src/parser/comm_table.c
+						./src/parser/comm_table.c \
+						./src/parser/comm_table_utils.c \
 
 SRC-BUILTINS		= 	./src/builtins/exec.c \
 						./src/builtins/echo.c \

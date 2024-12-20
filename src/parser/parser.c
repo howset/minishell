@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/20 18:35:36 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./parser.h"
 
 t_ast	*parse_command(t_token **current)
@@ -9,10 +21,10 @@ t_ast	*parse_command(t_token **current)
 		return (NULL);
 	// Collect arguments until we hit an operator or EOF
 //	while (*current && ((*current)->type == TKN_WORD)
-	while (*current && ((*current)->type == TKN_WORD || 
-						(*current)->type == TKN_QUO_SIN ||
-						(*current)->type == TKN_QUO_DOU ||
-						(*current)->type == TKN_BG))
+	while (*current && ((*current)->type == TKN_WORD
+			|| (*current)->type == TKN_QUO_SIN
+			|| (*current)->type == TKN_QUO_DOU
+			|| (*current)->type == TKN_BG))
 	{
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
@@ -23,6 +35,7 @@ t_ast	*parse_command(t_token **current)
 	}
 	return (node);
 }
+
 t_ast	*parse_factor(t_token **current)
 {
 	t_ast	*node;
@@ -33,8 +46,10 @@ t_ast	*parse_factor(t_token **current)
 		node = parse_expression(current);
 		if ((*current)->type != TKN_PAREN_CL)
 		{
-			syntax_error_at((*current) ? (*current)->position : -1,
-				"Unmatched parenthesis");
+			if (*current != NULL)
+				syntax_error_at((*current)->position, "Unmatched parenthesis");
+			else
+				syntax_error_at(-1, "Unmatched parenthesis");
 			return (NULL);
 		}
 		(*current) = (*current)->next; // Skip ')'
@@ -50,6 +65,7 @@ t_ast	*parse_factor(t_token **current)
 	}
 	return (node);
 }
+
 t_ast	*parse_term(t_token **current)
 {
 	t_ast	*node;
@@ -66,8 +82,11 @@ t_ast	*parse_term(t_token **current)
 		(*current) = (*current)->next;
 		if ((*current)->type != TKN_WORD)
 		{
-			syntax_error_at((*current) ? (*current)->position : -1,
-				"Expected a filename after redirection");
+			if (*current)
+				syntax_error_at((*current)->position,
+					"Expected a filename after redirection");
+			else
+				syntax_error_at(-1, "Expected a filename after redirection");
 			return (NULL);
 		}
 		redir_node->filename = ft_strdup((*current)->value);
@@ -77,6 +96,7 @@ t_ast	*parse_term(t_token **current)
 	}
 	return (node);
 }
+
 t_ast	*parse_pipe(t_token **current)
 {
 	t_ast	*node;
@@ -93,6 +113,7 @@ t_ast	*parse_pipe(t_token **current)
 	}
 	return (node);
 }
+
 t_ast	*parse_expression(t_token **current)
 {
 	t_ast		*node;
@@ -109,21 +130,31 @@ t_ast	*parse_expression(t_token **current)
 				"Unexpected logical operator without a preceding command");
 			return (NULL);
 		}
-		type = (*current)->type == TKN_AND ? NODE_AND : (*current)->type == TKN_OR ? NODE_OR : NODE_SEQUENCE; //must change notation?
+		if ((*current)->type == TKN_AND)
+			type = NODE_AND;
+		else if ((*current)->type == TKN_OR)
+			type = NODE_OR;
+		else
+			type = NODE_SEQUENCE;
 		op_node = create_ast_node(type);
 		(*current) = (*current)->next; // Skip '&&', '||', or ';'
 		op_node->left = node;
 		op_node->right = parse_pipe(current);
 		if (op_node->right == NULL)
 		{
-			syntax_error_at((*current) ? (*current)->position : -1,
-				"Expected a command after logical operator");
+			if (*current)
+				syntax_error_at((*current)->position,
+					"Expected a command after logical operator");
+			else
+				syntax_error_at(-1,
+					"Expected a command after logical operator");
 			return (NULL);
 		}
 		node = op_node;
 	}
 	return (node);
 }
+
 t_ast	*parse(t_token *tokens)
 {
 	t_token	*current;

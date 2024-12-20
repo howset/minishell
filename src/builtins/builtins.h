@@ -11,7 +11,7 @@ char	*find_path(char *cmd, t_env *env_list);
 int		exec_prog(char **args, t_env *env_list, char *envp[]);
 
 // echo.c
-int		rh_echo(char *args[], int opt);
+int		rh_echo(char *args[]);
 
 // env.c
 int		rh_env(char *args[], char *envp[], t_env **env_list);
