@@ -43,6 +43,7 @@ void	sort_envlist(t_env **env_list)
 	}
 }
 
+
 //print the sorted environment list
 void	print_sortedenvlist(t_env *env_list)
 {
