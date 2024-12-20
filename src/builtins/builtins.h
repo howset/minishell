@@ -6,6 +6,7 @@
 // echo.c
 int		rh_echo(char *args[]);
 int		check_n(char *arg);
+int		writing(char *str);
 
 // env.c
 int		rh_env(char *args[], char *envp[], t_env **env_list);

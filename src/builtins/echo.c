@@ -17,29 +17,13 @@ int rh_echo(char *args[])
 	while (args[i])
 	{
 		if (!first_arg)
-		{
-			if (write(STDOUT_FILENO, " ", 1) == -1)
-			{
-				perror("echo: write error");
-				return (EXIT_FAILURE);
-			}
-		}
-		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
-		{
-			perror("echo: write error");
-			return (EXIT_FAILURE);
-		}
+			writing(" ");
+		writing(args[i]);
 		first_arg = 0;
 		i++;
 	}
 	if (!opt)
-	{
-		if (write(STDOUT_FILENO, "\n", 1) == -1)
-		{
-			perror("echo: write error");
-			return (EXIT_FAILURE);
-		}
-	}
+		return(writing("\n"));
 	return (EXIT_SUCCESS);
 }
 
@@ -57,4 +41,13 @@ int	check_n(char *arg)
 		i++;
 	}
 	return (1);
+}
+int	writing(char *str)
+{
+	if (write(STDOUT_FILENO, str, ft_strlen(str)) == -1)
+	{
+		perror("echo: write error");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
