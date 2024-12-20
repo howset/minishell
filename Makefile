@@ -18,6 +18,7 @@ UTILS 				= 	./src/utils/malloc_perex.c\
 ## Sources & header
 SRC-MS				= 	./src/minishell.c
 
+
 SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
 						./src/lexer/operator.c \
@@ -84,7 +85,6 @@ test_vallog:			$(NAME-LIBFT) $(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Pattern rule
-
 %.o: %.c
 		@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
