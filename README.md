@@ -41,10 +41,7 @@ sudo apt-get install pkg-config
 - 26.11.2024 - stable & merged to main.
 
 #### 🌿 Branch: h-parse
-- 3.12.2024 - add `comm_table.c` under src/parser/
-	- Maybe unnecessary, but works.
-- Pull from main the stable ast parser.
-- Then merge to main the command table parser.
+- 20.12.2024 -- delete the remote, obsolete.
 
 #### 🌿 Branch: r-parser
 - 1.12.2024 - parser done!
