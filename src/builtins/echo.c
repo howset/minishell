@@ -1,9 +1,10 @@
 #include "./builtins.h"
 
-int	rh_echo(char *args[])
+int rh_echo(char *args[])
 {
-	int	i;
-	int	opt;
+	int i;
+	int opt;
+	int first_arg;
 
 	opt = 0;
 	i = 1;
@@ -12,25 +13,33 @@ int	rh_echo(char *args[])
 		opt = 1;
 		i++;
 	}
+	first_arg = 1;
 	while (args[i])
 	{
-		if (i > 1)
+		if (!first_arg)
 		{
 			if (write(STDOUT_FILENO, " ", 1) == -1)
 			{
-				perror("Echo: write error");
+				perror("echo: write error");
 				return (EXIT_FAILURE);
 			}
 		}
 		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
 		{
-			perror("Echo: write error");
+			perror("echo: write error");
 			return (EXIT_FAILURE);
 		}
+		first_arg = 0;
 		i++;
 	}
-	if (opt == 0)
-		write(STDOUT_FILENO, "\n", 1);
+	if (!opt)
+	{
+		if (write(STDOUT_FILENO, "\n", 1) == -1)
+		{
+			perror("echo: write error");
+			return (EXIT_FAILURE);
+		}
+	}
 	return (EXIT_SUCCESS);
 }
 

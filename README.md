@@ -57,7 +57,7 @@ sudo apt-get install pkg-config
 - 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
 
 #### 🌿 Branch: h-export_unset
-- 20.12.2024 delete the remote, already contained in h_fork
+- 20.12.2024 -- delete the remote, already contained in h_fork
 
 #### 🌿 Branch: h-fork
 - 11.12.2024 preliminary experiment with forks and executing non built-in functions.
