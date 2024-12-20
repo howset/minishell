@@ -69,6 +69,7 @@ t_env	*find_envvar(t_env *env_list, char *key)
 	return (NULL);
 }
 
+//now obsolete, replaced by print_envlist_sorted in export_sort.c
 /**This function printfs env_list by iterating it. Some key may not have val,
  * hence the if-else.
  * 		Takes the env_list.

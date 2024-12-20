@@ -31,8 +31,11 @@ SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/ast.c \
 						./src/parser/comm_table.c
 
-SRC-BUILTINS		= 	./src/builtins/exec.c \
-						./src/builtins/echo.c \
+SRC-EXEC			= 	./src/exec/exec.c \
+						./src/exec/exec_child.c \
+						./src/exec/exec_pathfinding.c
+
+SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/env.c \
 						./src/builtins/exit.c \
 						./src/builtins/export.c \
@@ -41,7 +44,7 @@ SRC-BUILTINS		= 	./src/builtins/exec.c \
 
 
 HEADER				= ./src/
-ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-BUILTINS) $(UTILS)
+ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(UTILS)
 OBJS				= $(ALL_SRC:.c=.o)
 
 ## Text colors

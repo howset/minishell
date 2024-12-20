@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/03 20:06:54 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:45:51 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "./structs.h"
 # include "./lexer/lexer.h"
 # include "./parser/parser.h"
+# include "./exec/exec.h"
 # include "./builtins/builtins.h"
 # include "./utils/utils.h"
 

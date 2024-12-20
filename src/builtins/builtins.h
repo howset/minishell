@@ -1,19 +1,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "./minishell.h"
-
-// exec.c
-int		is_builtin(char *cmd);
-int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
-int		exec_commtab(t_commtab *table, t_env **env_list, char *envp[]);
-char	*init_fullpath(t_env *env_list, size_t *path_len);
-char	*build_fullpath(char *full_path, char *dir, char *cmd, size_t path_len);
-char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len);
-char	*find_path(char *cmd, t_env *env_list);
-int		exec_chprocess(char **args, t_env *env_list, char *envp[]);
-int		wait_chprocess(pid_t p_id);
-int		exec_prog(char **args, t_env *env_list, char *envp[]);
+# include "../minishell.h"
 
 // echo.c
 int		rh_echo(char *args[]);
@@ -30,7 +18,6 @@ int		rh_exit(char *args[]);
 void	add_envvar(t_env **env_list, char *key, char *val);
 t_env	*create_envvar(char *key, char *val);
 t_env	*find_envvar(t_env *env_list, char *key);
-//void	print_envlist(t_env *env_list);
 int		rh_export(char *args[], t_env **env_list);
 
 // export_sort.c
@@ -39,6 +26,7 @@ void	sort_envlist(t_env **env_list);
 void	print_envlist_sorted(t_env *env_list);
 
 // unset.c
+int		remove_envvar(char *key, t_env **env_list);
 int		rh_unset(char *args[], t_env **env_list);
 
 #endif

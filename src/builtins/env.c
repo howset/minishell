@@ -4,7 +4,6 @@
  * prints row by row. When no option is given, then prints the variables in
  * **this** minishell, when `-g` is given, then prints the global environ
  * variables.
- *
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
  */
@@ -39,7 +38,7 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 	return (EXIT_SUCCESS);
 }
 
-//this can be confusing, but this aims to free the mallocs from create_envvar
+//this aims to free the mallocs from create_envvar
 void free_envlist(t_env *env_list)
 {
 	t_env *tmp;

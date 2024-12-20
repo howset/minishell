@@ -21,27 +21,15 @@ sudo apt-get install pkg-config
 - Parsing:
 - Exec:
 	- Add builtins
-		- echo - Done, minor probs with -n.
+		- echo - Done.
 		- cd
 		- pwd
-		- export - Done, except maybe sorting out the prints.
+		- export - Done.
 		- unset - Done.
 		- env - Done.
 		- exit - Done, but no frees.
-	- Exec non-builtins
-		- Read system calls: dup/dup2
-		- Read system calls: fork
-		- Read system calls: waitpid
-		- Read system calls: execve
+	- Exec non-builtins - Done (maybe)
 - Free:
-	- AST: done in reem's branch
-	- Comm tab:
-		- howard's version isnt yet done
-		- reems's version is complete
-			- free_redirection
-			- free_command
-			- free_command_table
-	- env_list
 - Now have `ft_realloc` in libft.
 - Now have `ft_fprintf` in utils to circumvent fprintf.
 
@@ -65,32 +53,13 @@ sudo apt-get install pkg-config
 - Merge the stable ast parser to main.
 
 #### 🌿 Branch: h-echo
-- 3.12.2024 - start with echo
-	- How to deal with exit status?
-	- How to remove trailing space? -> fixed
-- Pull from main the stable ast and comm table parser
-- Still have to polish exec.c
-- 10.12.2024
-	- echo seems ok, but not closing/pushing. Wait for confirmation.
 - 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
 
 #### 🌿 Branch: h-env_exit
-- 10.12.2024
-	- env & exit seem fine.
 - 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
 
 #### 🌿 Branch: h-export_unset
-- 10.12.2024
-	- unset postponed.
-	- export can load a list and populated by the envvar
-		- the list is initialized in main (has to be freed!)
-- 11.12.2024
-	- export seems working
-		- should print alphabetically?
-	- env: fixed problem where LS_COLORS cant print properly
-		- has options to print which environmental variables
-	- unset seems working
-	- just remembered, exit probably has to free stuffs up.
+- 20.12.2024 delete the remote, already contained in h_fork
 
 #### 🌿 Branch: h-fork
 - 11.12.2024 preliminary experiment with forks and executing non built-in functions.
@@ -165,6 +134,8 @@ Contains redundant content
 ![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
 ![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
 ![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
+![Parsing15](./slides/Ms_slide15.svg "One struct to rule them all ")
+![Parsing16](./slides/Ms_slide16.svg "Modules")
 
 ### Allowed Funcs
 - ugly table removed.
