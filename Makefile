@@ -12,10 +12,12 @@ AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
 
-UTILS 				= ./src/utils/malloc_perex.c
+UTILS 				= 	./src/utils/malloc_perex.c\
+						./src/utils/ft_fprintf.c
 
 ## Sources & header
-SRC-MS				= ./src/minishell.c
+SRC-MS				= 	./src/minishell.c
+
 
 SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
@@ -30,11 +32,20 @@ SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/ast.c \
 						./src/parser/comm_table.c
 
-SRC-BUILTINS		= 	./src/builtins/exec.c \
-						./src/builtins/echo.c
+SRC-EXEC			= 	./src/exec/exec.c \
+						./src/exec/exec_child.c \
+						./src/exec/exec_pathfinding.c
+
+SRC-BUILTINS		= 	./src/builtins/echo.c \
+						./src/builtins/env.c \
+						./src/builtins/exit.c \
+						./src/builtins/export.c \
+						./src/builtins/export_sort.c \
+						./src/builtins/unset.c
+
 
 HEADER				= ./src/
-ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-BUILTINS) $(UTILS)
+ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(UTILS)
 OBJS				= $(ALL_SRC:.c=.o)
 
 ## Text colors
@@ -74,7 +85,6 @@ test_vallog:			$(NAME-LIBFT) $(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Pattern rule
-
 %.o: %.c
 		@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 

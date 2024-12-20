@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
-/*   Updated: 2024/11/26 21:05:45 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:44:08 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "./lexer.h"
 
 /**This function creates a node for the list. The node is malloc'ed. The value
  * is also malloc'ed because the size changes.
+ * 		Takes a defined type as the parameter
  */
 t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos)
 {
@@ -51,6 +52,8 @@ void	print_tkn(t_token *tokens)
 {
 	t_token	*current;
 
+	printf("\n");
+	printf("Tokens:\n");
 	current = tokens;
 	while (current)
 	{

@@ -5,6 +5,10 @@
 		"history.h": "c",
 		"readline.h": "c",
 		"minishell.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"lexer.h": "c",
+		"ft_printf.h": "c",
+		"structs.h": "c",
+		"parser.h": "c"
 	}
 }
