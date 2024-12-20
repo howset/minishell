@@ -142,7 +142,7 @@
 - history now dont save empty lines
 
 ### 18.12.2024
-- make `export` prints out sorted env.
+- make `export` prints out sorted env. --> now 2 files, export.c and export_sort.c
 - free `env_list` in main.
 - separate `find_path` in exec.c to a couple of smaller functions.
 - separate `exec_prog` in exec.c to a couple of smaller functions.
