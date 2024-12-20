@@ -39,9 +39,9 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 }
 
 //this aims to free the mallocs from create_envvar
-void free_envlist(t_env *env_list)
+void	free_envlist(t_env *env_list)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (env_list)
 	{

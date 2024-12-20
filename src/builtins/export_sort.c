@@ -1,7 +1,7 @@
 #include "./builtins.h"
 
 //Swap keys and values of two t_env nodes
-void swap_envvar(t_env *a, t_env *b)
+void	swap_envvar(t_env *a, t_env *b)
 {
 	char	*temp_key;
 	char	*temp_val;
@@ -15,7 +15,7 @@ void swap_envvar(t_env *a, t_env *b)
 }
 
 //Sort linked list alphabetically (by key) --> bubble sort
-void sort_envlist(t_env **env_list)
+void	sort_envlist(t_env **env_list)
 {
 	t_env	*current;
 	t_env	*next;
@@ -23,7 +23,7 @@ void sort_envlist(t_env **env_list)
 	int		key_len;
 
 	if (!env_list || !*env_list)
-		return;
+		return ;
 	swapped = 1;
 	while (swapped)
 	{
@@ -44,12 +44,12 @@ void sort_envlist(t_env **env_list)
 }
 
 //Print the sorted environment list
-void print_envlist_sorted(t_env *env_list)
+void	print_envlist_sorted(t_env *env_list)
 {
 	t_env	*current;
 
 	if (!env_list)
-		return;
+		return ;
 	sort_envlist(&env_list);
 	current = env_list;
 	while (current)

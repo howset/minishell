@@ -22,7 +22,6 @@ int	rh_echo(char *args[])
 				return (EXIT_FAILURE);
 			}
 		}
-		//if (print_quotedstr(args[i]) != EXIT_SUCCESS)
 		if (write(STDOUT_FILENO, args[i], ft_strlen(args[i])) == -1)
 		{
 			perror("Echo: write error");

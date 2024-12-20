@@ -28,7 +28,8 @@ sudo apt-get install pkg-config
 		- unset - Done.
 		- env - Done.
 		- exit - Done, but no frees.
-	- Exec non-builtins - Done (maybe)
+	- Exec non-builtins
+		- fork, waitpid, execve --> can now use non builtins in `$PATH`
 - Free:
 - Now have `ft_realloc` in libft.
 - Now have `ft_fprintf` in utils to circumvent fprintf.
@@ -64,6 +65,12 @@ sudo apt-get install pkg-config
 #### 🌿 Branch: h-fork
 - 11.12.2024 preliminary experiment with forks and executing non built-in functions.
 - 12.12.2024 can execute ls, which. not sure what else.
+
+#### 🌿 Branch: h-builtins
+- 20.12.2024 new branch
+	- return to prev iteration of echo without handling quotes, but retains the handling of -n.
+	- exec separated to a different module.
+	- to be consolidated with finished parser.
 
 ## Collected materials:
 - https://github.com/DimitriDaSilva/42_minishell

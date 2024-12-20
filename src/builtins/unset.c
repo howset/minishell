@@ -1,14 +1,17 @@
 #include "./builtins.h"
 
 /**Separate the functionality to reduce number of lines
- * 
+ *
  */
-int remove_envvar(char *key, t_env **env_list)
+int	remove_envvar(char *key, t_env **env_list)
 {
-	t_env *prev = NULL;
-	t_env *current = *env_list;
-	int len = ft_strlen(key);
+	t_env	*prev;
+	t_env	*current;
+	int		len;
 
+	prev = NULL;
+	current = *env_list;
+	len = ft_strlen(key);
 	while (current)
 	{
 		if (ft_strncmp(current->key, key, len) == 0)
@@ -34,9 +37,9 @@ int remove_envvar(char *key, t_env **env_list)
  * 		Takes the args from the simple command and env_list.
  * 		Returns the exit status (always 0, except when no args given)
 */
-int rh_unset(char *args[], t_env **env_list)
+int	rh_unset(char *args[], t_env **env_list)
 {
-	int i;
+	int	i;
 
 	if (!args[1])
 	{
