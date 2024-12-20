@@ -150,3 +150,8 @@
 - echo now deals with edge case `echo -nnnn -n -n teststr`.
 - it seems that nobody handles the issue with echo -n something and readline/history.
 - before forget: the handling of quotes in echo is wrong!!! --> fix!!!!
+
+### 20.12.2024
+- reem works parser in h-fork
+- howard make new branch h-builtins
+	- exec as a new module
