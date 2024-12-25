@@ -54,7 +54,7 @@ START_TEST(test_cd_invalid_path)
 }
 END_TEST
 
-Suite	*pwd_suite(void)
+Suite	*builtin_pwd_test(void)
 {
 	Suite	*s;
 	TCase	*tc_core;
