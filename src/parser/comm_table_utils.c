@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 16:48:32 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/20 17:11:59 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/25 15:28:53 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	handle_compound_nodes(t_ast *node, t_commtab *table)
 	}
 	else if (node->type == NODE_OR)
 	{
-		if (traverse_ast(node->left, table) == 1)
+		if (traverse_ast(node->left, table) == 0)
 			traverse_ast(node->right, table);
 	}
 	else if (node->type == NODE_SUBSHELL)
