@@ -1,36 +1,40 @@
 #include <check.h>
 #include <stdlib.h>
 
-// Declare the suite functions from other test files
-Suite	*lexer_grouping_suite(void);
-Suite	*lexer_operator_suite(void);
-Suite	*lexer_quote_suite(void);
-Suite	*lexer_redirection_suite(void);
-Suite	*lexer_word_suite(void);
+// Existing suite declarations
+Suite *lexer_grouping_suite(void);
+Suite *lexer_operator_suite(void);
+Suite *lexer_quote_suite(void);
+Suite *lexer_redirection_suite(void);
+Suite *lexer_word_suite(void);
 
-int	main(void)
+// New parser suite declarations
+Suite *parser_simple_command_suite(void);
+Suite *parser_pipe_suite(void);
+Suite *parser_redirection_suite(void);
+Suite *parser_logical_suite(void);
+
+int main(void)
 {
-	int number_failed;
-	SRunner *sr;
+    int number_failed;
+    SRunner *sr = srunner_create(NULL);
 
-	// Create a new test runner
-	sr = srunner_create(NULL);
+    // Add lexer suites
+    srunner_add_suite(sr, lexer_grouping_suite());
+    srunner_add_suite(sr, lexer_operator_suite());
+    srunner_add_suite(sr, lexer_quote_suite());
+    srunner_add_suite(sr, lexer_redirection_suite());
+    srunner_add_suite(sr, lexer_word_suite());
 
-	// Add suites to the test runner
-	srunner_add_suite(sr, lexer_grouping_suite());
-	srunner_add_suite(sr, lexer_operator_suite());
-	srunner_add_suite(sr, lexer_quote_suite());
-	srunner_add_suite(sr, lexer_redirection_suite());
-	srunner_add_suite(sr, lexer_word_suite());
+    // Add parser suites
+    srunner_add_suite(sr, parser_simple_command_suite());
+    srunner_add_suite(sr, parser_pipe_suite());
+    srunner_add_suite(sr, parser_redirection_suite());
+    srunner_add_suite(sr, parser_logical_suite());
 
-	// If you have more suites, add them here
-	// srunner_add_suite(sr, another_suite());
+    srunner_run_all(sr, CK_NORMAL);
+    number_failed = srunner_ntests_failed(sr);
+    srunner_free(sr);
 
-	// Run all tests
-	srunner_run_all(sr, CK_NORMAL);
-	number_failed = srunner_ntests_failed(sr);
-	srunner_free(sr);
-
-	// Return the number of failed tests as the exit code
-	return ((number_failed == 0) ? 0 : 1);
+    return (number_failed == 0) ? 0 : 1;
 }
