@@ -12,6 +12,7 @@ Suite	*parser_simple_command_suite(void);
 Suite	*parser_pipe_suite(void);
 Suite	*parser_redirection_suite(void);
 Suite	*parser_logical_suite(void);
+Suite	*parser_command_table_suite(void);
 
 // Builtins Suite
 Suite	*builtin_echo_test(void);
@@ -37,6 +38,7 @@ int	main(void)
 	srunner_add_suite(sr, parser_pipe_suite());
 	srunner_add_suite(sr, parser_redirection_suite());
 	srunner_add_suite(sr, parser_logical_suite());
+	srunner_add_suite(sr, parser_command_table_suite());
 	// Add builtins suites
 	srunner_add_suite(sr, builtin_echo_test());
 	srunner_add_suite(sr, builtin_env_test());

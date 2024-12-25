@@ -53,7 +53,8 @@ LEXER_TESTS = ./lexer/lexer_grouping_test.c \
 PARSER_TESTS = ./parser/parser_simple_command_test.c \
                ./parser/parser_pipe_test.c \
                ./parser/parser_redirection_test.c \
-               ./parser/parser_logical_test.c
+               ./parser/parser_logical_test.c \
+               ./parser/parser_command_table_test.c
 
 BUILTINS_TESTS =  ./builtins/builtin_pwd_test.c \
 				  ./builtins/builtin_unset_test.c \
