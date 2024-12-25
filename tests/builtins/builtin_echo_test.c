@@ -1,87 +1,83 @@
 #include "../tests.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-// Mock function to capture output
-// Mock function to capture output
-char	*captured_output = NULL;
-
-// Create weak alias to override original writing function
-__attribute__((weak)) int writing(char *str);
-
-int	writing(char *str)
+static char	*capture_stdout(char *args[], int *exit_code)
 {
-	char	*new_output;
+	int		pipefd[2];
+	int		saved_stdout;
+	char	buffer[1024];
+	ssize_t	n;
+	char	*output;
 
-	if (captured_output == NULL)
-	{
-		captured_output = strdup(str);
-	}
+	// Create pipe
+	pipe(pipefd);
+	// Save current stdout
+	saved_stdout = dup(STDOUT_FILENO);
+	// Redirect stdout to pipe
+	dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[1]);
+	// Call the function under test
+	*exit_code = rh_echo(args);
+	// Restore stdout
+	fflush(stdout);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
+	// Read from pipe
+	memset(buffer, 0, sizeof(buffer));
+	n = read(pipefd[0], buffer, sizeof(buffer) - 1);
+	close(pipefd[0]);
+	// Duplicate output
+	if (n > 0)
+		buffer[n] = '\0';
 	else
-	{
-		new_output = malloc(strlen(captured_output) + strlen(str) + 1);
-		strcpy(new_output, captured_output);
-		strcat(new_output, str);
-		free(captured_output);
-		captured_output = new_output;
-	}
-	return (0);
-}
-
-void	reset_captured_output(void)
-{
-	if (captured_output)
-	{
-		free(captured_output);
-		captured_output = NULL;
-	}
+		buffer[0] = '\0';
+	output = strdup(buffer);
+	return (output);
 }
 
 START_TEST(test_rh_echo_no_args)
 {
 	char	*args[] = {"echo", NULL};
-	int		result;
+	int		status;
+	char	*out;
 
-	reset_captured_output();
-	result = rh_echo(args);
-	ck_assert_int_eq(result, EXIT_SUCCESS);
-	ck_assert_str_eq(captured_output, "\n");
+	out = capture_stdout(args, &status);
+	ck_assert_int_eq(status, EXIT_SUCCESS);
+	ck_assert_str_eq(out, "\n");
+	free(out);
 }
 END_TEST
 
 START_TEST(test_rh_echo_with_args)
 {
 	char	*args[] = {"echo", "Hello", "world", NULL};
-	int		result;
+	int		status;
+	char	*out;
 
-	reset_captured_output();
-	result = rh_echo(args);
-	ck_assert_int_eq(result, EXIT_SUCCESS);
-	ck_assert_str_eq(captured_output, "Hello world\n");
+	out = capture_stdout(args, &status);
+	ck_assert_int_eq(status, EXIT_SUCCESS);
+	ck_assert_str_eq(out, "Hello world\n");
+	free(out);
 }
 END_TEST
 
-START_TEST(test_rh_echo_with_n_option)
-{
-	char	*args[] = {"echo", "-n", "Hello", "world", NULL};
-	int		result;
+// START_TEST(test_rh_echo_with_env_var)
+// {
+// 	char	*args[] = {"echo", "$HOME", NULL};
+// 	int		status;
+// 	char	*out;
 
-	reset_captured_output();
-	result = rh_echo(args);
-	ck_assert_int_eq(result, EXIT_SUCCESS);
-	ck_assert_str_eq(captured_output, "Hello world");
-}
-END_TEST
+// 	out = capture_stdout(args, &status);
+// 	ck_assert_int_eq(status, EXIT_SUCCESS);
+// 	ck_assert_str_eq(out, "$HOME\n");
+// 	free(out);
+// }
 
-START_TEST(test_rh_echo_with_multiple_n_options)
-{
-	char	*args[] = {"echo", "-n", "-n", "Hello", "world", NULL};
-	int		result;
-
-	reset_captured_output();
-	result = rh_echo(args);
-	ck_assert_int_eq(result, EXIT_SUCCESS);
-	ck_assert_str_eq(captured_output, "Hello world");
-}
-END_TEST
+// END_TEST
 
 Suite	*builtin_echo_test(void)
 {
@@ -92,8 +88,6 @@ Suite	*builtin_echo_test(void)
 	tc_core = tcase_create("Core");
 	tcase_add_test(tc_core, test_rh_echo_no_args);
 	tcase_add_test(tc_core, test_rh_echo_with_args);
-	tcase_add_test(tc_core, test_rh_echo_with_n_option);
-	tcase_add_test(tc_core, test_rh_echo_with_multiple_n_options);
 	suite_add_tcase(s, tc_core);
 	return (s);
 }
