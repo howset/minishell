@@ -1,8 +1,12 @@
+
 ### 25.12.2024
 - I merged the parser tests from r-parser to main and deleted the branch.
 - I finished `pwd` and `cd` builtins.
 - Wrote tests for all builtins, except `exit` because it's tricky.
 - Merge h-builtins to main and deleted h-builtins.
+- Added tests for command table.
+	- while doing so, I found a bug in handling `or` in command table. I fixed it
+
 
 ### 26.11.2024
 - fixed lex_word.
