@@ -12,6 +12,8 @@ int		writing(char *str);
 int		rh_env(char *args[], char *envp[], t_env **env_list);
 void	init_envlist(t_env **env_list, char *envp[]);
 void	free_envlist(t_env *env_list);
+t_env	*find_env(t_env *env_list, char *key);
+void	update_env_variable(t_env *env_list, char *key, char *val);
 
 // exit.c
 int		rh_exit(char *args[]);
@@ -30,5 +32,9 @@ void	print_sortedenvlist(t_env *env_list);
 // unset.c
 int		remove_envvar(char *key, t_env **env_list);
 int		rh_unset(char *args[], t_env **env_list);
+
+// pwd.c
+int		rh_pwd(void);
+int		rh_cd(char *path);
 
 #endif

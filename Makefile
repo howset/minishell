@@ -41,7 +41,8 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/exit.c \
 						./src/builtins/export.c \
 						./src/builtins/export_sort.c \
-						./src/builtins/unset.c
+						./src/builtins/unset.c \
+						./src/builtins/pwd.c
 
 
 HEADER				= ./src/

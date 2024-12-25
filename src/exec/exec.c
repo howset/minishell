@@ -4,7 +4,7 @@
  * as one of the built-in functions or not.
  * 		Takes the command (args[0] in the t_simmcom struct) as an argument.
  * 		Returns a true/false (1/0 -bool)
-*/
+ */
 int	is_builtin(char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", 4) == 0)
@@ -45,10 +45,10 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 		exit_stat = rh_export(args, env_list);
 	else if (ft_strncmp(args[0], "unset", 5) == 0)
 		exit_stat = rh_unset(args, env_list);
-	/* else if (ft_strncmp(args[0], "cd", 2) == 0)
-		exit_stat = rh_cd(args, envp, env_list);
+	else if (ft_strncmp(args[0], "cd", 2) == 0)
+		exit_stat = rh_cd(args[1]);
 	else if (ft_strncmp(args[0], "pwd", 3) == 0)
-		exit_stat = rh_pwd(args, envp, env_list); */
+		exit_stat = rh_pwd();
 	else
 		exit_stat = 1;
 	return (exit_stat);
