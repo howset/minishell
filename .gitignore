@@ -108,3 +108,4 @@ test_runner
 
 ## Valgrind
 valgrind-out.txt
+.vscode

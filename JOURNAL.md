@@ -1,3 +1,9 @@
+### 25.12.2024
+- I merged the parser tests from r-parser to main and deleted the branch.
+- I finished `pwd` and `cd` builtins.
+- Wrote tests for all builtins, except `exit` because it's tricky.
+- Merge h-builtins to main and deleted h-builtins.
+
 ### 26.11.2024
 - fixed lex_word.
 - fixed a bug in when starting with a symbol. Like `()` would fail.

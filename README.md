@@ -22,8 +22,8 @@ sudo apt-get install pkg-config
 - Exec:
 	- Add builtins
 		- echo - Done.
-		- cd
-		- pwd
+		- cd- Done.
+		- pwd - Done.
 		- export - Done.
 		- unset - Done.
 		- env - Done.
