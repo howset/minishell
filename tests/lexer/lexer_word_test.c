@@ -1,6 +1,5 @@
-#include "../../src/lexer/lexer.h"
-#include "../../src/minishell.h"
-#include <check.h>
+#include "../tests.h"
+
 
 // Test lex_var function
 START_TEST(test_lex_var)

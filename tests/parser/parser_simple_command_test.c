@@ -1,6 +1,4 @@
-#include "../../src/minishell.h"
-#include "../../src/parser/parser.h"
-#include <check.h>
+#include "../tests.h"
 
 START_TEST(test_parse_echo_command)
 {

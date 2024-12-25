@@ -1,5 +1,4 @@
-#include <check.h>
-#include <stdlib.h>
+#include "./tests.h"
 
 // Existing suite declarations
 Suite	*lexer_grouping_suite(void);
@@ -17,6 +16,7 @@ Suite	*parser_logical_suite(void);
 // Builtins Suite
 Suite	*builtin_pwd_test(void);
 Suite	*builtin_unset_test(void);
+Suite	*builtin_export_test(void);
 
 int	main(void)
 {
@@ -38,6 +38,7 @@ int	main(void)
 	// Add builtins suites
 	srunner_add_suite(sr, builtin_pwd_test());
 	srunner_add_suite(sr, builtin_unset_test());
+	srunner_add_suite(sr, builtin_export_test());
 	// Run all the suites
 	srunner_run_all(sr, CK_NORMAL);
 	number_failed = srunner_ntests_failed(sr);

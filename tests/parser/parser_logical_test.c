@@ -1,6 +1,4 @@
-#include "../../src/parser/parser.h"
-#include "../../src/minishell.h"
-#include <check.h>
+#include "../tests.h"
 
 START_TEST(test_parse_logical_and)
 {

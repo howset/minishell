@@ -56,11 +56,14 @@ PARSER_TESTS = ./parser/parser_simple_command_test.c \
                ./parser/parser_logical_test.c
 
 BUILTINS_TESTS =  ./builtins/builtin_pwd_test.c \
-				  ./builtins/builtin_unset_test.c
+				  ./builtins/builtin_unset_test.c \
+				  ./builtins/builtin_export_test.c \
 
+HELPERS = ./helpers/env.c
+TEST_HEADER = ./tests.h
 ## Test sources
 # Update TEST_SRCS to include parser tests
-TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS) $(BUILTINS_TESTS)
+TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS) $(BUILTINS_TESTS) $(HELPERS)
 TEST_EXEC   = test_runner
 
 ##------------------------------------------------------------------##
