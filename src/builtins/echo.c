@@ -1,10 +1,10 @@
 #include "./builtins.h"
 
-int rh_echo(char *args[])
+int	rh_echo(char *args[])
 {
-	int i;
-	int opt;
-	int first_arg;
+	int	i;
+	int	opt;
+	int	first_arg;
 
 	opt = 0;
 	i = 1;
@@ -23,7 +23,7 @@ int rh_echo(char *args[])
 		i++;
 	}
 	if (!opt)
-		return(writing("\n"));
+		return (writing("\n"));
 	return (EXIT_SUCCESS);
 }
 

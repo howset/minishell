@@ -1,4 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/25 12:10:04 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./parser.h"
+
+/**
+ * consume_token:
+ * --------------
+ * Advances the current token pointer to the next token in the linked list.
+ * If the current token pointer is NULL, it does nothing. This is used to
+ * move forward through the token stream during parsing.
+ */
 
 void	consume_token(t_token **current)
 {
@@ -8,6 +28,14 @@ void	consume_token(t_token **current)
 	}
 }
 
+/**
+ * get_token_type:
+ * ---------------
+ * Returns the type of the current token. If the current token pointer is NULL,
+ * it returns TKN_EOF (end of file). This helps the parser identify the kind
+ * of token it is currently looking at without advancing.
+ */
+
 t_tkntype	get_token_type(t_token **current)
 {
 	if (*current != NULL)
@@ -16,6 +44,14 @@ t_tkntype	get_token_type(t_token **current)
 	}
 	return (TKN_EOF);
 }
+
+/**
+ * parse_error:
+ * ------------
+ * Prints a parse error message to stderr, indicating the token value (if
+ * available) that caused the error. This function assists in debugging and
+ * error handling by pointing out the source of parsing failures.
+ */
 
 void	parse_error(const char *message, t_token *token)
 {
@@ -31,13 +67,47 @@ void	parse_error(const char *message, t_token *token)
 	// clean up, etc.)
 }
 
+/**
+ * syntax_error:
+ * -------------
+ * Prints a syntax error message to stderr. Used when the parser detects that
+ * the structure of the tokens does not conform to the expected grammar, but
+ * no specific token is highlighted.
+ */
+
 void	syntax_error(const char *message)
 {
 	fprintf(stderr, "Syntax error: %s\n", message);
 }
 
-void syntax_error_at(int position, const char *message)
+/**
+ * syntax_error_at:
+ * ----------------
+ * Prints a syntax error message that includes the position in the input
+ * where the error occurred. This is useful for more pinpointed error reporting
+ * and debugging, indicating exactly where parsing went wrong.
+ */
+
+void	syntax_error_at(int position, const char *message)
 {
-    fprintf(stderr, "Syntax error at position %d: %s\n", position, message);
+	fprintf(stderr, "Syntax error at position %d: %s\n", position, message);
 }
 
+void	free_ast(t_ast *ast)
+{
+	if (ast == NULL)
+		return ;
+	if (ast->args)
+	{
+		for (int i = 0; i < ast->args_count; i++)
+		{
+			free(ast->args[i]);
+		}
+		free(ast->args);
+	}
+	if (ast->filename)
+		free(ast->filename);
+	free_ast(ast->left);
+	free_ast(ast->right);
+	free(ast);
+}
