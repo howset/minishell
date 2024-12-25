@@ -58,7 +58,8 @@ PARSER_TESTS = ./parser/parser_simple_command_test.c \
 BUILTINS_TESTS =  ./builtins/builtin_pwd_test.c \
 				  ./builtins/builtin_unset_test.c \
 				  ./builtins/builtin_export_test.c \
-				  ./builtins/builtin_echo_test.c
+				  ./builtins/builtin_echo_test.c \
+				  ./builtins/builtin_env_test.c
 
 HELPERS = ./helpers/env.c
 TEST_HEADER = ./tests.h

@@ -17,7 +17,8 @@ Suite	*parser_logical_suite(void);
 Suite	*builtin_pwd_test(void);
 Suite	*builtin_unset_test(void);
 Suite	*builtin_export_test(void);
-
+Suite	*builtin_echo_test(void);
+Suite	*builtin_env_test(void);
 int	main(void)
 {
 	int		number_failed;
@@ -39,6 +40,9 @@ int	main(void)
 	srunner_add_suite(sr, builtin_pwd_test());
 	srunner_add_suite(sr, builtin_unset_test());
 	srunner_add_suite(sr, builtin_export_test());
+	srunner_add_suite(sr, builtin_echo_test());
+	srunner_add_suite(sr, builtin_env_test());
+
 	// Run all the suites
 	srunner_run_all(sr, CK_NORMAL);
 	number_failed = srunner_ntests_failed(sr);
