@@ -45,9 +45,10 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/unset.c \
 						./src/builtins/pwd.c
 
+SRC-CMDTABLE		= 	./src/command_table/command_table.c
 
 HEADER				= ./src/
-ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(UTILS)
+ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(UTILS)
 OBJS				= $(ALL_SRC:.c=.o)
 
 ## Text colors

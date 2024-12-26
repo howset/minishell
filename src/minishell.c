@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/20 14:07:29 by hsetya           ###   ########.fr       */
+/*   Updated: 2024/12/26 14:24:49 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,47 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[], t_alldata *all_data)
 /**
  * currently the main function is getting confusing.
  */
+void	print_command_table(t_cmdtable *table)
+{
+	t_command *cmd;
+	t_redirection *redir;
+	int i;
+
+	if (!table)
+		return ;
+	printf("\nCommand Table:\n");
+	printf("Total commands: %d\n", table->cmd_count);
+	printf("Total pipes: %d\n", table->pipe_count);
+
+	cmd = table->commands;
+	while (cmd)
+	{
+		printf("\nCommand:\n");
+		printf("Type: %d\n", cmd->type);
+		printf("Arguments: ");
+		i = 0;
+		while (cmd->args && cmd->args[i])
+		{
+			printf("%s ", cmd->args[i]);
+			i++;
+		}
+		printf("\n");
+
+		if (cmd->pipe_read != -1)
+			printf("Pipe read fd: %d\n", cmd->pipe_read);
+		if (cmd->pipe_write != -1)
+			printf("Pipe write fd: %d\n", cmd->pipe_write);
+
+		redir = cmd->redirections;
+		while (redir)
+		{
+			printf("Redirection: type=%d, file=%s\n", redir->type, redir->file);
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
+	printf("\n");
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {

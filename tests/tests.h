@@ -5,6 +5,7 @@
 # include "../src/lexer/lexer.h"
 # include "../src/minishell.h"
 # include "../src/parser/parser.h"
+# include "../src/command_table/command_table.h"
 # include <check.h>
 # include <stdlib.h>
 # include <string.h>

@@ -37,8 +37,9 @@ SRC-BUILTINS		= 	../src/builtins/echo.c \
 						../src/builtins/unset.c \
 						../src/builtins/pwd.c
 
-ALL_SRC				= $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(UTILS)
+SRC-CMDTABLE		= 	../src/command_table/command_table.c
 
+ALL_SRC				= $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(UTILS)
 
 HEADER  = ../src/
 LIBFT   = ../src/lib/libft.a
@@ -62,11 +63,15 @@ BUILTINS_TESTS =  ./builtins/builtin_pwd_test.c \
 				  ./builtins/builtin_echo_test.c \
 				  ./builtins/builtin_env_test.c
 
+CMDTABLE_TESTS = ./command_table/command_table_test.c
+
+
 HELPERS = ./helpers/env.c
 TEST_HEADER = ./tests.h
 ## Test sources
 # Update TEST_SRCS to include parser tests
-TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS) $(BUILTINS_TESTS) $(HELPERS)
+TEST_SRCS   = main_test.c $(LEXER_TESTS) $(PARSER_TESTS) $(BUILTINS_TESTS) $(CMDTABLE_TESTS) $(HELPERS)
+## Test sources
 TEST_EXEC   = test_runner
 
 ##------------------------------------------------------------------##
