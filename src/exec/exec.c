@@ -61,14 +61,14 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  * 		Takes the command table as an argument.
  * 		Returns the exit status of the executed commands.
  */
-int	exec_commtab(t_commtab *table, t_env **env_list, char *envp[])
+int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 {
 	int			i;
-	t_simcomm	*cmd;
+	t_command	*cmd;
 	int			exit_stat;
 
 	i = 0;
-	while (i < table->count)
+	while (i < table->cmd_count)
 	{
 		cmd = &table->commands[i];
 		if (is_builtin(cmd->args[0]))

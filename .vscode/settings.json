@@ -9,6 +9,7 @@
 		"lexer.h": "c",
 		"ft_printf.h": "c",
 		"structs.h": "c",
-		"parser.h": "c"
+		"parser.h": "c",
+		"command_table.h": "c"
 	}
 }

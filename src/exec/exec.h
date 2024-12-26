@@ -2,10 +2,9 @@
 # define EXEC_H
 
 # include "../minishell.h"
-# include <sys/wait.h> //move to minishell.h(?)
 
 // exec.c
-int		exec_commtab(t_commtab *table, t_env **env_list, char *envp[]);
+int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
 int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
 int		exec_prog(char **args, t_env *env_list, char *envp[]);
 int		is_builtin(char *cmd);

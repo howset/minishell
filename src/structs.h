@@ -35,14 +35,14 @@ typedef struct s_token
 
 typedef enum e_nodetype
 {
-	NODE_COMMAND,		// 0
-	NODE_PIPE,			// 1
-	NODE_AND,			// 2
-	NODE_OR,			// 3
-	NODE_REDIRECTION,	// 4
-	NODE_SEQUENCE,		// 5
-	NODE_SUBSHELL,		// 6
-	NODE_INVALID		// 7
+	NODE_COMMAND,     // 0
+	NODE_PIPE,        // 1
+	NODE_AND,         // 2
+	NODE_OR,          // 3
+	NODE_REDIRECTION, // 4
+	NODE_SEQUENCE,    // 5
+	NODE_SUBSHELL,    // 6
+	NODE_INVALID      // 7
 }					t_nodetype;
 
 typedef struct s_ast
@@ -56,36 +56,67 @@ typedef struct s_ast
 	char *filename;             // File for redirection
 }					t_ast;
 
-typedef struct s_simcomm
+/*
+ * Command type enumeration to identify different types of commands
+ * in the command table
+ */
+typedef enum e_cmd_type
 {
-	char 	**args;				// Array of command + args
-	char	*in_redir;			// Input redirs
-	char	*out_redir;			// Output redirs
-	int		is_bg;		// FLag if command runs in background
-}					t_simcomm;	// Struct for *a* simple command
+	CMD_SIMPLE,  // Simple command (e.g., ls -l)
+	CMD_PIPE,    // Command part of a pipeline
+	CMD_SUBSHELL // Command in subshell
+}					t_cmd_type;
 
-typedef struct s_commtab
+/*
+ * Redirection structure to store input/output redirections
+ */
+typedef struct s_redirection
 {
-	t_simcomm *commands;		// Array of simple commands
-	int count;					// Count of simple commands
-}					t_commtab;
+	t_tkntype type;             // Type of redirection
+	char *file;                 // File for redirection
+	struct s_redirection *next; // Next redirection in list
+}					t_redirection;
+
+/*
+ * Command structure to store a single command with its arguments
+ * and redirections
+ */
+typedef struct s_command
+{
+	char **args;                 // Command and its arguments
+	t_redirection *redirections; // List of redirections
+	t_cmd_type type;             // Type of command
+	int pipe_read;               // Read end of pipe (-1 if none)
+	int pipe_write;              // Write end of pipe (-1 if none)
+	struct s_command *next;      // Next command in sequence
+}					t_command;
+
+/*
+ * Command table structure to store all commands to be executed
+ */
+typedef struct s_cmdtable
+{
+	t_command *commands; // List of commands
+	int cmd_count;       // Number of commands
+	int pipe_count;      // Number of pipes
+}					t_cmdtable;
 
 typedef struct s_env
 {
-	char *key;
-	char *val;
-	struct s_env *next;
+	char			*key;
+	char			*val;
+	struct s_env	*next;
 }					t_env;
 
 typedef struct s_alldata
 {
-	char 		*input;
-	t_token 	*tokens;
-	t_ast 		*tree;
-	t_commtab 	*table;
-	int			exit_stat;
-	t_env		*env_head;
-	t_env		**env_list;
+	char			*input;
+	t_token			*tokens;
+	t_ast			*tree;
+	t_cmdtable		*table;
+	int				exit_stat;
+	t_env			*env_head;
+	t_env			**env_list;
 }					t_alldata;
 
 #endif

@@ -21,9 +21,7 @@ SRC-LEXER			= 	../src/lexer/grouping.c \
 
 SRC-PARSER			= 	../src/parser/parser.c \
 						../src/parser/parser_utils.c \
-						../src/parser/ast.c \
-						../src/parser/comm_table.c \
-						../src/parser/comm_table_utils.c
+						../src/parser/ast.c
 
 SRC-EXEC			= 	../src/exec/exec.c \
 						../src/exec/exec_child.c \
@@ -54,8 +52,7 @@ LEXER_TESTS = ./lexer/lexer_grouping_test.c \
 PARSER_TESTS = ./parser/parser_simple_command_test.c \
                ./parser/parser_pipe_test.c \
                ./parser/parser_redirection_test.c \
-               ./parser/parser_logical_test.c \
-               ./parser/parser_command_table_test.c
+               ./parser/parser_logical_test.c
 
 BUILTINS_TESTS =  ./builtins/builtin_pwd_test.c \
 				  ./builtins/builtin_unset_test.c \

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/26 14:24:49 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:43:57 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int argc, char *argv[], char *envp[])
 			printf("%d\n", all_data->exit_stat);
 		all_data->tokens = lexer(all_data->input);
 		all_data->tree = parse(all_data->tokens);
-		all_data->table = ast_to_commtab(all_data->tree);
+		all_data->table = ast_to_command_table(all_data->tree);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list, envp);
 		free_tkn(all_data->tokens);
 		free(all_data->input);
