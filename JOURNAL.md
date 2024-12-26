@@ -1,3 +1,10 @@
+### 26.12.2024
+- Replaced first iteration of command table with command table of `r-command-table` branch
+- Finished first iteration of handling pipes. Tested the code with 3 pipes and it works. EG. `ls -l | grep a | wc -l`
+- Found an issue with our code flow, Pipes doesn't work if it contains a builtin command. EG. `ls -l | echo hello | wc -l` will not work. The reason is that we check if a command is a builtin command and execute it before we check if it's a pipe command. We need to change the order of the checks. We also lack pipes redirections in this case.
+- Next step: Move the builtin check to exec_chprocess function, so it doesn't matter if the command is a builtin or not. We can then check if the command is a pipe command and handle it accordingly. May also comeup with a better name
+- Found a bug in handling doubles quotes, like in grep` "hello world"`. The code doesn't handle it properly. Need to fix it.
+
 
 ### 25.12.2024
 - I merged the parser tests from r-parser to main and deleted the branch.

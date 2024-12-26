@@ -63,9 +63,9 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  */
 int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 {
-	int			i;
 	t_command	*cmd;
 	int			exit_stat;
+	int			i;
 
 	i = 0;
 	while (i < table->cmd_count)
@@ -73,25 +73,23 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 		cmd = &table->commands[i];
 		if (is_builtin(cmd->args[0]))
 			exit_stat = exec_builtin(cmd->args, env_list, envp);
-		else
-			exit_stat = exec_prog(cmd->args, *env_list, envp);
+		else if (cmd->type == CMD_SIMPLE)
+			exit_stat = exec_simple_command(cmd, *env_list, envp);
+		else if (cmd->type == CMD_PIPE)
+		{
+			exit_stat = exec_pipe_command(cmd, *env_list, envp);
+			while (i < table->cmd_count && table->commands[i].type == CMD_PIPE)
+				i++;
+		}
 		i++;
 	}
 	return (exit_stat);
 }
 
-/**Similar to `find_path`, this func is separated into a couple other funcs.
- * This func is called for non-builtins. It forks a child process that inherits
- * everything from the parent including this function. If the child process
- * executes this function, it will evaluate p_id == 0 and this func will go to
- * exec_chprocess. Whereas the parent process (p_id != 0) will wait for the
- * child process to finish (via the func wait_chprocess).
- * 		Takes the simple command row, env_list and envp.
- * 		Returns the exit status of the executed command via waitpid.
- */
-int	exec_prog(char **args, t_env *env_list, char *envp[])
+int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 {
 	pid_t	p_id;
+	int		is_child_process;
 
 	p_id = fork();
 	if (p_id < 0)
@@ -99,9 +97,59 @@ int	exec_prog(char **args, t_env *env_list, char *envp[])
 		perror("Forking error");
 		return (EXIT_FAILURE);
 	}
-	if (p_id == 0)
-		exec_chprocess(args, env_list, envp);
+	printf("p_id: %d\n", p_id);
+	is_child_process = p_id == 0;
+	if (is_child_process)
+		exec_chprocess(cmd->args, env_list, envp);
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
+}
+
+int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
+{
+	int			status;
+	pid_t		p_id;
+	t_command	*current_cmd;
+
+	current_cmd = cmd;
+	if (!cmd->next)
+	{
+		perror("No next command");
+		return (EXIT_FAILURE);
+	}
+	while (current_cmd && current_cmd->type == CMD_PIPE)
+	{
+		p_id = fork();
+		if (p_id < 0)
+		{
+			perror("Forking error");
+			return (EXIT_FAILURE);
+		}
+		if (p_id == 0)
+		{
+			if (current_cmd->pipe_read != -1)
+			{
+				dup2(current_cmd->pipe_read, STDIN_FILENO);
+				close(current_cmd->pipe_read);
+			}
+			if (current_cmd->pipe_write != -1)
+			{
+				dup2(current_cmd->pipe_write, STDOUT_FILENO);
+				close(current_cmd->pipe_write);
+			}
+			exec_chprocess(current_cmd->args, env_list, envp);
+			exit(EXIT_FAILURE);
+		}
+		if (current_cmd->pipe_read != -1)
+			close(current_cmd->pipe_read);
+		if (current_cmd->pipe_write != -1)
+			close(current_cmd->pipe_write);
+		status = wait_chprocess(p_id);
+		// If the child process failed, break the pipeline
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			return (WEXITSTATUS(status));
+		current_cmd = current_cmd->next;
+	}
+	return (status);
 }

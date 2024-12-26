@@ -6,7 +6,9 @@
 // exec.c
 int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
 int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
-int		exec_prog(char **args, t_env *env_list, char *envp[]);
+int		exec_prog(t_command *cmd, t_env *env_list, char *envp[]);
+int		exec_simple_command(t_command *cmd, t_env *env_list, char *envp[]);
+int		exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[]);
 int		is_builtin(char *cmd);
 
 // exec_child
