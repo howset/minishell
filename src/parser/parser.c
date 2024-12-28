@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/20 18:35:36 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:31:43 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,26 @@
 t_ast	*parse_command(t_token **current)
 {
 	t_ast	*node;
+	char	*value;
 
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
 		return (NULL);
 	// Collect arguments until we hit an operator or EOF
-//	while (*current && ((*current)->type == TKN_WORD)
+	//	while (*current && ((*current)->type == TKN_WORD)
 	while (*current && ((*current)->type == TKN_WORD
-			|| (*current)->type == TKN_QUO_SIN
-			|| (*current)->type == TKN_QUO_DOU
-			|| (*current)->type == TKN_BG))
+			|| (*current)->type == TKN_VAR || (*current)->type == TKN_QUO_SIN
+			|| (*current)->type == TKN_QUO_DOU || (*current)->type == TKN_BG))
 	{
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
-		node->args[node->args_count - 1] = ft_strdup((*current)->value);
+		value = ft_strdup((*current)->value);
+		if ((*current)->type == TKN_VAR)
+		{
+			value = "should be replaced here";
+		}
+		node->args[node->args_count - 1] = value;
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}
@@ -155,7 +160,7 @@ t_ast	*parse_expression(t_token **current)
 	return (node);
 }
 
-t_ast	*parse(t_token *tokens)
+t_ast	*parse(t_token *tokens, t_env **env_list)
 {
 	t_token	*current;
 
