@@ -31,13 +31,15 @@ SRC-BUILTINS		= 	../src/builtins/echo.c \
 						../src/builtins/env.c \
 						../src/builtins/exit.c \
 						../src/builtins/export.c \
-						../src/builtins/export_sort.c \
 						../src/builtins/unset.c \
 						../src/builtins/pwd.c
 
 SRC-CMDTABLE		= 	../src/command_table/command_table.c
 
-ALL_SRC				= $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(UTILS)
+SRC-ENVS 			= 	../src/envs/envvar.c \
+						../src/envs/envlist.c
+
+ALL_SRC				= $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(SRC-ENVS) $(UTILS)
 
 HEADER  = ../src/
 LIBFT   = ../src/lib/libft.a

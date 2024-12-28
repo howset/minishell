@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/26 14:43:01 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/28 22:40:15 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "./lexer/lexer.h"
 # include "./parser/parser.h"
 # include "./exec/exec.h"
+# include "./envs/envs.h"
 # include "./builtins/builtins.h"
 # include "./command_table/command_table.h"
 # include "./utils/utils.h"

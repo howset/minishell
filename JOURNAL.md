@@ -1,6 +1,9 @@
 ### 28.12.2024
 - Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.
-- QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later
+- QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later.
+- I need to handle replacments, for example replacing a variable with its value. I believe the best place to do this woiuld be in the parser. We already have a token with type `TKN_VAR` that we can use for this.
+	- To do this, I need to be able to seach for env variables in the parser. The code we use to handle this is in the builtin modul and it's scattered. I need to move this code to a separate module, group it together and make it more modular. I'll then use this module in the parser to handle replacements. It will still used as it is in the builtin module.
+- ✅ moved env variables code to a separate module
 
 ### 26.12.2024
 - Replaced first iteration of command table with command table of `r-command-table` branch
