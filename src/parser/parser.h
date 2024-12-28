@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:23:52 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/26 14:41:48 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 00:18:00 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void		parse_error(const char *message, t_token *token);
 void		syntax_error(const char *message);
 void		syntax_error_at(int position, const char *message);
 // parser.c functions
-t_ast		*parse_command(t_token **current);
-t_ast		*parse_factor(t_token **current);
-t_ast		*parse_term(t_token **current);
-t_ast		*parse_pipe(t_token **current);
-t_ast		*parse_expression(t_token **current);
-t_ast		*parse(t_token *tokens);
+t_ast		*parse_command(t_token **current, t_alldata *all_data);
+t_ast		*parse_factor(t_token **current, t_alldata *all_data);
+t_ast		*parse_term(t_token **current, t_alldata *all_data);
+t_ast		*parse_pipe(t_token **current, t_alldata *all_data);
+t_ast		*parse_expression(t_token **current, t_alldata *all_data);
+t_ast		*parse(t_token *tokens, t_alldata *all_data);
 void		syntax_error(const char *message);
 void		syntax_error_at(int position, const char *message);
 void		free_ast(t_ast *ast);

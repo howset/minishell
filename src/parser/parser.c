@@ -6,16 +6,17 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/28 23:31:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 00:30:31 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./parser.h"
 
-t_ast	*parse_command(t_token **current)
+t_ast	*parse_command(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
 	char	*value;
+	t_env	*env;
 
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
@@ -32,7 +33,13 @@ t_ast	*parse_command(t_token **current)
 		value = ft_strdup((*current)->value);
 		if ((*current)->type == TKN_VAR)
 		{
-			value = "should be replaced here";
+			char *var_name = value + 1; // Skip the '$' character
+			env = find_envvar(*all_data->env_list, var_name);
+			if (env)
+			{
+				free(value);
+				value = ft_strdup(env->val);
+			}
 		}
 		node->args[node->args_count - 1] = value;
 		node->args[node->args_count] = NULL;
@@ -41,14 +48,14 @@ t_ast	*parse_command(t_token **current)
 	return (node);
 }
 
-t_ast	*parse_factor(t_token **current)
+t_ast	*parse_factor(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
 
 	if ((*current)->type == TKN_PAREN_OP)
 	{
 		(*current) = (*current)->next; // Skip '('
-		node = parse_expression(current);
+		node = parse_expression(current, all_data);
 		if ((*current)->type != TKN_PAREN_CL)
 		{
 			if (*current != NULL)
@@ -61,7 +68,7 @@ t_ast	*parse_factor(t_token **current)
 	}
 	else if ((*current)->type == TKN_WORD)
 	{
-		node = parse_command(current);
+		node = parse_command(current, all_data);
 	}
 	else
 	{
@@ -71,12 +78,12 @@ t_ast	*parse_factor(t_token **current)
 	return (node);
 }
 
-t_ast	*parse_term(t_token **current)
+t_ast	*parse_term(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
 	t_ast	*redir_node;
 
-	node = parse_factor(current);
+	node = parse_factor(current, all_data);
 	while (*current && ((*current)->type == TKN_RDIR_IN
 			|| (*current)->type == TKN_RDIR_OUT
 			|| (*current)->type == TKN_APPEND
@@ -102,30 +109,30 @@ t_ast	*parse_term(t_token **current)
 	return (node);
 }
 
-t_ast	*parse_pipe(t_token **current)
+t_ast	*parse_pipe(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
 	t_ast	*pipe_node;
 
-	node = parse_term(current);
+	node = parse_term(current, all_data);
 	while (*current && (*current)->type == TKN_PIPE)
 	{
 		pipe_node = create_ast_node(NODE_PIPE);
 		(*current) = (*current)->next; // Skip '|'
 		pipe_node->left = node;
-		pipe_node->right = parse_term(current);
+		pipe_node->right = parse_term(current, all_data);
 		node = pipe_node;
 	}
 	return (node);
 }
 
-t_ast	*parse_expression(t_token **current)
+t_ast	*parse_expression(t_token **current, t_alldata *all_data)
 {
 	t_ast		*node;
 	t_nodetype	type;
 	t_ast		*op_node;
 
-	node = parse_pipe(current);
+	node = parse_pipe(current, all_data);
 	while (*current && ((*current)->type == TKN_AND
 			|| (*current)->type == TKN_OR || (*current)->type == TKN_SEMCOL))
 	{
@@ -144,7 +151,7 @@ t_ast	*parse_expression(t_token **current)
 		op_node = create_ast_node(type);
 		(*current) = (*current)->next; // Skip '&&', '||', or ';'
 		op_node->left = node;
-		op_node->right = parse_pipe(current);
+		op_node->right = parse_pipe(current, all_data);
 		if (op_node->right == NULL)
 		{
 			if (*current)
@@ -160,10 +167,10 @@ t_ast	*parse_expression(t_token **current)
 	return (node);
 }
 
-t_ast	*parse(t_token *tokens, t_env **env_list)
+t_ast	*parse(t_token *tokens, t_alldata *all_data)
 {
 	t_token	*current;
 
 	current = tokens;
-	return (parse_expression(&current));
+	return (parse_expression(&current, all_data));
 }
