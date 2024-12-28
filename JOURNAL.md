@@ -1,3 +1,7 @@
+### 28.12.2024
+- Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.
+- QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later
+
 ### 26.12.2024
 - Replaced first iteration of command table with command table of `r-command-table` branch
 - Finished first iteration of handling pipes. Tested the code with 3 pipes and it works. EG. `ls -l | grep a | wc -l`
