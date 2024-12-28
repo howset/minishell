@@ -12,7 +12,7 @@
  * 		Returns 0 because always success that will be transferred to the
  * 			calling executor.
  */
-int	rh_export(char *args[], t_env **env_list)
+int	rh_export(char *args[])
 {
 	int		i;
 	char	*eq_sign;
@@ -20,7 +20,7 @@ int	rh_export(char *args[], t_env **env_list)
 
 	if (!args[1])
 	{
-		print_sortedenvlist(*env_list);
+		print_sortedenvlist();
 		return (EXIT_SUCCESS);
 	}
 	i = 1;
@@ -31,11 +31,11 @@ int	rh_export(char *args[], t_env **env_list)
 		{
 			*eq_sign = '\0';
 			val = eq_sign + 1;
-			add_envvar(env_list, args[i], val);
+			add_envvar(args[i], val);
 			*eq_sign = '=';
 		}
 		else
-			add_envvar(env_list, args[i], NULL);
+			add_envvar(args[i], NULL);
 		i++;
 	}
 	return (EXIT_SUCCESS);

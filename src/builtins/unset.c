@@ -6,7 +6,7 @@
  * 		Takes the args from the simple command and env_list.
  * 		Returns the exit status (always 0, except when no args given)
  */
-int	rh_unset(char *args[], t_env **env_list)
+int	rh_unset(char *args[])
 {
 	int	i;
 
@@ -18,7 +18,7 @@ int	rh_unset(char *args[], t_env **env_list)
 	i = 1;
 	while (args[i])
 	{
-		remove_envvar(args[i], env_list);
+		remove_envvar(args[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

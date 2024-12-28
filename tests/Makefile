@@ -95,3 +95,9 @@ run:    $(TEST_EXEC)
 
 # .PHONY
 .PHONY: clean all run
+
+# Add env.c to your source files
+SRCS += src/env/env.c
+
+# Make sure to add the directory to includes if needed
+INCLUDES += -I./src/env

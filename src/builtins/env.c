@@ -7,21 +7,23 @@
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
  */
-int	rh_env(char *args[], char *envp[], t_env **env_list)
+int	rh_env(char *args[], char *envp[])
 {
-	int	i;
+	int		i;
+	t_env	*env_list;
 
 	i = 0;
+	env_list = get_envlist();
 	if (!args[1])
 	{
 		printf("-->The following are the variables in minishell.<--\n");
-		while (*env_list)
+		while (env_list)
 		{
-			if ((*env_list)->val)
-				printf("%s=%s\n", (*env_list)->key, (*env_list)->val);
+			if (env_list->val)
+				printf("%s=%s\n", env_list->key, env_list->val);
 			else
-				printf("%s=\n", (*env_list)->key);
-			env_list = &(*env_list)->next;
+				printf("%s=\n", env_list->key);
+			env_list = env_list->next;
 		}
 	}
 	else if (ft_strncmp(args[1], "-g", 2) == 0)

@@ -9,17 +9,17 @@ int		check_n(char *arg);
 int		writing(char *str);
 
 // env.c
-int		rh_env(char *args[], char *envp[], t_env **env_list);
+int		rh_env(char *args[], char *envp[]);
 
 // exit.c
 int		rh_exit(char *args[]);
 
 // export.c
-int		rh_export(char *args[], t_env **env_list);
+int		rh_export(char *args[]);
 
 
 // unset.c
-int		rh_unset(char *args[], t_env **env_list);
+int		rh_unset(char *args[]);
 
 // pwd.c
 int		rh_pwd(void);

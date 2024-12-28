@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/26 19:49:34 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:59:20 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*prompt_hist(char *input)
 	input = readline("rh-shell> ");
 	if (ft_strlen(input) > 0)
 		add_history(input);
-	return(input);
+	return (input);
 }
 
 /**
@@ -34,7 +34,8 @@ char	*prompt_hist(char *input)
  * 		Takes the arguments from the main function.
  * 		Returns nothing.
  */
-t_alldata	*initialize(int argc, char *argv[], char *envp[], t_alldata *all_data)
+t_alldata	*initialize(int argc, char *argv[], char *envp[],
+		t_alldata *all_data)
 {
 	(void)argv;
 	if (argc > 1)
@@ -42,10 +43,11 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[], t_alldata *all_data)
 		ft_fprintf(STDERR_FILENO, "Too many args");
 		exit(127);
 	}
-	all_data->env_head = NULL; //have to be like this or segfault
-	all_data->env_list = &all_data->env_head; //have to be like this or segfault
+	all_data->env_head = NULL;
+	// have to be like this or segfault
+	// have to be like this or segfault
 	all_data->input = NULL;
-	init_envlist(all_data->env_list, envp); //this function is momentarily in env.c
+	init_envlist(envp); // this function is momentarily in env.c
 	return (all_data);
 }
 
@@ -54,16 +56,15 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[], t_alldata *all_data)
  */
 void	print_command_table(t_cmdtable *table)
 {
-	t_command *cmd;
-	t_redirection *redir;
-	int i;
+	t_command		*cmd;
+	t_redirection	*redir;
+	int				i;
 
 	if (!table)
 		return ;
 	printf("\nCommand Table:\n");
 	printf("Total commands: %d\n", table->cmd_count);
 	printf("Total pipes: %d\n", table->pipe_count);
-
 	cmd = table->commands;
 	while (cmd)
 	{
@@ -77,12 +78,10 @@ void	print_command_table(t_cmdtable *table)
 			i++;
 		}
 		printf("\n");
-
 		if (cmd->pipe_read != -1)
 			printf("Pipe read fd: %d\n", cmd->pipe_read);
 		if (cmd->pipe_write != -1)
 			printf("Pipe write fd: %d\n", cmd->pipe_write);
-
 		redir = cmd->redirections;
 		while (redir)
 		{
@@ -109,12 +108,10 @@ int	main(int argc, char *argv[], char *envp[])
 		all_data->tree = parse(all_data->tokens);
 		all_data->table = ast_to_command_table(all_data->tree);
 		// print_command_table(all_data->table);
-		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list, envp);
+		all_data->exit_stat = exec_commtab(all_data->table, envp);
 		free_tkn(all_data->tokens);
 		free(all_data->input);
 	}
-	free_envlist(*all_data->env_list);
-	free(all_data->env_list);
 	free(all_data);
 	return (0);
 }

@@ -31,7 +31,7 @@ int	is_builtin(char *cmd)
  * 			env_list and envp for functions that required them (e.g. export).
  * 		Returns an exit status.
  */
-int	exec_builtin(char *args[], t_env **env_list, char *envp[])
+int	exec_builtin(char *args[], char *envp[])
 {
 	int	exit_stat;
 
@@ -40,11 +40,11 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 	else if (ft_strncmp(args[0], "exit", 4) == 0)
 		exit_stat = rh_exit(args);
 	else if (ft_strncmp(args[0], "env", 3) == 0)
-		exit_stat = rh_env(args, envp, env_list);
+		exit_stat = rh_env(args, envp);
 	else if (ft_strncmp(args[0], "export", 6) == 0)
-		exit_stat = rh_export(args, env_list);
+		exit_stat = rh_export(args);
 	else if (ft_strncmp(args[0], "unset", 5) == 0)
-		exit_stat = rh_unset(args, env_list);
+		exit_stat = rh_unset(args);
 	else if (ft_strncmp(args[0], "cd", 2) == 0)
 		exit_stat = rh_cd(args[1]);
 	else if (ft_strncmp(args[0], "pwd", 3) == 0)
@@ -61,7 +61,7 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  * 		Takes the command table as an argument.
  * 		Returns the exit status of the executed commands.
  */
-int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
+int	exec_commtab(t_cmdtable *table, char *envp[])
 {
 	t_command	*cmd;
 	int			exit_stat;
@@ -72,12 +72,12 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	{
 		cmd = &table->commands[i];
 		if (is_builtin(cmd->args[0]))
-			exit_stat = exec_builtin(cmd->args, env_list, envp);
+			exit_stat = exec_builtin(cmd->args, envp);
 		else if (cmd->type == CMD_SIMPLE)
-			exit_stat = exec_simple_command(cmd, *env_list, envp);
+			exit_stat = exec_simple_command(cmd, envp);
 		else if (cmd->type == CMD_PIPE)
 		{
-			exit_stat = exec_pipe_command(cmd, *env_list, envp);
+			exit_stat = exec_pipe_command(cmd, envp);
 			while (i < table->cmd_count && table->commands[i].type == CMD_PIPE)
 				i++;
 		}
@@ -86,7 +86,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
+int	exec_simple_command(t_command *cmd,char *envp[])
 {
 	pid_t	p_id;
 	int		is_child_process;
@@ -100,13 +100,13 @@ int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 	printf("p_id: %d\n", p_id);
 	is_child_process = p_id == 0;
 	if (is_child_process)
-		exec_chprocess(cmd->args, env_list, envp);
+		exec_chprocess(cmd->args, envp);
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
 }
 
-int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
+int	exec_pipe_command(t_command *cmd, char *envp[])
 {
 	int			status;
 	pid_t		p_id;
@@ -138,7 +138,7 @@ int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 				dup2(current_cmd->pipe_write, STDOUT_FILENO);
 				close(current_cmd->pipe_write);
 			}
-			exec_chprocess(current_cmd->args, env_list, envp);
+			exec_chprocess(current_cmd->args, envp);
 			exit(EXIT_FAILURE);
 		}
 		if (current_cmd->pipe_read != -1)

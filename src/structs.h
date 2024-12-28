@@ -116,7 +116,6 @@ typedef struct s_alldata
 	t_cmdtable		*table;
 	int				exit_stat;
 	t_env			*env_head;
-	t_env			**env_list;
 }					t_alldata;
 
 #endif

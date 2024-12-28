@@ -1,19 +1,23 @@
 #include "envs.h"
 
-// this aims to free the mallocs from create_envvar
-void	free_envlist(t_env *env_list)
-{
-	t_env	*tmp;
+t_env	*g_env = NULL;
 
-	while (env_list)
+t_env	*get_envlist(void)
+{
+	return (g_env);
+}
+// this aims to free the mallocs from create_envvar
+void	free_envlist(void)
+{
+	t_env	*current;
+
+	current = get_envlist();
+	while (current)
 	{
-		tmp = env_list;
-		env_list = env_list->next;
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->val)
-			free(tmp->val);
-		free(tmp);
+		free(current->key);
+		free(current->val);
+		free(current);
+		current = current->next;
 	}
 }
 
@@ -26,7 +30,7 @@ void	free_envlist(t_env *env_list)
  * 		Takes the envp from main and declared env_list in main.
  * 		Returns nothing because void func, but initializes the env_list.
  */
-void	init_envlist(t_env **env_list, char *envp[])
+void	init_envlist(char *envp[])
 {
 	int		i;
 	char	*key;
@@ -56,7 +60,7 @@ void	init_envlist(t_env **env_list, char *envp[])
 			free(key);
 			return ;
 		}
-		add_envvar(env_list, key, val);
+		add_envvar(key, val);
 		free(key);
 		free(val);
 		i++;
@@ -78,20 +82,20 @@ void	swap_envvar(t_env *a, t_env *b)
 }
 
 // sort alphabetically (by key) --> bubble sort
-void	sort_envlist(t_env **env_list)
+void	sort_envlist(void)
 {
 	t_env	*current;
 	t_env	*next;
 	int		swapped;
 	int		key_len;
 
-	if (!env_list || !*env_list)
+	if (!g_env)
 		return ;
 	swapped = 1;
 	while (swapped)
 	{
 		swapped = 0;
-		current = *env_list;
+		current = get_envlist();
 		while (current && current->next)
 		{
 			next = current->next;
@@ -107,17 +111,20 @@ void	sort_envlist(t_env **env_list)
 }
 
 // print the sorted environment list
-void	print_sortedenvlist(t_env *env_list)
+void	print_sortedenvlist(void)
 {
-	if (!env_list)
+	t_env	*env;
+
+	if (!g_env)
 		return ;
-	sort_envlist(&env_list);
-	while (env_list)
+	sort_envlist();
+	env = g_env;
+	while (env)
 	{
-		if (env_list->val)
-			printf("declare -x %s=\"%s\"\n", env_list->key, env_list->val);
+		if (env->val)
+			printf("declare -x %s=\"%s\"\n", env->key, env->val);
 		else
-			printf("declare -x %s=\"\"\n", env_list->key);
-		env_list = env_list->next;
+			printf("declare -x %s=\"\"\n", env->key);
+		env = env->next;
 	}
 }

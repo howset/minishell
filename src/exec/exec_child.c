@@ -6,11 +6,11 @@
  * 		Takes the command (args[0]), other args, the env_list and the envp.
  * 		Returns exit status of the executed command.
  */
-int	exec_chprocess(char **args, t_env *env_list, char *envp[])
+int	exec_chprocess(char **args, char *envp[])
 {
 	char	*cmd_path;
 
-	cmd_path = find_path(args[0], env_list);
+	cmd_path = find_path(args[0]);
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);

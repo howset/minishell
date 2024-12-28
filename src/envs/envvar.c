@@ -7,12 +7,21 @@
  * 		Takes env_list from the main, and a key-value pair (KEY=value).
  * 		Returns nothing (but modifies env_list).
  */
-void	add_envvar(t_env **env_list, char *key, char *val)
+void	add_envvar(char *key, char *val)
 {
 	t_env	*existing;
 	t_env	*new_node;
+	t_env	*current;
 
-	existing = find_envvar(*env_list, key);
+
+	current = get_envlist();
+	if (!current)
+	{
+		new_node = create_envvar(key, val);
+		g_env = new_node;
+		return ;
+	}
+	existing = find_envvar(key);
 	if (existing)
 	{
 		if (existing->val)
@@ -25,8 +34,10 @@ void	add_envvar(t_env **env_list, char *key, char *val)
 	else
 	{
 		new_node = create_envvar(key, val);
-		new_node->next = *env_list;
-		*env_list = new_node;
+		while (current->next)
+			current = current->next;
+
+		current->next = new_node;
 	}
 }
 
@@ -53,30 +64,32 @@ t_env	*create_envvar(char *key, char *val)
  * 		Takes env_list to search for key.
  * 		Returns the node in which key is found, otherwise NULL.
  */
-t_env	*find_envvar(t_env *env_list, char *key)
+t_env	*find_envvar(char *key)
 {
-	int	i;
+	t_env	*current;
+	int		i;
 
+	current = get_envlist();
 	i = 0;
 	while (key[i])
 		i++;
-	while (env_list)
+	while (current)
 	{
-		if (ft_strncmp(env_list->key, key, i) == 0)
-			return (env_list);
-		env_list = env_list->next;
+		if (ft_strncmp(current->key, key, i) == 0)
+			return (current);
+		current = current->next;
 	}
 	return (NULL);
 }
 
-int	remove_envvar(char *key, t_env **env_list)
+int	remove_envvar(char *key)
 {
-	t_env *prev;
-	t_env *current;
-	int len;
+	t_env	*prev;
+	t_env	*current;
+	int		len;
 
 	prev = NULL;
-	current = *env_list;
+	current = get_envlist();
 	len = ft_strlen(key);
 	while (current)
 	{
@@ -85,7 +98,7 @@ int	remove_envvar(char *key, t_env **env_list)
 			if (prev)
 				prev->next = current->next;
 			else
-				*env_list = current->next;
+				current = current->next;
 			free(current->key);
 			free(current->val);
 			free(current);

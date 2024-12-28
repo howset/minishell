@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/28 23:31:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/28 23:46:01 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ t_ast	*parse_expression(t_token **current)
 	return (node);
 }
 
-t_ast	*parse(t_token *tokens, t_env **env_list)
+t_ast	*parse(t_token *tokens)
 {
 	t_token	*current;
 

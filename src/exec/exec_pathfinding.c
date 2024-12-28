@@ -8,16 +8,16 @@
  * 		Takes a cmd (e.g. ls, or cat) and the env_list that contains PATH
  * 		Returns the complete path to the command (e.g. /dir/dir/cmd)
  */
-char	*find_path(char *cmd, t_env *env_list)
+char	*find_path(char *cmd)
 {
 	char	*path;
 	char	*full_path;
 	size_t	path_len;
 
-	full_path = init_fullpath(env_list, &path_len);
+	full_path = init_fullpath(&path_len);
 	if (!full_path)
 		return (NULL);
-	path = find_envvar(env_list, "PATH")->val;
+	path = find_envvar("PATH")->val;
 	full_path = process_dirs(path, cmd, full_path, path_len);
 	if (!full_path)
 		free(full_path);
@@ -28,13 +28,13 @@ char	*find_path(char *cmd, t_env *env_list)
  * 		Takes the env_list, and the length of the path
  * 		Returns malloc'ed full_path.
  */
-char	*init_fullpath(t_env *env_list, size_t *path_len)
+char	*init_fullpath(size_t *path_len)
 {
 	t_env	*node;
 	char	*path;
 	char	*full_path;
 
-	node = find_envvar(env_list, "PATH");
+	node = find_envvar("PATH");
 	if (!node || !node->val)
 		return (NULL);
 	path = node->val;
