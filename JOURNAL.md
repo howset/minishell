@@ -1,3 +1,6 @@
+Bugs found:
+- Double quotes in echos. For example `echo "a \n b" will output `a \n b` instead of `a` and `b` on separate lines. This is probably to be handled in the parser.
+
 TODO:
 - refactor `exec_chprocess` and move the builtin check to `exec_chprocess`
 - handle redirections
@@ -7,7 +10,7 @@ TODO:
 	- ✅ Moved the builtins check and execution to `exec_chprocess`
 - Next step is to handle redirections. I'll start with handling `>` and `>>`. I'll start with `>` and then move to `>>`.
 	- While testing more complex scenarios. In particular, redirections with pipes `ls -l | grep a > output.txt`. I found that we had a bug in command table while handling redirections nodes in pipe nodes. ✅  I fixed this bug and added a test case for it.
-
+	- ✅ To allow exec_chprocess to handle redirections, it needs to know the redirections. I'll update the function to take the `t_command` struct as an argument. This way, it can access the redirections.
 ### 28.12.2024
 - Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.
 - QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later.
@@ -16,7 +19,7 @@ TODO:
 - ✅ moved env variables code to a separate module
 - Using the env in the parser is not as easy as it sounds. The reason is the env variables is part of all_data struct, which is not available in the parser. I passed the all_data struct to the parser, but it's not a good idea to pass it to the parser. I need to find a better way to handle this. I'll come back to this later. but for now env replacment works with `echo $HOME` . Variables inside quotes are not handled yet.
 - done environment variable replacement in parser. It works with `echo $HOME` and `echo "$HOME"`. In the process, I fixed the bug with hanlding double quotes. The code now handles double quotes properly. So now when doing ` echo "hello world"`, it will work properly.
-- fixed bug in `export` where it doesn't accept values with double quotes. For exmaple `export HOME="hello world"` will not work. Now it works.
+- ✅ fixed bug in `export` where it doesn't accept values with double quotes. For exmaple `export HOME="hello world"` will not work. Now it works.
 
 ### 26.12.2024
 - Replaced first iteration of command table with command table of `r-command-table` branch
