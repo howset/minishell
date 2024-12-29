@@ -11,6 +11,13 @@ TODO:
 - Next step is to handle redirections. I'll start with handling `>` and `>>`. I'll start with `>` and then move to `>>`.
 	- While testing more complex scenarios. In particular, redirections with pipes `ls -l | grep a > output.txt`. I found that we had a bug in command table while handling redirections nodes in pipe nodes. ✅  I fixed this bug and added a test case for it.
 	- ✅ To allow exec_chprocess to handle redirections, it needs to know the redirections. I'll update the function to take the `t_command` struct as an argument. This way, it can access the redirections.
+- ✅ Created a new file to handle redirections `exec_redirections.c`. This file will handle redirections.
+- ✅ Did a quick test with
+	-	`<`
+	-	`>`
+	-   `>>`
+	-   `<<`
+
 ### 28.12.2024
 - Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.
 - QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later.
