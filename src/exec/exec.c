@@ -44,7 +44,7 @@ int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 	printf("p_id: %d\n", p_id);
 	is_child_process = p_id == 0;
 	if (is_child_process)
-		exec_chprocess(cmd->args, env_list, envp);
+		exec_chprocess(cmd, env_list, envp);
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
@@ -82,7 +82,7 @@ int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 				dup2(current_cmd->pipe_write, STDOUT_FILENO);
 				close(current_cmd->pipe_write);
 			}
-			exec_chprocess(current_cmd->args, env_list, envp);
+			exec_chprocess(current_cmd, env_list, envp);
 			exit(EXIT_FAILURE);
 		}
 		if (current_cmd->pipe_read != -1)

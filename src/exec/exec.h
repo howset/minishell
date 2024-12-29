@@ -12,7 +12,7 @@ int		exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[]);
 int		is_builtin(char *cmd);
 
 // exec_child
-int		exec_chprocess(char **args, t_env *env_list, char *envp[]);
+int		exec_chprocess(t_command *cmd, t_env *env_list, char *envp[]);
 int		wait_chprocess(pid_t p_id);
 
 // exec_pathfinding.c

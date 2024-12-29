@@ -60,21 +60,21 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  * 		Takes the command (args[0]), other args, the env_list and the envp.
  * 		Returns exit status of the executed command.
  */
-int	exec_chprocess(char **args, t_env *env_list, char *envp[])
+int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 {
 	char	*cmd_path;
 
-	if (is_builtin(args[0]))
+	if (is_builtin(cmd->args[0]))
 	{
-		return (exec_builtin(args, &env_list, envp));
+		return (exec_builtin(cmd->args, &env_list, envp));
 	}
-	cmd_path = find_path(args[0], env_list);
+	cmd_path = find_path(cmd->args[0], env_list);
 	if (!cmd_path)
 	{
-		ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);
+		ft_fprintf(STDERR_FILENO, "command not found: %s\n", cmd->args[0]);
 		exit(127);
 	}
-	execve(cmd_path, args, envp);
+	execve(cmd_path, cmd->args, envp);
 	perror("Execve fails");
 	free(cmd_path);
 	exit(EXIT_FAILURE);
