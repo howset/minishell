@@ -6,11 +6,12 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/25 12:10:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 01:02:46 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./parser.h"
+#include <string.h> //TODO :REMOVE
 
 /**
  * consume_token:
@@ -110,4 +111,66 @@ void	free_ast(t_ast *ast)
 	free_ast(ast->left);
 	free_ast(ast->right);
 	free(ast);
+}
+
+/**
+
+	* This function is used to sanitize the text that is passed to the parser. It takes a string and replaces
+
+	* all environment variables with their values. If an environment variable is not found,
+	it is replaced with
+
+	* an empty string. This function is used to preprocess the input before parsing.
+ */
+char	*sanitize_text(char *text, t_alldata *all_data)
+{
+	char	*result;
+	int		i;
+	int		j;
+	char	var_name[256];
+	t_env	*env;
+	char	*new_str;
+	int		var_len;
+	int		value_len;
+
+	if (!text)
+		return (NULL);
+	result = strdup(text);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (result[i])
+	{
+		if (result[i] == '$')
+		{
+			j = 0;
+			i++;
+			while (result[i] && (ft_isalnum(result[i]) || result[i] == '_'))
+			{
+				var_name[j++] = result[i++];
+			}
+			var_name[j] = '\0';
+			if (j > 0)
+			{
+				env = find_envvar(*all_data->env_list, var_name);
+				var_len = ft_strlen(var_name);
+				value_len = env ? ft_strlen(env->val) : 0;
+				new_str = malloc(strlen(result) - var_len + value_len + 1);
+				if (!new_str)
+					return (result);
+				ft_memcpy(new_str, result, i - var_len - 1);
+				if (env)
+					ft_memcpy(new_str + (i - var_len - 1), env->val, value_len);
+				ft_memcpy(new_str + (i - var_len - 1) + value_len, result + i,
+					ft_strlen(result + i) + 1);
+				free(result);
+				result = new_str;
+				i = (i - var_len - 1) + value_len;
+				continue ;
+			}
+			continue ;
+		}
+		i++;
+	}
+	return (result);
 }

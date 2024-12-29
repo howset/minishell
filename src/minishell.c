@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/29 00:20:02 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 01:18:09 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ft_strncmp(all_data->input, "$?", 2) == 0)
 			printf("%d\n", all_data->exit_stat);
 		all_data->tokens = lexer(all_data->input);
+		// print_tkn(all_data->tokens);
 		all_data->tree = parse(all_data->tokens, all_data);
 		all_data->table = ast_to_command_table(all_data->tree);
 		// print_command_table(all_data->table);

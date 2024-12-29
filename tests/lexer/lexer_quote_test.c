@@ -10,7 +10,7 @@ START_TEST(test_lex_quo_sin)
 	tokens = lexer(input);
 	ck_assert_ptr_nonnull(tokens);
 	ck_assert_int_eq(tokens->type, TKN_QUO_SIN);
-	ck_assert_str_eq(tokens->value, "'single quoted string'");
+	ck_assert_str_eq(tokens->value, "single quoted string");
 	free_tkn(tokens);
 }
 END_TEST
@@ -35,7 +35,7 @@ START_TEST(test_lex_quo_dou)
 	tokens = lexer(input);
 	ck_assert_ptr_nonnull(tokens);
 	ck_assert_int_eq(tokens->type, TKN_QUO_DOU);
-	ck_assert_str_eq(tokens->value, "\"double quoted string\"");
+	ck_assert_str_eq(tokens->value, "double quoted string");
 	free_tkn(tokens);
 }
 END_TEST

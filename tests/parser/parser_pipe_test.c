@@ -2,11 +2,13 @@
 
 START_TEST(test_parse_pipe)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("ls -l | grep test");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_PIPE);
 	ck_assert_ptr_nonnull(ast->left);
@@ -26,11 +28,13 @@ END_TEST
 
 START_TEST(test_parse_multiple_pipe)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("ls -l | grep test | wc -l");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_PIPE);
 	// First Pipe
@@ -62,11 +66,13 @@ END_TEST
 
 START_TEST(test_multiple_parsre_with_redirection)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("ls -l | grep test | wc -l > output.txt");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_PIPE);
 	// First Pipe

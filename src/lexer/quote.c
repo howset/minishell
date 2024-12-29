@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:57 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/11 12:04:46 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/29 01:06:08 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	lex_quo_sin(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 	{
 		pos++;
 		len = pos - start;
-		new_tkn = create_tkn(TKN_QUO_SIN, &input[start], len, start);
+		new_tkn = create_tkn(TKN_QUO_SIN, &input[start+1], len-2, start);
 		append_tkn(tokens, new_tkn);
 	}
 	else
@@ -49,7 +49,7 @@ int	lex_quo_dou(const char *input, int pos,
 	{
 		pos++;
 		len = pos - start;
-		new_tkn = create_tkn(TKN_QUO_DOU, &input[start], len, start);
+		new_tkn = create_tkn(TKN_QUO_DOU, &input[start]+1, len-2, start);
 		append_tkn(tokens, new_tkn);
 	}
 	else

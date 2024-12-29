@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:23:52 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/29 00:18:00 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 00:50:25 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_tkntype	get_token_type(t_token **current);
 void		parse_error(const char *message, t_token *token);
 void		syntax_error(const char *message);
 void		syntax_error_at(int position, const char *message);
+char		*sanitize_text(char *text, t_alldata *all_data);
 // parser.c functions
 t_ast		*parse_command(t_token **current, t_alldata *all_data);
 t_ast		*parse_factor(t_token **current, t_alldata *all_data);

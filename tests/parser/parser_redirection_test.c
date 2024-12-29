@@ -1,13 +1,14 @@
 #include "../tests.h"
 
-
 START_TEST(test_parse_redirection)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("cat < input.txt > output.txt");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_REDIRECTION);
 	ck_assert_str_eq(ast->filename, "output.txt");
@@ -25,11 +26,13 @@ END_TEST
 
 START_TEST(test_parse_input_redirection)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("cat < input.txt");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_REDIRECTION);
 	ck_assert_str_eq(ast->filename, "input.txt");
@@ -45,11 +48,13 @@ END_TEST
 
 START_TEST(test_parse_output_redirection)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("echo hello > output.txt");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_REDIRECTION);
 	ck_assert_str_eq(ast->filename, "output.txt");
@@ -66,11 +71,13 @@ END_TEST
 
 START_TEST(test_parse_append_redirection)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("echo hello >> output.txt");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, TKN_RDIR_IN);
 	ck_assert_str_eq(ast->filename, "output.txt");
@@ -82,11 +89,13 @@ END_TEST
 
 START_TEST(test_parse_heredoc)
 {
-	t_token	*tokens;
-	t_ast	*ast;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	tokens = lexer("cat << EOF");
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	ck_assert_ptr_nonnull(ast);
 	ck_assert_int_eq(ast->type, NODE_REDIRECTION);
 	ck_assert_int_eq(ast->redirection_type, TKN_HEREDOC);

@@ -6,11 +6,13 @@ START_TEST(test_simple_command)
 	char		*cmd;
 	t_token		*tokens;
 	t_ast		*ast;
+	t_alldata	*all_data;
 	t_cmdtable	*table;
 
+	all_data = initialize_test_alldata();
 	cmd = "ls -l";
 	tokens = lexer(cmd);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 1);
@@ -28,11 +30,13 @@ START_TEST(test_pipe_command)
 	char		*cmd;
 	t_token		*tokens;
 	t_ast		*ast;
+	t_alldata	*all_data;
 	t_cmdtable	*table;
 
+	all_data = initialize_test_alldata();
 	cmd = "ls -l | grep test";
 	tokens = lexer(cmd);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 2);
@@ -56,11 +60,13 @@ START_TEST(test_redirection)
 	char		*cmd;
 	t_token		*tokens;
 	t_ast		*ast;
+	t_alldata	*all_data;
 	t_cmdtable	*table;
 
+	all_data = initialize_test_alldata();
 	cmd = "cat file.txt > output.txt";
 	tokens = lexer(cmd);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 1);
@@ -77,11 +83,13 @@ START_TEST(test_sequence)
 	char		*cmd;
 	t_token		*tokens;
 	t_ast		*ast;
+	t_alldata	*all_data;
 	t_cmdtable	*table;
 
+	all_data = initialize_test_alldata();
 	cmd = "echo hello; echo world";
 	tokens = lexer(cmd);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 2);
@@ -103,10 +111,12 @@ START_TEST(test_multiple_redirections)
 	t_ast			*ast;
 	t_cmdtable		*table;
 	t_redirection	*redir;
+	t_alldata		*all_data;
 
+	all_data = initialize_test_alldata();
 	cmd = "cat < input.txt > output.txt";
 	tokens = lexer(cmd);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 1);
@@ -129,15 +139,17 @@ END_TEST
 // Test complex pipeline
 START_TEST(test_complex_pipeline)
 {
-	char			*command;
-	t_token			*tokens;
-	t_ast			*ast;
-	t_cmdtable		*table;
-	t_command		*cmd;
+	char		*command;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_cmdtable	*table;
+	t_command	*cmd;
+	t_alldata	*all_data;
 
+	all_data = initialize_test_alldata();
 	command = "cat file.txt | grep pattern | sort | uniq";
 	tokens = lexer(command);
-	ast = parse(tokens);
+	ast = parse(tokens, all_data);
 	table = ast_to_command_table(ast);
 	ck_assert_ptr_nonnull(table);
 	ck_assert_int_eq(table->cmd_count, 4);
@@ -172,7 +184,7 @@ END_TEST
 
 // 	cmd = "(echo test)";
 // 	tokens = lexer(cmd);
-// 	ast = parse(tokens);
+// 	ast = parse(tokens,all_data);
 // 	print_ast(ast, 0);
 // 	table = ast_to_command_table(ast);
 // 	ck_assert_ptr_nonnull(table);

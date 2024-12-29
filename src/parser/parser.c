@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/29 00:30:31 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 01:05:13 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 t_ast	*parse_command(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
-	char	*value;
-	t_env	*env;
 
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
@@ -30,18 +28,12 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
-		value = ft_strdup((*current)->value);
-		if ((*current)->type == TKN_VAR)
-		{
-			char *var_name = value + 1; // Skip the '$' character
-			env = find_envvar(*all_data->env_list, var_name);
-			if (env)
-			{
-				free(value);
-				value = ft_strdup(env->val);
-			}
-		}
-		node->args[node->args_count - 1] = value;
+		// Single quotes are not sanitized
+		if ((*current)->type == TKN_QUO_SIN)
+			node->args[node->args_count - 1] = ft_strdup((*current)->value);
+		else
+			node->args[node->args_count
+				- 1] = ft_strdup(sanitize_text((*current)->value, all_data));
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}

@@ -26,3 +26,14 @@ void	free_env_list(t_env *env_list)
 		free(tmp);
 	}
 }
+
+t_alldata	*initialize_test_alldata(void)
+{
+	t_alldata	*all_data;
+
+	all_data = malloc(sizeof(t_alldata));
+	all_data->env_head = NULL;
+	all_data->env_list = &all_data->env_head;
+	all_data->input = NULL;
+	return (all_data);
+}
