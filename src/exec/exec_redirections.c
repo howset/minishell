@@ -1,12 +1,16 @@
 #include "exec.h"
+#include "string.h"
 
 /**
  * Handle input redirection ("<" and "<<").
  * @param redirection The redirection structure.
  */
- void	handle_input_redirection(t_redirection *redirection)
+void	handle_input_redirection(t_redirection *redirection)
 {
-	int	fd;
+	int		fd;
+	int		pipefd[2];
+	pid_t	pid;
+	char	*line;
 
 	if (redirection->type == TKN_RDIR_IN) // "<"
 	{
@@ -16,20 +20,59 @@
 			perror("open");
 			exit(EXIT_FAILURE);
 		}
-		dup2(fd, STDIN_FILENO);
+		if (dup2(fd, STDIN_FILENO) == -1)
+		{
+			perror("dup2");
+			close(fd);
+			exit(EXIT_FAILURE);
+		}
 		close(fd);
 	}
 	else if (redirection->type == TKN_HEREDOC) // "<<"
 	{
-		// Handle heredoc (assumes redirection->file contains the heredoc content file path)
-		fd = open(redirection->file, O_RDONLY);
-		if (fd == -1)
+		if (pipe(pipefd) == -1)
 		{
-			perror("heredoc open");
+			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
-		dup2(fd, STDIN_FILENO);
-		close(fd);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (pid == 0) // Child process
+		{
+			close(pipefd[0]); // Close read end
+			line = NULL;
+			while (1)
+			{
+				line = readline("> ");
+				if (!line)
+					break ;
+				if (strcmp(line, redirection->file) == 0)
+				{
+					free(line);
+					break ;
+				}
+				write(pipefd[1], line, strlen(line));
+				write(pipefd[1], "\n", 1);
+				free(line);
+			}
+			close(pipefd[1]);
+			exit(EXIT_SUCCESS);
+		}
+		else // Parent process
+		{
+			close(pipefd[1]); // Close write end
+			if (dup2(pipefd[0], STDIN_FILENO) == -1)
+			{
+				perror("dup2");
+				exit(EXIT_FAILURE);
+			}
+			close(pipefd[0]);
+			waitpid(pid, NULL, 0);
+		}
 	}
 }
 
@@ -37,7 +80,7 @@
  * Handle output redirection (">" and ">>").
  * @param redirection The redirection structure.
  */
- void	handle_output_redirection(t_redirection *redirection)
+void	handle_output_redirection(t_redirection *redirection)
 {
 	int	fd;
 

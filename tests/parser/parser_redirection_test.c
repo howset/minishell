@@ -104,6 +104,30 @@ START_TEST(test_parse_heredoc)
 }
 END_TEST
 
+START_TEST(test_parse_heredoc_detailed)
+{
+	t_token *tokens;
+	t_ast *ast;
+	t_alldata *all_data;
+
+	all_data = initialize_test_alldata();
+	tokens = lexer("cat << EOF");
+	ast = parse(tokens, all_data);
+
+	ck_assert_ptr_nonnull(ast);
+	ck_assert_int_eq(ast->type, NODE_REDIRECTION);
+	ck_assert_int_eq(ast->redirection_type, TKN_HEREDOC);
+	ck_assert_str_eq(ast->filename, "EOF");
+
+	ck_assert_ptr_nonnull(ast->left);
+	ck_assert_int_eq(ast->left->type, NODE_COMMAND);
+	ck_assert_str_eq(ast->left->args[0], "cat");
+
+	free_ast(ast);
+	free_tkn(tokens);
+}
+END_TEST
+
 Suite	*parser_redirection_suite(void)
 {
 	Suite	*s;
@@ -116,6 +140,7 @@ Suite	*parser_redirection_suite(void)
 	tcase_add_test(tc_core, test_parse_output_redirection);
 	tcase_add_test(tc_core, test_parse_append_redirection);
 	tcase_add_test(tc_core, test_parse_heredoc);
+	tcase_add_test(tc_core, test_parse_heredoc_detailed);
 	suite_add_tcase(s, tc_core);
 	return (s);
 }
