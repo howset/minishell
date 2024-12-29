@@ -174,6 +174,41 @@ START_TEST(test_complex_pipeline)
 }
 END_TEST
 
+// Test complex pipeline
+START_TEST(test_pipeline_with_redirection)
+{
+	char		*command;
+	t_token		*tokens;
+	t_ast		*ast;
+	t_cmdtable	*table;
+	t_command	*cmd;
+	t_alldata	*all_data;
+
+	all_data = initialize_test_alldata();
+	command = "cat file.txt | grep pattern > output.txt";
+	tokens = lexer(command);
+	ast = parse(tokens, all_data);
+	table = ast_to_command_table(ast);
+	ck_assert_ptr_nonnull(table);
+	ck_assert_int_eq(table->cmd_count, 2);
+	ck_assert_int_eq(table->pipe_count, 1);
+	// Check all commands in sequence
+	cmd = table->commands;
+	ck_assert_str_eq(cmd->args[0], "cat");
+	ck_assert_str_eq(cmd->args[1], "file.txt");
+	ck_assert_int_ne(cmd->pipe_write, -1);
+	cmd = cmd->next;
+	ck_assert_str_eq(cmd->args[0], "grep");
+	ck_assert_str_eq(cmd->args[1], "pattern");
+	ck_assert_int_ne(cmd->pipe_read, -1);
+	ck_assert_int_eq(cmd->pipe_write, -1);
+	// Check redirection
+	ck_assert_ptr_nonnull(cmd->redirections);
+	ck_assert_int_eq(cmd->redirections->type, TKN_RDIR_OUT);
+	ck_assert_str_eq(cmd->redirections->file, "output.txt");
+}
+END_TEST
+
 // // Test subshell
 // START_TEST(test_subshell)
 // {
@@ -210,6 +245,7 @@ Suite	*command_table_suite(void)
 	tcase_add_test(tc_core, test_multiple_redirections);
 	tcase_add_test(tc_core, test_complex_pipeline);
 	// tcase_add_test(tc_core, test_subshell);
+	tcase_add_test(tc_core, test_pipeline_with_redirection);
 	suite_add_tcase(s, tc_core);
 	return (s);
 }

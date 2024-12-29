@@ -1,8 +1,12 @@
-### 29.12.2024
 TODO:
 - refactor `exec_chprocess` and move the builtin check to `exec_chprocess`
 - handle redirections
 
+### 29.12.2024
+- The redirections should redirect the file output into a file or append it to a file. Any command can have redireection even if it's a builtin command. I'm thinking that the best place to handle this would be the place that will execute the command. AKA. `exec_chprocess`. If we handle it here, any command having direction will work with minimal effort. As a start, I need to refactor it to run all the commands first.
+	- ✅ Moved the builtins check and execution to `exec_chprocess`
+- Next step is to handle redirections. I'll start with handling `>` and `>>`. I'll start with `>` and then move to `>>`.
+	- While testing more complex scenarios. In particular, redirections with pipes `ls -l | grep a > output.txt`. I found that we had a bug in command table while handling redirections nodes in pipe nodes. ✅  I fixed this bug and added a test case for it.
 
 ### 28.12.2024
 - Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.

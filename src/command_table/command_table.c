@@ -13,7 +13,7 @@ t_cmdtable	*create_command_table(void)
 	return (table);
 }
 
-static char	**duplicate_args(char **args, int count)
+char	**duplicate_args(char **args, int count)
 {
 	char	**new_args;
 	int		i;
@@ -122,14 +122,34 @@ void	add_redirection(t_command *cmd, t_redirection *redir)
 	}
 }
 
-static t_command	*process_command_node(t_ast *node)
+t_command	*process_command_node(t_ast *node)
 {
-	char		**default_args;
 	t_command	*cmd;
+	char		**default_args;
 
 	if (!node)
 		return (NULL);
-	// Ensure we have at least one argument
+	if (node->type == NODE_REDIRECTION)
+	{
+		// Process the command part (left child)
+		cmd = process_command_node(node->left);
+		if (!cmd)
+		{
+			// Create empty command if none exists
+			default_args = malloc(sizeof(char *) * 2);
+			if (!default_args)
+				return (NULL);
+			default_args[0] = ft_strdup("");
+			default_args[1] = NULL;
+			cmd = create_command(default_args, CMD_SIMPLE);
+			free(default_args[0]);
+			free(default_args);
+		}
+		// Create and add redirection
+		process_redirection_node(node, cmd);
+		return (cmd);
+	}
+	// Original command processing
 	if (!node->args || !node->args[0])
 	{
 		default_args = malloc(sizeof(char *) * 2);
@@ -145,7 +165,7 @@ static t_command	*process_command_node(t_ast *node)
 	return (create_command(node->args, CMD_SIMPLE));
 }
 
-static void	process_pipe_node(t_ast *node, t_cmdtable *table)
+void	process_pipe_node(t_ast *node, t_cmdtable *table)
 {
 	t_command	*left_cmd;
 	t_command	*right_cmd;
@@ -202,7 +222,7 @@ static void	process_pipe_node(t_ast *node, t_cmdtable *table)
 	table->pipe_count++;
 }
 
-static void	process_redirection_node(t_ast *node, t_command *cmd)
+void	process_redirection_node(t_ast *node, t_command *cmd)
 {
 	t_redirection	*redir;
 
@@ -215,7 +235,7 @@ static void	process_redirection_node(t_ast *node, t_command *cmd)
 		add_redirection(cmd, redir);
 }
 
-static t_command	*process_subshell_node(t_ast *node)
+t_command	*process_subshell_node(t_ast *node)
 {
 	t_command	*cmd;
 
@@ -225,14 +245,14 @@ static t_command	*process_subshell_node(t_ast *node)
 	return (cmd);
 }
 
-static t_ast	*find_command_node(t_ast *node)
+t_ast	*find_command_node(t_ast *node)
 {
 	while (node && node->type == NODE_REDIRECTION)
 		node = node->left;
 	return (node);
 }
 
-static void	ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table)
+void	ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table)
 {
 	t_command	*cmd;
 	t_ast		*cmd_node;
@@ -286,7 +306,7 @@ t_cmdtable	*ast_to_command_table(t_ast *ast)
 	return (table);
 }
 
-static void	free_redirection(t_redirection *redir)
+void	free_redirection(t_redirection *redir)
 {
 	t_redirection	*next;
 
@@ -299,7 +319,7 @@ static void	free_redirection(t_redirection *redir)
 	}
 }
 
-static void	free_command(t_command *cmd)
+void	free_command(t_command *cmd)
 {
 	t_command	*next;
 	int			i;
