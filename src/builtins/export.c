@@ -31,6 +31,10 @@ int	rh_export(char *args[], t_env **env_list)
 		{
 			*eq_sign = '\0';
 			val = eq_sign + 1;
+			if (*val == '\0' && args[i + 1] != NULL)
+			{
+				val = args[i + 1];
+			}
 			add_envvar(env_list, args[i], val);
 			*eq_sign = '=';
 		}

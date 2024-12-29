@@ -16,25 +16,42 @@ END_TEST
 
 START_TEST(test_rh_export_add_new_var)
 {
-    t_env	*env_list;
-    char	arg_new_var[] = "NEW_VAR=new_value";
-    char	*args[] = {"export", arg_new_var, NULL};
-    int		result;
+	t_env	*env_list;
+	char	arg_new_var[] = "NEW_VAR=new_value";
+	char	*args[] = {"export", arg_new_var, NULL};
+	int		result;
 
-    env_list = create_env_var("INITIAL", "value");
-    result = rh_export(args, &env_list);
-    ck_assert_int_eq(result, EXIT_SUCCESS);
-    ck_assert_ptr_nonnull(env_list);
-    ck_assert_str_eq(env_list->key, "NEW_VAR");
-    ck_assert_str_eq(env_list->val, "new_value");
-    free_env_list(env_list);
+	env_list = create_env_var("INITIAL", "value");
+	result = rh_export(args, &env_list);
+	ck_assert_int_eq(result, EXIT_SUCCESS);
+	ck_assert_ptr_nonnull(env_list);
+	ck_assert_str_eq(env_list->key, "NEW_VAR");
+	ck_assert_str_eq(env_list->val, "new_value");
+	free_env_list(env_list);
+}
+END_TEST
+
+START_TEST(test_rh_export_add_new_var_with_quotes)
+{
+	t_env	*env_list;
+	char	arg_new_var[] = "NEW_VAR=\"new_value\"";
+	char	*args[] = {"export", arg_new_var, NULL};
+	int		result;
+
+	env_list = create_env_var("INITIAL", "value");
+	result = rh_export(args, &env_list);
+	ck_assert_int_eq(result, EXIT_SUCCESS);
+	ck_assert_ptr_nonnull(env_list);
+	ck_assert_str_eq(env_list->key, "NEW_VAR");
+	ck_assert_str_eq(env_list->val, "\"new_value\"");
+	free_env_list(env_list);
 }
 END_TEST
 
 START_TEST(test_rh_export_update_var)
 {
 	t_env	*env_list;
-    char	arg_new_var[] = "TEST=new_value";
+	char	arg_new_var[] = "TEST=new_value";
 	char	*args[] = {"export", arg_new_var, NULL};
 	int		result;
 
@@ -75,6 +92,7 @@ Suite	*builtin_export_test(void)
 	tcase_add_test(tc_core, test_rh_export_add_new_var);
 	tcase_add_test(tc_core, test_rh_export_update_var);
 	tcase_add_test(tc_core, test_rh_export_add_var_without_value);
+	tcase_add_test(tc_core, test_rh_export_add_new_var_with_quotes);
 	suite_add_tcase(s, tc_core);
 	return (s);
 }

@@ -12,6 +12,7 @@ TODO:
 - ✅ moved env variables code to a separate module
 - Using the env in the parser is not as easy as it sounds. The reason is the env variables is part of all_data struct, which is not available in the parser. I passed the all_data struct to the parser, but it's not a good idea to pass it to the parser. I need to find a better way to handle this. I'll come back to this later. but for now env replacment works with `echo $HOME` . Variables inside quotes are not handled yet.
 - done environment variable replacement in parser. It works with `echo $HOME` and `echo "$HOME"`. In the process, I fixed the bug with hanlding double quotes. The code now handles double quotes properly. So now when doing ` echo "hello world"`, it will work properly.
+- fixed bug in `export` where it doesn't accept values with double quotes. For exmaple `export HOME="hello world"` will not work. Now it works.
 
 ### 26.12.2024
 - Replaced first iteration of command table with command table of `r-command-table` branch
