@@ -41,7 +41,6 @@ int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 		perror("Forking error");
 		return (EXIT_FAILURE);
 	}
-	printf("p_id: %d\n", p_id);
 	is_child_process = p_id == 0;
 	if (is_child_process)
 		exec_chprocess(cmd, env_list, envp);

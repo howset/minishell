@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/28 22:40:15 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 13:50:13 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <signal.h>
+# include <termios.h>
 
 # include "./structs.h"
 # include "./lexer/lexer.h"
@@ -30,5 +32,6 @@
 # include "./builtins/builtins.h"
 # include "./command_table/command_table.h"
 # include "./utils/utils.h"
+# include "./signals/signals.h"
 
 #endif

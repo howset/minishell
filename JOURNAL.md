@@ -1,10 +1,6 @@
 Bugs found:
 - Double quotes in echos. For example `echo "a \n b" will output `a \n b` instead of `a` and `b` on separate lines. This is probably to be handled in the parser.
 
-TODO:
-- refactor `exec_chprocess` and move the builtin check to `exec_chprocess`
-- handle redirections
-
 ### 29.12.2024
 - The redirections should redirect the file output into a file or append it to a file. Any command can have redireection even if it's a builtin command. I'm thinking that the best place to handle this would be the place that will execute the command. AKA. `exec_chprocess`. If we handle it here, any command having direction will work with minimal effort. As a start, I need to refactor it to run all the commands first.
 	- ✅ Moved the builtins check and execution to `exec_chprocess`
@@ -17,7 +13,7 @@ TODO:
 	-	`>`
 	-   `>>`
 	-   `<<`
-
+- ✅ Handled signals in the shell. The shell now handles `ctrl+c` and `ctrl+d` signals. It will not kill the shell when pressing `ctrl+c`. It will just print a new line.
 ### 28.12.2024
 - Improved command tables testing so it uses the whole flow of lexer -> parser -> command table -> exec. This way we can test the whole flow of the shell.
 - QUESTION: do we need to handle subshell? It's not covered in parsers. will come back to this later.

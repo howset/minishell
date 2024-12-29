@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/29 01:34:28 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 13:56:18 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 char	*prompt_hist(char *input)
 {
 	input = readline("rh-shell> ");
+	if (!input) // Handle ctrl-D (EOF)
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	if (ft_strlen(input) > 0)
 		add_history(input);
 	return (input);
@@ -99,6 +104,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
 
+	setup_signals(); // Set up signal handlers
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
 	while (1)
@@ -119,5 +125,6 @@ int	main(int argc, char *argv[], char *envp[])
 	free_envlist(*all_data->env_list);
 	free(all_data->env_list);
 	free(all_data);
+	// rl_replace_line("", 0);
 	return (0);
 }

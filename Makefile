@@ -18,6 +18,7 @@ UTILS 				= 	./src/utils/malloc_perex.c\
 ## Sources & header
 SRC-MS				= 	./src/minishell.c
 
+SRC-SIGNALS			= 	./src/signals/signals.c
 
 SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
@@ -49,7 +50,7 @@ SRC-ENVS 			= 	./src/envs/envvar.c \
 						./src/envs/envlist.c
 
 HEADER				= ./src/
-ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(SRC-ENVS) $(UTILS)
+ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(SRC-ENVS) $(UTILS) $(SRC-SIGNALS)
 OBJS				= $(ALL_SRC:.c=.o)
 
 ## Text colors
