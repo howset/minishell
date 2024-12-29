@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/29 01:02:46 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:57:29 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,25 @@ char	*sanitize_text(char *text, t_alldata *all_data)
 		{
 			j = 0;
 			i++;
+			if (result[i] == '?')
+			{
+				env = find_envvar(*all_data->env_list, "?");
+				if (env)
+				{
+					new_str = malloc(strlen(result) - 1 + ft_strlen(env->val)
+							+ 1);
+					if (!new_str)
+						return (result);
+					ft_memcpy(new_str, result, i - 1);
+					ft_memcpy(new_str + i - 1, env->val, ft_strlen(env->val));
+					ft_memcpy(new_str + i - 1 + ft_strlen(env->val), result + i
+						+ 1, ft_strlen(result + i + 1) + 1);
+					free(result);
+					result = new_str;
+					i = i - 1 + ft_strlen(env->val);
+					continue ;
+				}
+			}
 			while (result[i] && (ft_isalnum(result[i]) || result[i] == '_'))
 			{
 				var_name[j++] = result[i++];

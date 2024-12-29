@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:18:48 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/12 17:59:13 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:51:19 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	lex_var(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 
 	start = pos;
 	pos++;
-	while (ft_isalnum(input[pos]) || input[pos] == '_')
+	while (ft_isalnum(input[pos]) || input[pos] == '_' || input[pos] == '?')
 		pos++;
 	len = pos - start;
 	new_tkn = create_tkn(TKN_VAR, &input[start], len, start);
