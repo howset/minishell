@@ -21,4 +21,8 @@ char	*init_fullpath(t_env *env_list, size_t *path_len);
 char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len);
 char	*build_fullpath(char *full_path, char *dir, char *cmd, size_t path_len);
 
+// exec_redirections.c
+void	handle_input_redirection(t_redirection *redirection);
+void	handle_output_redirection(t_redirection *redirection);
+void	exec_redirections(t_redirection *redirections);
 #endif

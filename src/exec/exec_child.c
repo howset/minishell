@@ -63,10 +63,15 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 {
 	char	*cmd_path;
+	int		exit_status;
 
+	// Apply redirections before executing the command
+	if (cmd->redirections)
+		exec_redirections(cmd->redirections);
 	if (is_builtin(cmd->args[0]))
 	{
-		return (exec_builtin(cmd->args, &env_list, envp));
+		exit_status = exec_builtin(cmd->args, &env_list, envp);
+		exit(exit_status); // Add this line to exit after builtin execution
 	}
 	cmd_path = find_path(cmd->args[0], env_list);
 	if (!cmd_path)
