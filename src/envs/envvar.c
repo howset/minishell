@@ -55,14 +55,9 @@ t_env	*create_envvar(char *key, char *val)
  */
 t_env	*find_envvar(t_env *env_list, char *key)
 {
-	int	i;
-
-	i = 0;
-	while (key[i])
-		i++;
 	while (env_list)
 	{
-		if (ft_strncmp(env_list->key, key, i) == 0)
+		if (ft_strcmp(env_list->key, key) == 0)
 			return (env_list);
 		env_list = env_list->next;
 	}

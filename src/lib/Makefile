@@ -45,6 +45,7 @@ SRC					= $(DIR_FPF)ft_printf.c \
 					$(DIR_LFT)ft_strchr.c \
 					$(DIR_LFT)ft_strrchr.c \
 					$(DIR_LFT)ft_strncmp.c \
+					$(DIR_LFT)ft_strcmp.c \
 					$(DIR_LFT)ft_memchr.c \
 					$(DIR_LFT)ft_memcmp.c \
 					$(DIR_LFT)ft_strnstr.c \

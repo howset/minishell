@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:33:54 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 11:59:26 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:01:29 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 	temp = *env_list;
 	if (!args[1])
 	{
-		printf("-->The following are the variables in minishell.<--\n");
 		while (temp)
 		{
+			if (!ft_strcmp(temp->key, "?"))
+			{
+				temp = temp->next;
+				continue ;
+			}
 			if (temp->val)
 				printf("%s=%s\n", temp->key, temp->val);
 			else
