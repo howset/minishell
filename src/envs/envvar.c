@@ -71,9 +71,9 @@ t_env	*find_envvar(t_env *env_list, char *key)
 
 int	remove_envvar(char *key, t_env **env_list)
 {
-	t_env *prev;
-	t_env *current;
-	int len;
+	t_env	*prev;
+	t_env	*current;
+	int		len;
 
 	prev = NULL;
 	current = *env_list;

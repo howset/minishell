@@ -6,12 +6,39 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 12:02:02 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:47:21 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
+/*
+ * add_env_variables() checks if the environment variable key is valid,
+ * then calls add_envvar() to add it to env_list with the given value.
+ */
+static int	add_env_variables(t_env **env_list, char *key, char *val)
+{
+	int	i;
+
+	i = 0;
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+		{
+			ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	add_envvar(env_list, key, val);
+	return (EXIT_SUCCESS);
+}
+
+/*
+ * handle_with_equals() temporarily replaces '=' with '\0' so we can split
+ * the argument into 'key' and 'value'. If 'value' is empty, we pass NULL
+ * to add_env_variables(). Then it restores '='.
+ */
 static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
 {
 	char	*value;
@@ -19,23 +46,19 @@ static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
 	*eq_sign = '\0';
 	value = eq_sign + 1;
 	if (*value == '\0')
-		add_envvar(env_list, arg, NULL);
+		add_env_variables(env_list, arg, NULL);
 	else
-		add_envvar(env_list, arg, value);
+		add_env_variables(env_list, arg, value);
 	*eq_sign = '=';
 }
 
-/**This is the implementation of export. It either prints env_list when no args
- * are given in the simple command, or add/update the env_list if there is one.
- * When that happens, the func loops over the args and finds the eq sign. The
- * eq_sign is then replaced with a null terminator to split the string to key
- * (args[i]) and value (eq_sign+1) which then are passed to add_envvar. The
- * eq_sign is then restored to =. If no eq sign is found, then add_envvar is
- * called without val.
- * 		Takes the whole args in simple command (incl args[0] --> the command,
- * 			has to be skipped, hence the check for args[1]), and env_list.
- * 		Returns 0 because always success that will be transferred to the
- * 			calling executor.
+/*
+ * rh_export() implements the 'export' builtin.
+ *  - If no arguments are given (beyond the command itself),
+ *    it prints the environment list in sorted order.
+ *  - Otherwise, it checks each arg for an '=' sign.
+ *    If found, handle_with_equals() is used;
+ *    if not, the variable is added with a NULL value.
  */
 int	rh_export(char *args[], t_env **env_list)
 {
@@ -54,7 +77,7 @@ int	rh_export(char *args[], t_env **env_list)
 		if (eq_sign)
 			handle_with_equals(env_list, args[i], eq_sign);
 		else
-			add_envvar(env_list, args[i], NULL);
+			add_env_variables(env_list, args[i], NULL);
 	}
 	return (EXIT_SUCCESS);
 }
