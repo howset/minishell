@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/30 13:07:09 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:09:54 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
+	add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	// this function is momentarily in env.c
 	return (all_data);
 }
