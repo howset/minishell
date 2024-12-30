@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 14:47:21 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:13:07 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,18 @@ static int	add_env_variables(t_env **env_list, char *key, char *val)
 {
 	int	i;
 
+	if (!ft_isalpha(*key) && *key != '_')
+	{
+		// ft_fprintf(STDERR_FILENO, "export: '%s'", key);
+		ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
+		exit(EXIT_FAILURE);
+	}
 	i = 0;
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
+			// ft_fprintf(STDERR_FILENO, "export: '%s'", key);
 			ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
 			exit(EXIT_FAILURE);
 		}

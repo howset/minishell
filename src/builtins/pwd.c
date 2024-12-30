@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 12:25:13 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/25 12:41:36 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:14:03 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	rh_cd(char *path)
 	}
 	if (chdir(path) != 0)
 	{
-		ft_printf("cd: no such file or directory: %s\n", path);
+		ft_fprintf(STDERR_FILENO, " No such file or directory\n", path);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

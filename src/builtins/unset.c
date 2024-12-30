@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:32:54 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:32:56 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:18:17 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ int	rh_unset(char *args[], t_env **env_list)
 {
 	int	i;
 
-	if (!args[1])
-	{
-		ft_fprintf(STDERR_FILENO, "unset: not enough arguments\n");
-		return (1);
-	}
 	i = 1;
 	while (args[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 12:05:30 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 15:29:47 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	int			i;
 
 	i = 0;
+	exit_stat = EXIT_SUCCESS;
 	while (i < table->cmd_count)
 	{
 		cmd = &table->commands[i];
