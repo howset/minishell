@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:49:45 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:05:04 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,10 @@ void	free_ast(t_ast *ast)
 	free_ast(ast->right);
 	free(ast);
 }
-
 /**
-
-	* This function is used to sanitize the text that is passed to the parser. It takes a string and replaces
-
-	* all environment variables with their values. If an environment variable is not found,
-	it is replaced with
-
-	* an empty string. This function is used to preprocess the input before parsing.
+ * This function is used to sanitize the text that is passed to the parser. It takes a string and replaces
+ * all environment variables with their values. If an environment variable is not found, it is replaced with
+ * an empty string. This function is used to preprocess the input before parsing.
  */
 char	*sanitize_text(char *text, t_alldata *all_data)
 {
@@ -136,6 +131,11 @@ char	*sanitize_text(char *text, t_alldata *all_data)
 	char	*new_str;
 	int		var_len;
 	int		value_len;
+	char	quote;
+	int		start;
+	int		len;
+	char	*substr;
+	char	*processed;
 
 	if (!text)
 		return (NULL);
@@ -145,6 +145,63 @@ char	*sanitize_text(char *text, t_alldata *all_data)
 	i = 0;
 	while (result[i])
 	{
+		if (result[i] == '\'' || result[i] == '\"')
+		{
+			quote = result[i];
+			start = i + 1;
+			len = 0;
+			// Find the matching closing quote
+			i++;
+			while (result[i] && result[i] != quote)
+			{
+				len++;
+				i++;
+			}
+			if (result[i] == quote)
+			{
+				if (quote == '\"')
+				{
+					// Process variables inside double quotes
+					substr = ft_substr(result, start, len);
+					processed = sanitize_text(substr, all_data);
+					// Create new string with processed content
+					new_str = malloc(strlen(result) - len - 2
+							+ strlen(processed) + 1);
+					if (!new_str)
+					{
+						free(substr);
+						free(processed);
+						return (result);
+					}
+					ft_memcpy(new_str, result, start - 1);
+					ft_memcpy(new_str + start - 1, processed,
+						strlen(processed));
+					ft_memcpy(new_str + start - 1 + strlen(processed), result
+						+ start + len + 1, strlen(result + start + len + 1)
+						+ 1);
+					free(substr);
+					free(processed);
+					free(result);
+					result = new_str;
+					i = start - 1 + strlen(processed);
+				}
+				else // Single quotes
+				{
+					// Keep content without quotes
+					new_str = malloc(strlen(result) - 2 + 1);
+					if (!new_str)
+						return (result);
+					ft_memcpy(new_str, result, start - 1);
+					ft_memcpy(new_str + start - 1, result + start, len);
+					ft_memcpy(new_str + start - 1 + len, result + start + len + 1,
+						strlen(result + start + len + 1) + 1);
+					free(result);
+					result = new_str;
+					i = start - 1 + len;
+				}
+			}
+			continue ;
+		}
 		if (result[i] == '$')
 		{
 			j = 0;

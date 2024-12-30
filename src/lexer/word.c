@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:18:48 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/29 18:51:19 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:06:02 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	lex_word(const char *input, int pos, t_token **tokens, t_token *new_tkn)
 	int	len;
 
 	start = pos;
-	while ((input[pos] && !ft_isspace(input[pos])) && !ft_strchr("|&;<>$()'\"",
+	while ((input[pos] && !ft_isspace(input[pos])) && !ft_strchr("|&;<>()",
 			input[pos]))
 		pos++;
 	len = pos - start;

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/29 01:05:13 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:52:11 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,8 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
-		// Single quotes are not sanitized
-		if ((*current)->type == TKN_QUO_SIN)
-			node->args[node->args_count - 1] = ft_strdup((*current)->value);
-		else
-			node->args[node->args_count
-				- 1] = ft_strdup(sanitize_text((*current)->value, all_data));
+		node->args[node->args_count
+			- 1] = ft_strdup(sanitize_text((*current)->value, all_data));
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}

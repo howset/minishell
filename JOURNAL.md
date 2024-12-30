@@ -1,6 +1,22 @@
 Bugs found:
 - Double quotes in echos. For example `echo "a \n b" will output `a \n b` instead of `a` and `b` on separate lines. This is probably to be handled in the parser.
 
+## 30.12.2024
+Running tests and Squshing bugs
+First case:
+```
+Test   4: ❌ echo hello'world'
+mini output = (hello world)
+bash output = (helloworld)
+```
+- Our lexer breaks the string `hello'world'` into 2 tokens `hello` and `world`. This is not the expected behavior. The expected behavior is to treat `hello'world'` as a single token.
+    - I'll update the lexer `lex_word` to accept single quotes and double quotes as allowed characters in a word. This way, it will treat `hello'world'` as a single token.
+	- I'll rely on the santize function to remove the quotes from the token and evalute what is inside the quotes.
+	- I also extended lex_world to accept variables insnide
+	- Updated the sanitize function to handle quotes.
+		- Signle quotes will keep the string as is.
+		- Double quotes calls sanitize again to handle variables inside the quotes.
+
 ### 29.12.2024
 - The redirections should redirect the file output into a file or append it to a file. Any command can have redireection even if it's a builtin command. I'm thinking that the best place to handle this would be the place that will execute the command. AKA. `exec_chprocess`. If we handle it here, any command having direction will work with minimal effort. As a start, I need to refactor it to run all the commands first.
 	- ✅ Moved the builtins check and execution to `exec_chprocess`
