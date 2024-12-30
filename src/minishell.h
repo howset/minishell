@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/29 13:50:13 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:01:12 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <termios.h>
+# include <unistd.h>
+# include <limits.h>
 
 # include "./structs.h"
 # include "./lexer/lexer.h"

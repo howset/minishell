@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:33:54 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 11:59:26 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./builtins.h"
+
+static void	rh_env_g(char *envp[])
+{
+	int	i;
+
+	i = 0;
+	printf("-->The following are the global variables environ.<--\n");
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
 
 /**Iterates the envp that is passed from the calling terminal (environ) and
  * prints row by row. When no option is given, then prints the variables in
@@ -9,29 +34,24 @@
  */
 int	rh_env(char *args[], char *envp[], t_env **env_list)
 {
-	int	i;
+	t_env	*temp;
 
-	i = 0;
+	temp = *env_list;
 	if (!args[1])
 	{
 		printf("-->The following are the variables in minishell.<--\n");
-		while (*env_list)
+		while (temp)
 		{
-			if ((*env_list)->val)
-				printf("%s=%s\n", (*env_list)->key, (*env_list)->val);
+			if (temp->val)
+				printf("%s=%s\n", temp->key, temp->val);
 			else
-				printf("%s=\n", (*env_list)->key);
-			env_list = &(*env_list)->next;
+				printf("%s=\n", temp->key);
+			temp = temp->next;
 		}
 	}
 	else if (ft_strncmp(args[1], "-g", 2) == 0)
 	{
-		printf("-->The following are the global variables environ.<--\n");
-		while (envp[i])
-		{
-			printf("%s\n", envp[i]);
-			i++;
-		}
+		rh_env_g(envp);
 	}
 	else
 		printf("No option or option -g only");

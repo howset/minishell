@@ -1,5 +1,16 @@
-#include "./builtins.h"
-#include <limits.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:32:36 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 12:01:17 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "builtins.h"
 
 /**An extension of ft_isdigit but includes checks to *str if its empty or NULL.
  * As well, to skip (-). Hate to use pointers to iterate the str, but have to

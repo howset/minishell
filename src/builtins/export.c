@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 12:02:02 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./builtins.h"
+
+static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
+{
+	char	*value;
+
+	*eq_sign = '\0';
+	value = eq_sign + 1;
+	if (*value == '\0')
+		add_envvar(env_list, arg, NULL);
+	else
+		add_envvar(env_list, arg, value);
+	*eq_sign = '=';
+}
 
 /**This is the implementation of export. It either prints env_list when no args
  * are given in the simple command, or add/update the env_list if there is one.
@@ -16,31 +41,20 @@ int	rh_export(char *args[], t_env **env_list)
 {
 	int		i;
 	char	*eq_sign;
-	char	*val;
 
 	if (!args[1])
 	{
 		print_sortedenvlist(*env_list);
 		return (EXIT_SUCCESS);
 	}
-	i = 1;
-	while (args[i])
+	i = 0;
+	while (args[++i])
 	{
 		eq_sign = ft_strchr(args[i], '=');
 		if (eq_sign)
-		{
-			*eq_sign = '\0';
-			val = eq_sign + 1;
-			if (*val == '\0' && args[i + 1] != NULL)
-			{
-				val = args[i + 1];
-			}
-			add_envvar(env_list, args[i], val);
-			*eq_sign = '=';
-		}
+			handle_with_equals(env_list, args[i], eq_sign);
 		else
 			add_envvar(env_list, args[i], NULL);
-		i++;
 	}
 	return (EXIT_SUCCESS);
 }

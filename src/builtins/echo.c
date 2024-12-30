@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:34:28 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 04:35:43 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./builtins.h"
 
 int	rh_echo(char *args[])
@@ -42,6 +54,7 @@ int	check_n(char *arg)
 	}
 	return (1);
 }
+
 int	writing(char *str)
 {
 	if (write(STDOUT_FILENO, str, ft_strlen(str)) == -1)

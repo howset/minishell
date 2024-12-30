@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:33:11 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 04:35:20 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
@@ -16,7 +28,6 @@ int		rh_exit(char *args[]);
 
 // export.c
 int		rh_export(char *args[], t_env **env_list);
-
 
 // unset.c
 int		rh_unset(char *args[], t_env **env_list);
