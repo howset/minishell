@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 04:56:35 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "signals.h"
 
 void	disable_ctrl_char_echo(void)
@@ -27,7 +39,7 @@ void	handle_sigquit(int sig)
 void	setup_signals(void)
 {
 	disable_ctrl_char_echo();
-	signal(SIGINT, handle_sigint);   // Handle ctrl-C
+	signal(SIGINT, handle_sigint); // Handle ctrl-C
 	signal(SIGQUIT, handle_sigquit); // Handle ctrl-\
 	// ctrl-D (EOF) is handled by readline in the main loop
 }

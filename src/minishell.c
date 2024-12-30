@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/29 18:58:16 by reldahli         ###   ########.fr       */
+/*   Updated: 2024/12/30 05:03:01 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
  * input to the history list.
  * 		Takes the declared char *input from main.
  * 		Returns the input string.
+ * 		if (!input) // Handle ctrl-D (EOF)
  */
 char	*prompt_hist(char *input)
 {
 	input = readline("rh-shell> ");
-	if (!input) // Handle ctrl-D (EOF)
+	if (!input)
 	{
 		printf("exit\n");
 		exit(0);

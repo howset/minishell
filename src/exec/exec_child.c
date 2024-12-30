@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_child.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
+/*   Updated: 2024/12/30 04:40:35 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./exec.h"
 
 /**This function just serves as a check if the given simple command is included
@@ -54,7 +66,8 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-/**This func is called by `exec_prog` and executed by the child process.
+/*
+ *This func is called by `exec_prog` and executed by the child process.
  * `cmd_path` is the complete path to  a command by `find_path`. The execution
  *  of the command is by execve.
  * 		Takes the command (args[0]), other args, the env_list and the envp.
