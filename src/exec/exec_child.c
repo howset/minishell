@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:40:35 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:47:02 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  */
 int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 {
-	char	*cmd_path;
-	int		exit_status;
+	struct stat	st;
+	char		*cmd_path;
+	int			exit_status;
 
 	// Apply redirections before executing the command
 	if (cmd->redirections)
@@ -89,7 +90,16 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 	cmd_path = find_path(cmd->args[0], env_list);
 	if (!cmd_path)
 	{
-		ft_fprintf(STDERR_FILENO, "command not found: %s\n", cmd->args[0]);
+		// Check if it's a directory
+		if (stat(cmd->args[0], &st) == 0 && S_ISDIR(st.st_mode))
+		{
+			ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd->args[0]);
+			free(cmd_path);
+			exit(126);
+		}
+		else
+			ft_fprintf(STDERR_FILENO, "command not found: %s\n", cmd->args[0]);
+		free(cmd_path);
 		exit(127);
 	}
 	execve(cmd_path, cmd->args, envp);

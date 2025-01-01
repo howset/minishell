@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/30 12:01:12 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:30:11 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 # include <termios.h>
 # include <unistd.h>
 # include <limits.h>
-
+# include <errno.h>
+# include <string.h>
+#include <sys/stat.h>
 # include "./structs.h"
 # include "./lexer/lexer.h"
 # include "./parser/parser.h"

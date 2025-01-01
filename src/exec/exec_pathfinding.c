@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:45 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:41:48 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:31:10 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,31 @@
  */
 char	*find_path(char *cmd, t_env *env_list)
 {
-	char	*path;
-	char	*full_path;
-	size_t	path_len;
+	struct stat	st;
+	size_t		path_len;
+	char		*path;
+	char		*full_path;
 
+	// If user typed a path (contains '/'),
+	//	check if it’s a directory or executable
+	if (ft_strchr(cmd, '/'))
+	{
+		if (stat(cmd, &st) == 0)
+		{
+			if (S_ISDIR(st.st_mode))
+				return (NULL); // "Is a directory"
+			// If it’s not a directory, check execute permission
+			if (access(cmd, X_OK) == 0)
+				return (ft_strdup(cmd)); // replace with your own strdup
+		}
+		return (NULL); // "command not found"
+	}
+	// Otherwise, proceed with existing PATH search
 	full_path = init_fullpath(env_list, &path_len);
 	if (!full_path)
 		return (NULL);
 	path = find_envvar(env_list, "PATH")->val;
-	full_path = process_dirs(path, cmd, full_path, path_len);
-	if (!full_path)
-		free(full_path);
-	return (full_path);
+	return (process_dirs(path, cmd, full_path, path_len));
 }
 
 /**This function basically initializes (malloc) full_path.

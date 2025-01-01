@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 18:41:17 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:52:46 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_ast	*parse_factor(t_token **current, t_alldata *all_data)
 		}
 		(*current) = (*current)->next; // Skip ')'
 	}
-	else if ((*current)->type == TKN_WORD)
+	else if ((*current)->type == TKN_WORD || (*current)->type == TKN_VAR)
 	{
 		node = parse_command(current, all_data);
 	}
