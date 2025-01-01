@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 19:59:22 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:43:03 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ t_ast	*parse_factor(t_token **current, t_alldata *all_data)
 		(*current) = (*current)->next; // Skip ')'
 	}
 	else if ((*current)->type == TKN_WORD || (*current)->type == TKN_VAR)
+	{
+		node = parse_command(current, all_data);
+	}
+	else if ((*current)->type == TKN_QUO_DOU)
 	{
 		node = parse_command(current, all_data);
 	}
