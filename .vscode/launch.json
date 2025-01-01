@@ -10,7 +10,8 @@
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
 		"preLaunchTask": "build",
-		"MIMode": "lldb"
+		"MIMode": "lldb",
+		"externalConsole": true
 	  }
 	]
   }
