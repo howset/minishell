@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:45 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 19:31:10 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:25:58 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ char	*find_path(char *cmd, t_env *env_list)
 			// If it’s not a directory, check execute permission
 			if (access(cmd, X_OK) == 0)
 				return (ft_strdup(cmd)); // replace with your own strdup
+			else{
+				ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
+				exit(126);
+			}
 		}
 		return (NULL); // "command not found"
 	}
