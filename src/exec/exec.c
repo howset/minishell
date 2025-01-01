@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 16:09:10 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:45:51 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 {
 	t_command	*cmd;
 	int			exit_stat;
-	int			i;
 
-	i = 0;
 	exit_stat = EXIT_SUCCESS;
-	while (i < table->cmd_count)
+	cmd = table->commands;
+	while (cmd)
 	{
-		cmd = &table->commands[i];
 		if (cmd->type == CMD_SIMPLE)
 		{
 			exit_stat = exec_simple_command(cmd, *env_list, envp);
@@ -37,10 +35,11 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 		else if (cmd->type == CMD_PIPE)
 		{
 			exit_stat = exec_pipe_command(cmd, *env_list, envp);
-			while (i < table->cmd_count && table->commands[i].type == CMD_PIPE)
-				i++;
+			while (cmd && cmd->type == CMD_PIPE)
+				cmd = cmd->next;
+			continue;
 		}
-		i++;
+		cmd = cmd->next;
 	}
 	return (exit_stat);
 }
