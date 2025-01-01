@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:45 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 20:25:58 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:37:27 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,21 @@ char	*find_path(char *cmd, t_env *env_list)
 		if (stat(cmd, &st) == 0)
 		{
 			if (S_ISDIR(st.st_mode))
-				return (NULL); // "Is a directory"
+			{
+				ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd);
+				exit(126);
+			}
 			// If it’s not a directory, check execute permission
 			if (access(cmd, X_OK) == 0)
 				return (ft_strdup(cmd)); // replace with your own strdup
-			else{
+			else
+			{
 				ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
 				exit(126);
 			}
 		}
-		return (NULL); // "command not found"
+		ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
+		exit(127);
 	}
 	// Otherwise, proceed with existing PATH search
 	full_path = init_fullpath(env_list, &path_len);
