@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 19:47:02 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 20:01:38 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 	char		*cmd_path;
 	int			exit_status;
 
+	if (cmd->args[0] && cmd->args[0][0] == '\0') //handle empty command
+		exit(0);
 	// Apply redirections before executing the command
 	if (cmd->redirections)
 		exec_redirections(cmd->redirections);

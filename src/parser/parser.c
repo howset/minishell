@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 19:52:46 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 19:59:22 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 			|| (*current)->type == TKN_VAR || (*current)->type == TKN_QUO_SIN
 			|| (*current)->type == TKN_QUO_DOU || (*current)->type == TKN_BG))
 	{
+		if ((*current)->type == TKN_VAR && ft_strcmp((*current)->value,
+				"$EMPTY") == 0)
+		{
+			(*current) = (*current)->next;
+			continue ;
+		}
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
