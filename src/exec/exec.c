@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 17:45:51 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/01 18:49:58 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 			exit_stat = exec_pipe_command(cmd, *env_list, envp);
 			while (cmd && cmd->type == CMD_PIPE)
 				cmd = cmd->next;
-			continue;
+			continue ;
 		}
 		cmd = cmd->next;
 	}
@@ -104,8 +104,10 @@ int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 			close(current_cmd->pipe_write);
 		status = wait_chprocess(p_id);
 		// If the child process failed, break the pipeline
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-			return (WEXITSTATUS(status));
+		if (status != EXIT_SUCCESS)
+		{
+			return (EXIT_FAILURE);
+		}
 		current_cmd = current_cmd->next;
 	}
 	return (status);
