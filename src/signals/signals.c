@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 15:15:01 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:16:46 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	handle_sigint(int sig)
 void	handle_sigquit(int sig)
 {
 	(void)sig;
-	// Do nothing for ctrl-\ in interactive mode
+	// Do nothing for ctrl-\ in interactive mode.
 }
 
 void	setup_signals(void)
