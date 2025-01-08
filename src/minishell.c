@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/30 16:09:16 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:06:49 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
+	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
+	add_envvar(all_data->env_list, "?", "initial value");
 	// this function is momentarily in env.c
 	return (all_data);
 }
