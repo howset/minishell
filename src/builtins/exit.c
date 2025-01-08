@@ -1,16 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 04:32:36 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 15:23:16 by reldahli         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "builtins.h"
+#include "./builtins.h"
+#include <limits.h>
 
 /**An extension of ft_isdigit but includes checks to *str if its empty or NULL.
  * As well, to skip (-). Hate to use pointers to iterate the str, but have to
@@ -22,7 +11,7 @@ static int	ft_isnumber(const char *str)
 {
 	if (!str || !*str)
 		return (0);
-	if (*str == '-' || *str == '+')
+	if (*str == '-')
 		str++;
 	while (*str)
 	{
@@ -49,12 +38,6 @@ int	rh_exit(char *args[])
 	printf("exit\n");
 	if (!args[1])
 		exit(0);
-	if (ft_isalpha(*args[1]))
-	{
-		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required\n",
-			args[1]);
-		exit(255);
-	}
 	if (!ft_isnumber(args[1]))
 	{
 		ft_fprintf(STDERR_FILENO, "exit: %s: numeric argument required\n",

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:56:35 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:46:58 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 
+// this function supresses the echoing of ctrl-c, which we may not want.
 void	disable_ctrl_char_echo(void)
 {
 	struct termios	term;
@@ -24,8 +25,8 @@ void	disable_ctrl_char_echo(void)
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	write(STDERR_FILENO, "\nrh-shell>", 10);
-	rl_on_new_line();
+	write(STDERR_FILENO, "\nrh-shell> ", 11);
+	//rl_on_new_line(); //remove redundant prompt
 	// rl_replace_line("", 0);
 	rl_redisplay();
 }
@@ -40,7 +41,7 @@ void	setup_signals(void)
 {
 	disable_ctrl_char_echo();
 	signal(SIGINT, handle_sigint); // Handle ctrl-C
-	signal(SIGQUIT, handle_sigquit); // Handle ctrl-\
+	signal(SIGQUIT, handle_sigquit); /* // Handle ctrl-\ */
 	// ctrl-D (EOF) is handled by readline in the main loop
 }
 
