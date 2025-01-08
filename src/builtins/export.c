@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 15:13:07 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/08 16:22:36 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	add_env_variables(t_env **env_list, char *key, char *val)
 	{
 		// ft_fprintf(STDERR_FILENO, "export: '%s'", key);
 		ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	i = 0;
 	while (key[i])
