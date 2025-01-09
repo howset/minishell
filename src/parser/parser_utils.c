@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 13:05:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:28:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ char	*sanitize_text(char *text, t_alldata *all_data)
 
 	if (!text)
 		return (NULL);
-	result = strdup(text);
+	result = ft_strdup(text);
 	if (!result)
 		return (NULL);
 	i = 0;

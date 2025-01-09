@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 18:03:15 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:02:31 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	{
 		if (cmd->type == CMD_SIMPLE)
 		{
-			exit_stat = exec_simple_command(cmd, *env_list, envp);
+			//exit_stat = exec_simple_command(cmd, *env_list, envp);
+			exit_stat = exec_chprocess(cmd, *env_list, envp);
 		}
 		else if (cmd->type == CMD_PIPE)
 		{
@@ -44,22 +45,10 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
+/**exec_simple_command makes sure that *any* command (builtins & non) is 
+ * executed *NOT* as a child process*/
 int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 {
-	/* pid_t	p_id;
-	int		is_child_process;
-
-	p_id = fork();
-	if (p_id < 0)
-	{
-		perror("Forking error");
-		return (EXIT_FAILURE);
-	}
-	is_child_process = p_id == 0;
-	if (is_child_process)
-		exec_chprocess(cmd, env_list, envp);
-	else
-		return (wait_chprocess(p_id)); */
 	int			exit_stat;
 	
 	if (is_builtin(cmd->args[0]))
@@ -132,6 +121,7 @@ int	exec_simprog(char *args[], t_env **env_list, char *envp[])
 	}
 	if (p_id == 0)
 		exec_simchprocess(args, *env_list, envp);
+		//exec_chprocess(args, *env_list, envp);
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
