@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 18:18:29 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 14:31:33 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,40 @@
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 } */
 
-void	handle_sigint(int sig)
+/**
+ * CTRL + C
+*/
+void	handle_sigint(int sigint)
 {
-	(void)sig;
+	(void)sigint;
 	write(STDERR_FILENO, "\nrh-shell> ", 11);
-	//rl_on_new_line(); //remove redundant prompt
-	//rl_replace_line("", 0);
-	rl_redisplay();
 }
 
-void	handle_sigquit(int sig)
+/**
+ * CTRL + \
+*/
+void	handle_sigquit(int sigquit)
 {
-	(void)sig;
-	// Do nothing for ctrl-\ in interactive mode.
+	(void)sigquit;
 }
 
+/**
+ * CTRL + D 
+ * CTRL + C SIGINT
+ * CTRL + \ SIGQUIT
+*/
 void	setup_signals(void)
 {
-	//disable_ctrl_char_echo();
-	signal(SIGINT, handle_sigint); // Handle ctrl-C
+	struct sigaction sa;
+	
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART; // Restart interrupted syscalls
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		perror("sigint");
+		exit(EXIT_FAILURE);
+	}
 	signal(SIGQUIT, handle_sigquit); /* // Handle ctrl-\ */
-	// ctrl-D (EOF) is handled by readline in the main loop
 }
 
