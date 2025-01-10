@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/10 20:07:46 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:20:39 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
 		sanitized = sanitize_text((*current)->value, all_data);
-		node->args[node->args_count
-			- 1] = ft_strdup(sanitized);
+		node->args[node->args_count	- 1] = ft_strdup(sanitized);
+		free(sanitized);
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}
-	free(sanitized);
 	return (node);
 }
 

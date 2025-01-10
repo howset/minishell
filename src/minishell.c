@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/10 19:39:32 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:23:54 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ void	print_command_table(t_cmdtable *table)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
-
+	char		*ex_stat;
+	
 	setup_signals(); // Set up signal handlers
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
@@ -146,7 +147,9 @@ int	main(int argc, char *argv[], char *envp[])
 		// print_command_table(all_data->table);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list,
 				envp);
-		add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
+		ex_stat = ft_itoa(all_data->exit_stat);
+		add_envvar(all_data->env_list, "?", ex_stat);
+		free(ex_stat);
 		free_tkn(all_data->tokens);
 		free(all_data->input);
 	}
