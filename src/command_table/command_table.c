@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:52:36 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:52:38 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:32:36 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,8 @@ void	ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table)
 	default:
 		break ;
 	}
+/* 	if (cmd)
+		free(cmd); */
 }
 
 t_cmdtable	*ast_to_command_table(t_ast *ast)
@@ -312,8 +314,6 @@ t_cmdtable	*ast_to_command_table(t_ast *ast)
 	t_cmdtable	*table;
 
 	table = create_command_table();
-	if (!table)
-		return (NULL);
 	ast_to_cmdtable_recursive(ast, table);
 	return (table);
 }
