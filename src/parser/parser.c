@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/10 20:20:39 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:43:27 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_ast	*parse_term(t_token **current, t_alldata *all_data)
 	t_ast	*node;
 	t_ast	*redir_node;
 	t_ast	*command_node;
+	char	*filename;
 
 	// First parse either a simple command, variable, etc., or '(' expression
 	node = parse_factor(current, all_data);
@@ -130,12 +131,13 @@ t_ast	*parse_term(t_token **current, t_alldata *all_data)
 						"Expected a filename after redirection");
 				return (NULL);
 			}
-			redir_node->filename = ft_strdup(sanitize_text((*current)->value,
-						all_data));
+			filename = sanitize_text((*current)->value, all_data);
+			redir_node->filename = ft_strdup(filename);
 			(*current) = (*current)->next; // consume the filename token
 			// attach previous node (command or pipeline or subshell) to the redirection's left
 			redir_node->left = node;
 			node = redir_node;
+			free(filename);
 		}
 		// Otherwise, if it's an argument token, append it to the command node
 		else
