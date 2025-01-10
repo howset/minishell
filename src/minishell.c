@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/10 20:34:35 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:37:32 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free_tkn(all_data->tokens);
 		free(all_data->input);
 		free_command_table(all_data->table);
+		free_ast(all_data->tree);
 	}
 	free_envlist(*all_data->env_list);
 	free(all_data->env_list);
