@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 20:43:03 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/10 20:07:46 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	is_redirection_token(t_tkntype type)
 t_ast	*parse_command(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
+	char	*sanitized;
 
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
@@ -46,11 +47,13 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 		node->args_count++;
 		node->args = realloc(node->args, sizeof(char *) * (node->args_count
 					+ 1));
+		sanitized = sanitize_text((*current)->value, all_data);
 		node->args[node->args_count
-			- 1] = ft_strdup(sanitize_text((*current)->value, all_data));
+			- 1] = ft_strdup(sanitized);
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}
+	free(sanitized);
 	return (node);
 }
 
@@ -230,7 +233,9 @@ t_ast	*parse_expression(t_token **current, t_alldata *all_data)
 t_ast	*parse(t_token *tokens, t_alldata *all_data)
 {
 	t_token	*current;
+	t_ast	*ast;
 
 	current = tokens;
-	return (parse_expression(&current, all_data));
+	ast = parse_expression(&current, all_data);
+	return (ast);
 }
