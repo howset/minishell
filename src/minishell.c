@@ -6,11 +6,35 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/08 18:06:49 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/10 19:39:32 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+char	*fancy_prompt(void)
+{
+	char	*wdir;
+	char	*temp;
+	char	*temp1;
+	char	*temp2;
+	char	*temp3;
+	char	*prompt;
+
+	wdir = getcwd(NULL, 0);
+	temp = ft_strjoin(YEL BOLD, "rh-shell> ");
+	temp1 = ft_strjoin(BLU BOLD, wdir);
+	temp2 = ft_strjoin(temp1, RES);
+	temp3 = ft_strjoin(temp, temp2);
+	prompt = ft_strjoin(temp3, "\n$> ");
+	free(wdir);
+	free(temp);
+	free(temp1);
+	free(temp2);
+	free(temp3);
+	return (prompt);
+}
 
 /**
  * This function is the prompt for the shell. It uses the readline function
@@ -22,14 +46,18 @@
  */
 char	*prompt_hist(char *input)
 {
-	input = readline("rh-shell> ");
+	char	*prompt;
+
+	prompt = fancy_prompt();
+	input = readline(prompt);
 	if (!input)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(0); // may have to free something?
 	}
 	if (ft_strlen(input) > 0)
 		add_history(input);
+	free(prompt);
 	return (input);
 }
 
@@ -55,7 +83,6 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	add_envvar(all_data->env_list, "?", "initial value");
 	// this function is momentarily in env.c
 	return (all_data);
@@ -127,5 +154,6 @@ int	main(int argc, char *argv[], char *envp[])
 	free(all_data->env_list);
 	free(all_data);
 	// rl_replace_line("", 0);
+	rl_clear_history();
 	return (0);
 }
