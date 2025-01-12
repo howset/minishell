@@ -10,6 +10,8 @@
 		"ft_printf.h": "c",
 		"structs.h": "c",
 		"parser.h": "c",
-		"command_table.h": "c"
+		"command_table.h": "c",
+		"__node_handle": "c",
+		"get_next_line.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:33:54 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 16:01:29 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:33:19 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int	rh_env(char *args[], char *envp[], t_env **env_list)
 		}
 	}
 	else if (ft_strncmp(args[1], "-g", 2) == 0)
-	{
 		rh_env_g(envp);
-	}
 	else
 		printf("No option or option -g only");
 	return (EXIT_SUCCESS);
