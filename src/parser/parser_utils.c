@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/10 20:14:11 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/12 15:50:19 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,11 @@ char	*sanitize_text(char *text, t_alldata *all_data)
 						+ start + len + 1, strlen(result + start + len + 1)
 						+ 1);
 					free(substr);
-					free(processed);
+					//free(processed);
 					free(result);
 					result = new_str;
 					i = start - 1 + strlen(processed);
+					free(processed);
 				}
 				else // Single quotes
 				{
