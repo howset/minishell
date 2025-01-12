@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/10 20:37:32 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:55:52 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*prompt_hist(char *input)
 	if (!input)
 	{
 		printf("exit\n");
-		exit(0); // may have to free something?
+		exit(0);
 	}
 	if (ft_strlen(input) > 0)
 		add_history(input);
