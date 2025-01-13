@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 14:25:56 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:07:47 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 # include "../minishell.h"
 
-void	setup_signals(void);
-void	handle_sigint(int sig);
-void	handle_sigquit(int sig);
+void	setup_signals(t_alldata *all_data);
+void	handle_sigint(int signum);
+//void	handle_sigquit(int signum);
 //void	reset_signals(void);
 
 #endif

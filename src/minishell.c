@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/12 16:55:52 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:07:32 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", "initial value");
+	add_envvar(all_data->env_list, "?", "0");
 	// this function is momentarily in env.c
 	return (all_data);
 }
@@ -135,7 +135,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_alldata	*all_data;
 	char		*ex_stat;
 	
-	setup_signals(); // Set up signal handlers
+	setup_signals(all_data); // Set up signal handlers
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
 	while (1)

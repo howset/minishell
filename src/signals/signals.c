@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 14:24:14 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:08:03 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,25 @@ void	handle_sigint(int signum)
 /**
  * CTRL + \
 */
-void	handle_sigquit(int sigquit)
+/* void	handle_sigquit(int signum)
 {
-	(void)sigquit;
-}
+	//(void)sigquit;
+	if (signum == SIGINT)
+	{
+		//ft_printf("\n");
+		//rl_replace_line("", 0);
+		//rl_on_new_line();
+		//rl_redisplay();
+		//g_flag = signum;
+	}
+} */
 
 /**
  * CTRL + D 
  * CTRL + C SIGINT
  * CTRL + \ SIGQUIT
 */
-void	setup_signals(void)
+void	setup_signals(t_alldata *all_data)
 {
 /* 	//disable_ctrl_char_echo();
 	signal(SIGINT, handle_sigint); // Handle ctrl-C
@@ -72,9 +80,9 @@ void	setup_signals(void)
 	sa.sa_flags = SA_RESTART; // Restart interrupted syscalls
 	sigaction(SIGINT, &sa, NULL);
 	
-	sa.sa_handler = handle_sigquit;
+/* 	sa.sa_handler = handle_sigquit;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL); */
 }
 
