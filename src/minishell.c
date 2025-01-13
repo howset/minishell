@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/13 15:07:32 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:40:30 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", "0");
+	add_envvar(all_data->env_list, "?", "init");
 	// this function is momentarily in env.c
 	return (all_data);
 }
@@ -130,14 +130,43 @@ void	print_command_table(t_cmdtable *table)
 	printf("\n");
 }
 
+/**
+ * A static pointer can be avoided if explicitly passing the t_alldata pointer.
+ * However, signal handlers don't take arguments. 
+ * static variable to store the pointer to t_alldata
+ */
+static t_alldata *g_all_data_ptr = NULL;
+
+/**
+ * Helper function for signals to pass the all_data structs because signals
+ * take no arguments.
+ * Set a static pointer
+ */
+void set_alldata(t_alldata *all_data)
+{
+	g_all_data_ptr = all_data;
+}
+
+/**
+ * Helper function for signals to pass the all_data structs because signals
+ * take no arguments.
+ * retrieve the pointer to t_alldata
+ */
+t_alldata *get_alldata(void)
+{
+	return g_all_data_ptr;
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
 	char		*ex_stat;
 	
-	setup_signals(all_data); // Set up signal handlers
+	setup_signals(); // Set up signal handlers
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
+	set_alldata(all_data);
+	setup_signals(); // Set up signal handlers
 	while (1)
 	{
 		all_data->input = prompt_hist(all_data->input);
@@ -154,11 +183,11 @@ int	main(int argc, char *argv[], char *envp[])
 		free(all_data->input);
 		free_command_table(all_data->table);
 		free_ast(all_data->tree);
+		//printf("all_data->exit_stat:%d", all_data->exit_stat);
 	}
 	free_envlist(*all_data->env_list);
 	free(all_data->env_list);
 	free(all_data);
-	// rl_replace_line("", 0);
 	rl_clear_history();
 	return (0);
 }

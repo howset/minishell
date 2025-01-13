@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 15:08:03 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:43:25 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,64 +25,59 @@
 /**
  * CTRL + C
 */
-void	handle_sigint(int signum)
+void	handle_sigint(int signum, siginfo_t *info, void *context)
 {
-/* 	(void)sig;
-	write(STDERR_FILENO, "\nrh-shell> ", 11);
-	//rl_on_new_line(); //remove redundant prompt
-	//rl_replace_line("", 0);
-	rl_redisplay(); */
-	/* (void)sigint;
-	write(STDERR_FILENO, "\nrh-shell> ", 11); */
-	//write(STDERR_FILENO, "\nrh-shell> ", 11);
+	t_alldata *all_data;
+
+	(void)info;
+	(void)context;
 	if (signum == SIGINT)
 	{
 		ft_printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		//g_flag = signum;
 	}
+	all_data = get_alldata();
+	all_data->exit_stat = 130; // 130 = Terminated by SIGINT
+	//printf("all_data->exit_stat:%d\n", all_data->exit_stat);
 }
 
 /**
  * CTRL + \
 */
-/* void	handle_sigquit(int signum)
+ void	handle_sigquit(int signum)
 {
-	//(void)sigquit;
-	if (signum == SIGINT)
-	{
-		//ft_printf("\n");
-		//rl_replace_line("", 0);
-		//rl_on_new_line();
-		//rl_redisplay();
-		//g_flag = signum;
-	}
-} */
+	(void)signum;
+}
 
 /**
- * CTRL + D 
+ * CTRL + D (EOF) is handled by readline in the main loop
  * CTRL + C SIGINT
  * CTRL + \ SIGQUIT
+ * SA_RESTART | SA_SIGINFO; // Restart interrupted syscalls | SA_SIGINFO to pass extra info
 */
-void	setup_signals(t_alldata *all_data)
+void	setup_signals(void)
 {
-/* 	//disable_ctrl_char_echo();
-	signal(SIGINT, handle_sigint); // Handle ctrl-C
-	signal(SIGQUIT, handle_sigquit); // Handle ctrl-\
-	// ctrl-D (EOF) is handled by readline in the main loop */
+	struct sigaction sa_int;
+	struct sigaction sa_quit;
+	t_alldata *all_data;
 	
-	struct sigaction sa;
+	all_data = get_alldata();
 	
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART; // Restart interrupted syscalls
-	sigaction(SIGINT, &sa, NULL);
+	sa_int.sa_sigaction = handle_sigint;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = SA_RESTART | SA_SIGINFO;
+	sigaction(SIGINT, &sa_int, NULL);
 	
-/* 	sa.sa_handler = handle_sigquit;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa, NULL); */
+	//sa_quit.sa_handler = SIG_IGN;
+	sa_quit.sa_handler = handle_sigquit;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = SA_RESTART;
+	sigaction(SIGQUIT, &sa_quit, NULL);
+
+	if (all_data)
+		//printf("all_data->exit_stat:%d", all_data->exit_stat);
+		printf(" ");
 }
 
