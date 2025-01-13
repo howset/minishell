@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 18:31:44 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 19:23:23 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * CTRL + C
 */
-void	handle_sigint(int signum, siginfo_t *info, void *context)
+void	handle_sigint(int signum)
 {
-	(void)info;
-	(void)context;
+	//(void)info;
+	//(void)context;
 	if (signum == SIGINT)
 	{
 		ft_printf("\n");
@@ -51,9 +51,10 @@ void	setup_signals(t_alldata *all_data)
 	ft_memset(&sa_int, 0, sizeof(sa_int));
 	//ft_memset(&sa_quit, 0, sizeof(sa_quit));
 	
-	sa_int.sa_sigaction = handle_sigint;
+	sa_int.sa_handler = handle_sigint;
+	//sa_int.sa_sigaction = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART | SA_SIGINFO;
+	sa_int.sa_flags = SA_RESTART; // | SA_SIGINFO;
 	sigaction(SIGINT, &sa_int, NULL);
 	
 /* 	sa_quit.sa_handler = SIG_IGN;

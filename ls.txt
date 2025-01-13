@@ -1,0 +1,11 @@
+en.subject.pdf
+JOURNAL.md
+ls.txt
+Makefile
+minishell
+README.md
+slides
+src
+tests
+valgrind-out.txt
+wc.txt

@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/13 18:36:17 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:43:01 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,13 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		setup_signals(all_data); // Set up signal handlers
-		if (g_signal_stat > 100)
+		/* if (g_signal_stat > 100)
 		{
 			all_data->exit_stat = g_signal_stat;
 			ex_stat = ft_itoa(all_data->exit_stat);
 			add_envvar(all_data->env_list, "?", ex_stat);
 			free(ex_stat);
-		}
+		} */
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
 		all_data->tree = parse(all_data->tokens, all_data);
