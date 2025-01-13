@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:33:11 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/12 23:15:07 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:14:19 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "../minishell.h"
 # include <limits.h>
+
+// cd.c
+int	rh_cd(char *path);
 
 // echo.c
 int		rh_echo(char *args[]);
