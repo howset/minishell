@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/10 19:43:55 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:24:14 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	setup_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART; // Restart interrupted syscalls
 	sigaction(SIGINT, &sa, NULL);
+	
 	sa.sa_handler = handle_sigquit;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
