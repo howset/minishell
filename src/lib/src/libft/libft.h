@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:11:32 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/30 15:53:57 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/13 01:12:27 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_isspace(int c);
 void				*ft_realloc(void *ptr, size_t size);
+int					ft_isnumber(const char *str);
 
 #endif

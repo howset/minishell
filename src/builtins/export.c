@@ -3,26 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 16:29:06 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/13 01:22:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
 
 /*
- * add_env_variables() checks if the environment variable key is valid,
- * then calls add_envvar() to add it to env_list with the given value.
+ * add_env_variables() - Validates and adds environment variables to env list
+ *
+ * Parameters:
+ *   env_list: Double pointer to environment variable list
+ *   key: Environment variable name to add/update
+ *   val: Value to associate with the key
+ *
+ * Return values:
+ *   EXIT_SUCCESS (0): Variable added successfully
+ *   EXIT_FAILURE (1): Invalid identifier
+ *
+ * Function flow:
+ * 1. Validate key's first character:
+ *    - Must start with letter or underscore
+ *    - Returns failure if invalid
+ *
+ * 2. Validate remaining characters in key:
+ *    - Must be alphanumeric or underscore
+ *    - Exits with failure if invalid character found
+ *
+ * 3. If validation passes:
+ *    - Calls add_envvar() to add/update environment variable
+ *    - Returns success
+ *
+ * Valid format examples:
+ *   - "PATH=/usr/bin"     (valid)
+ *   - "_TEST=value"       (valid)
+ *   - "2TEST=value"       (invalid)
+ *   - "TEST@=value"       (invalid)
  */
+
 static int	add_env_variables(t_env **env_list, char *key, char *val)
 {
 	int	i;
 
 	if (!ft_isalpha(*key) && *key != '_')
 	{
-		// ft_fprintf(STDERR_FILENO, "export: '%s'", key);
 		ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
 		return (EXIT_FAILURE);
 	}
@@ -31,7 +58,6 @@ static int	add_env_variables(t_env **env_list, char *key, char *val)
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
-			// ft_fprintf(STDERR_FILENO, "export: '%s'", key);
 			ft_fprintf(STDERR_FILENO, " not a valid identifier\n");
 			exit(EXIT_FAILURE);
 		}
@@ -46,6 +72,7 @@ static int	add_env_variables(t_env **env_list, char *key, char *val)
  * the argument into 'key' and 'value'. If 'value' is empty, we pass NULL
  * to add_env_variables(). Then it restores '='.
  */
+
 static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
 {
 	char	*value;
@@ -67,6 +94,7 @@ static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
  *    If found, handle_with_equals() is used;
  *    if not, the variable is added with a NULL value.
  */
+
 int	rh_export(char *args[], t_env **env_list)
 {
 	int		i;

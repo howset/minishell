@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/12 16:50:09 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/12 23:04:10 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int	main(int argc, char *argv[], char *envp[])
 	free(all_data->env_list);
 	free(all_data);
 	// rl_replace_line("", 0);
-	rl_clear_history();
+	// rl_clear_history();
+	clear_history();
 	return (0);
 }

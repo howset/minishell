@@ -75,6 +75,7 @@ SRC					= $(DIR_FPF)ft_printf.c \
 					$(DIR_LFT)ft_atol.c \
 					$(DIR_LFT)ft_isspace.c \
 					$(DIR_LFT)ft_realloc.c \
+					$(DIR_LFT)ft_isnumber.c \
 
 OBJ					= $(SRC:.c=.o)
 

@@ -6,11 +6,22 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:33:54 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/09 15:33:19 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/13 01:16:57 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./builtins.h"
+
+/*
+ * rh_env_g() - Prints all environment variables from the environ array
+ * Function flow:
+ * 1. Initialize counter i to 0
+ * 2. Print header message for environment variables
+ * 3. Loop through envp array until NULL terminator:
+ *	- Print each environment variable string
+ *	- Increment counter
+ * 4. Each variable is printed with format: KEY=VALUE\n
+ */
 
 static void	rh_env_g(char *envp[])
 {
@@ -25,13 +36,15 @@ static void	rh_env_g(char *envp[])
 	}
 }
 
-/**Iterates the envp that is passed from the calling terminal (environ) and
+/*
+ * Iterates the envp that is passed from the calling terminal (environ) and
  * prints row by row. When no option is given, then prints the variables in
  * **this** minishell, when `-g` is given, then prints the global environ
  * variables.
  * 		Takes basically everything (args for the option, envp, and env_list).
  * 		Returns a zero because always success.
  */
+
 int	rh_env(char *args[], char *envp[], t_env **env_list)
 {
 	t_env	*temp;
