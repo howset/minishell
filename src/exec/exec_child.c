@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 19:49:23 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:10:52 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 * // Check if it's a directory
 * ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
 */
-int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
+int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 {
 	char	*cmd_path;
 	int		exit_status;
@@ -94,11 +94,11 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 		exec_redirections(cmd->redirections);
 	if (is_builtin(cmd->args[0]))
 	{
-		exit_status = exec_builtin(cmd->args, &env_list, envp);
+		exit_status = exec_builtin(cmd->args, env_list, envp);
 		return (exit_status);
 		//exit(exit_status); // Add this line to exit after builtin execution
 	}
-	cmd_path = find_path(cmd->args[0], env_list);
+	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 17:24:39 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:10:17 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	while (cmd)
 	{
 		if (cmd->type == CMD_SIMPLE)
-			exit_stat = exec_simple_command(cmd, *env_list, envp);
+			exit_stat = exec_simple_command(cmd, env_list, envp);
 		else if (cmd->type == CMD_PIPE)
 		{
-			exit_stat = exec_pipe_command(cmd, *env_list, envp);
+			exit_stat = exec_pipe_command(cmd, env_list, envp);
 			while (cmd && cmd->type == CMD_PIPE)
 				cmd = cmd->next;
 			continue ;
@@ -46,14 +46,14 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
  * exec_simple_command makes sure that builtins is executed *NOT* as a child
  * process. for non builtins, go to exec_simprog
  */
-int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
+int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			exit_stat;
 
 	if (is_builtin(cmd->args[0]))
-		exit_stat = exec_builtin(cmd->args, &env_list, envp);
+		exit_stat = exec_builtin(cmd->args, env_list, envp);
 	else
-		exit_stat = exec_simprog(cmd, &env_list, envp);
+		exit_stat = exec_simprog(cmd, env_list, envp);
 	return (exit_stat);
 }
 
@@ -68,13 +68,13 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 		return (EXIT_FAILURE);
 	}
 	if (p_id == 0)
-		exec_chprocess(cmd, *env_list, envp);
+		exec_chprocess(cmd, env_list, envp);
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
 }
 
-int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
+int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			status;
 	pid_t		p_id;

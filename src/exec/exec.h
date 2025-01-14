@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 14:16:52 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:09:34 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
 //int		exec_simprog(char *args[], t_env **env_list, char *envp[]);
 int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[]);
 //int		exec_prog(t_command *cmd, t_env *env_list, char *envp[]);
-int		exec_simple_command(t_command *cmd, t_env *env_list, char *envp[]);
-int		exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[]);
+int		exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
+int		exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		is_builtin(char *cmd);
 
 // exec_child
-int		exec_chprocess(t_command *cmd, t_env *env_list, char *envp[]);
+int		exec_chprocess(t_command *cmd, t_env **env_list, char *envp[]);
 int		wait_chprocess(pid_t p_id);
 
 // exec_pathfinding.c
