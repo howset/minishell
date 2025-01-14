@@ -10,6 +10,13 @@
 		"ft_printf.h": "c",
 		"structs.h": "c",
 		"parser.h": "c",
-		"command_table.h": "c"
+		"command_table.h": "c",
+		"optional": "c",
+		"ostream": "c",
+		"system_error": "c",
+		"array": "c",
+		"functional": "c",
+		"tuple": "c",
+		"utility": "c"
 	}
 }

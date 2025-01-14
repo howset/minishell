@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/01 20:36:57 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:40:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 	if (is_builtin(cmd->args[0]))
 	{
 		exit_status = exec_builtin(cmd->args, &env_list, envp);
-		exit(exit_status); // Add this line to exit after builtin execution
+		return (exit_status);
+		//exit(exit_status); // Add this line to exit after builtin execution
 	}
 	cmd_path = find_path(cmd->args[0], env_list);
 	if (!cmd_path)
