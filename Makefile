@@ -7,10 +7,16 @@ NAME-LIBFT			= ./src/lib/libft.a
 
 ## Compiler, flags, & other commands
 CC 					= cc
-CFLAGS 				= -g -O0 -Wall -Werror -Wextra -I
+CFLAGS 				= -g -O0 -Wall -Werror -Wextra
 AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
+
+ifeq ($(shell uname), Darwin)
+CFLAGS += -I/opt/homebrew/opt/readline/include
+LIBS += -L/opt/homebrew/opt/readline/lib
+endif
+
 
 UTILS 				= 	./src/utils/malloc_perex.c\
 						./src/utils/ft_fprintf.c
@@ -91,7 +97,7 @@ test_vallog:			$(NAME-LIBFT) $(NAME-MS)
 ##------------------------------------------------------------------##
 # Pattern rule
 %.o: %.c
-		@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+		@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
 
 ##------------------------------------------------------------------##
 # Targets
@@ -101,7 +107,7 @@ $(NAME-LIBFT):
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
 $(NAME-MS): $(OBJS) $(NAME-LIBFT)
-		@$(CC) $(CFLAGS) $(HEADER) $(OBJS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
+		@$(CC) $(CFLAGS) $(OBJS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
 ##------------------------------------------------------------------##
