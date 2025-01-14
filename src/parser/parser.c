@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:33:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 19:50:15 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:33:14 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 		node->args[node->args_count] = NULL;
 		(*current) = (*current)->next;
 	}
-	free(sanitized);
 	return (node);
 }
 
