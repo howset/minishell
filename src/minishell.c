@@ -6,12 +6,13 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/12 23:04:10 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:47:04 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//int	g_signal_stat;
 
 char	*fancy_prompt(void)
 {
@@ -78,13 +79,11 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 		exit(127);
 	}
 	all_data->env_head = NULL;
-	// have to be like this or segfault
 	all_data->env_list = &all_data->env_head;
-	// have to be like this or segfault
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", "initial value");
-	// this function is momentarily in env.c
+	add_envvar(all_data->env_list, "?", "init");
+	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	return (all_data);
 }
 
@@ -133,10 +132,11 @@ void	print_command_table(t_cmdtable *table)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
+	char		*ex_stat;
 
-	setup_signals(); // Set up signal handlers
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
+	setup_signals(all_data->env_list);
 	while (1)
 	{
 		all_data->input = prompt_hist(all_data->input);
@@ -148,15 +148,17 @@ int	main(int argc, char *argv[], char *envp[])
 		// print_command_table(all_data->table);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list,
 				envp);
-		add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
+		ex_stat = ft_itoa(all_data->exit_stat);
+		add_envvar(all_data->env_list, "?", ex_stat);
+		free(ex_stat);
 		free_tkn(all_data->tokens);
 		free(all_data->input);
+		free_command_table(all_data->table);
+		free_ast(all_data->tree);
 	}
 	free_envlist(*all_data->env_list);
 	free(all_data->env_list);
 	free(all_data);
-	// rl_replace_line("", 0);
-	// rl_clear_history();
-	clear_history();
+	rl_clear_history();
 	return (0);
 }

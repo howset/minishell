@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 18:03:15 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:24:39 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	while (cmd)
 	{
 		if (cmd->type == CMD_SIMPLE)
-		{
 			exit_stat = exec_simple_command(cmd, *env_list, envp);
-		}
 		else if (cmd->type == CMD_PIPE)
 		{
 			exit_stat = exec_pipe_command(cmd, *env_list, envp);
@@ -44,10 +42,24 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
+/*
+ * exec_simple_command makes sure that builtins is executed *NOT* as a child
+ * process. for non builtins, go to exec_simprog
+ */
 int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 {
-	/* pid_t	p_id;
-	int		is_child_process;
+	int			exit_stat;
+
+	if (is_builtin(cmd->args[0]))
+		exit_stat = exec_builtin(cmd->args, &env_list, envp);
+	else
+		exit_stat = exec_simprog(cmd, &env_list, envp);
+	return (exit_stat);
+}
+
+int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
+{
+	pid_t	p_id;
 
 	p_id = fork();
 	if (p_id < 0)
@@ -55,18 +67,11 @@ int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 		perror("Forking error");
 		return (EXIT_FAILURE);
 	}
-	is_child_process = p_id == 0;
-	if (is_child_process)
-		exec_chprocess(cmd, env_list, envp);
+	if (p_id == 0)
+		exec_chprocess(cmd, *env_list, envp);
 	else
-		return (wait_chprocess(p_id)); */
-	int			exit_stat;
-	
-	if (is_builtin(cmd->args[0]))
-		exit_stat = exec_builtin(cmd->args, &env_list, envp);
-	else
-		exit_stat = exec_simprog(cmd->args, &env_list, envp);
-	return (exit_stat);
+		return (wait_chprocess(p_id));
+	return (EXIT_FAILURE);
 }
 
 int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
@@ -111,44 +116,8 @@ int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 		status = wait_chprocess(p_id);
 		// If the child process failed, break the pipeline
 		if (status != EXIT_SUCCESS)
-		{
 			return (EXIT_FAILURE);
-		}
 		current_cmd = current_cmd->next;
 	}
 	return (status);
-}
-
-int	exec_simchprocess(char **args, t_env *env_list, char *envp[]);
-int	exec_simprog(char *args[], t_env **env_list, char *envp[])
-{
-	pid_t	p_id;
-
-	p_id = fork();
-	if (p_id < 0)
-	{
-		perror("Forking error");
-		return (EXIT_FAILURE);
-	}
-	if (p_id == 0)
-		exec_simchprocess(args, *env_list, envp);
-	else
-		return (wait_chprocess(p_id));
-	return (EXIT_FAILURE);
-}
-
-int	exec_simchprocess(char **args, t_env *env_list, char *envp[])
-{
-	char	*cmd_path;
-
-	cmd_path = find_path(args[0], env_list);
-	if (!cmd_path)
-	{
-		ft_fprintf(STDERR_FILENO, "command not found: %s\n", args[0]);
-		exit(127);
-	}
-	execve(cmd_path, args, envp);
-	perror("Execve fails");
-	free(cmd_path);
-	exit(EXIT_FAILURE);
 }

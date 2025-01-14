@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/10 18:49:18 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:47:37 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # include "./utils/utils.h"
 # include "./signals/signals.h"
 
-//# define RES			"\033[0m"
 # define RES			"\x1b[0m"
 # define RED			"\033[31m"
 # define GRE			"\033[32m"

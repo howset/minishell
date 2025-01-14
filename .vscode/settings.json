@@ -11,7 +11,12 @@
 		"structs.h": "c",
 		"parser.h": "c",
 		"command_table.h": "c",
-		"__node_handle": "c",
-		"get_next_line.h": "c"
+		"optional": "c",
+		"ostream": "c",
+		"system_error": "c",
+		"array": "c",
+		"functional": "c",
+		"tuple": "c",
+		"utility": "c"
 	}
 }
