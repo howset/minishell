@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/14 19:47:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:39:42 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	all_data->env_list = &all_data->env_head;
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", "init");
+	add_envvar(all_data->env_list, "?", "0");
 	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	return (all_data);
 }
