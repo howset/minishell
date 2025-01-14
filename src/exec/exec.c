@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:10:17 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:49:06 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,52 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 	return (EXIT_FAILURE);
 }
 
+void	handle_pipe_io(t_command *cmd)
+{
+	if (cmd->pipe_read != -1)
+	{
+		dup2(cmd->pipe_read, STDIN_FILENO);
+		close(cmd->pipe_read);
+	}
+	if (cmd->pipe_write != -1)
+	{
+		dup2(cmd->pipe_write, STDOUT_FILENO);
+		close(cmd->pipe_write);
+	}
+}
+
+void	close_pipe_fds(t_command *cmd)
+{
+	if (cmd->pipe_read != -1)
+	{
+		close(cmd->pipe_read);
+	}
+	if (cmd->pipe_write != -1)
+	{
+		close(cmd->pipe_write);
+	}
+}
+
+int	fork_pipe_process(t_command *cmd, t_env **env_list, char *envp[])
+{
+	pid_t	p_id;
+
+	p_id = fork();
+	if (p_id < 0)
+	{
+		perror("Forking error");
+		return (-1);
+	}
+	if (p_id == 0)
+	{
+		handle_pipe_io(cmd);
+		exec_chprocess(cmd, env_list, envp);
+		exit(EXIT_FAILURE);
+	}
+	close_pipe_fds(cmd);
+	return (p_id);
+}
+
 int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			status;
@@ -88,35 +134,16 @@ int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 	}
 	while (current_cmd && current_cmd->type == CMD_PIPE)
 	{
-		p_id = fork();
+		p_id = fork_pipe_process(current_cmd, env_list, envp);
 		if (p_id < 0)
 		{
-			perror("Forking error");
 			return (EXIT_FAILURE);
 		}
-		if (p_id == 0)
-		{
-			if (current_cmd->pipe_read != -1)
-			{
-				dup2(current_cmd->pipe_read, STDIN_FILENO);
-				close(current_cmd->pipe_read);
-			}
-			if (current_cmd->pipe_write != -1)
-			{
-				dup2(current_cmd->pipe_write, STDOUT_FILENO);
-				close(current_cmd->pipe_write);
-			}
-			exec_chprocess(current_cmd, env_list, envp);
-			exit(EXIT_FAILURE);
-		}
-		if (current_cmd->pipe_read != -1)
-			close(current_cmd->pipe_read);
-		if (current_cmd->pipe_write != -1)
-			close(current_cmd->pipe_write);
 		status = wait_chprocess(p_id);
-		// If the child process failed, break the pipeline
 		if (status != EXIT_SUCCESS)
+		{
 			return (EXIT_FAILURE);
+		}
 		current_cmd = current_cmd->next;
 	}
 	return (status);

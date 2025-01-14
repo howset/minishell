@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:54:39 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:54:41 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:49:06 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ t_cmdtable		*ast_to_command_table(t_ast *ast);
 void			free_redirection(t_redirection *redir);
 void			free_command(t_command *cmd);
 void			free_command_table(t_cmdtable *table);
+// Command table printing functions
+void	print_command_table(t_cmdtable *table);
+void	print_command_info(t_command *cmd);
+void	print_command_args(char **args);
+void	print_command_pipes(t_command *cmd);
+void	print_redirections(t_redirection *redir);
 
 #endif

@@ -6,97 +6,113 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:35 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:42:36 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:49:06 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "string.h"
 
-/**
- * Handle input redirection ("<" and "<<").
- * @param redirection The redirection structure.
- */
-void	handle_input_redirection(t_redirection *redirection)
+void	handle_simple_input(t_redirection *redirection)
 {
-	int		fd;
-	int		pipefd[2];
-	pid_t	pid;
+	int	fd;
+
+	fd = open(redirection->file, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		close(fd);
+		exit(EXIT_FAILURE);
+	}
+	close(fd);
+}
+
+void	process_heredoc_child(int write_fd, char *delimiter)
+{
 	char	*line;
 
-	if (redirection->type == TKN_RDIR_IN) // "<"
+	line = NULL;
+	while (1)
 	{
-		fd = open(redirection->file, O_RDONLY);
-		if (fd == -1)
+		line = readline("> ");
+		if (!line)
 		{
-			perror("open");
-			exit(EXIT_FAILURE);
+			break ;
 		}
-		if (dup2(fd, STDIN_FILENO) == -1)
+		if (strcmp(line, delimiter) == 0)
 		{
-			perror("dup2");
-			close(fd);
-			exit(EXIT_FAILURE);
+			free(line);
+			break ;
 		}
-		close(fd);
+		write(write_fd, line, strlen(line));
+		write(write_fd, "\n", 1);
+		free(line);
 	}
-	else if (redirection->type == TKN_HEREDOC) // "<<"
+	close(write_fd);
+	exit(EXIT_SUCCESS);
+}
+
+void	process_heredoc_parent(int read_fd, pid_t child_pid)
+{
+	if (dup2(read_fd, STDIN_FILENO) == -1)
 	{
-		if (pipe(pipefd) == -1)
-		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		if (pid == 0) // Child process
-		{
-			close(pipefd[0]); // Close read end
-			line = NULL;
-			while (1)
-			{
-				line = readline("> ");
-				if (!line)
-					break ;
-				if (strcmp(line, redirection->file) == 0)
-				{
-					free(line);
-					break ;
-				}
-				write(pipefd[1], line, strlen(line));
-				write(pipefd[1], "\n", 1);
-				free(line);
-			}
-			close(pipefd[1]);
-			exit(EXIT_SUCCESS);
-		}
-		else // Parent process
-		{
-			close(pipefd[1]); // Close write end
-			if (dup2(pipefd[0], STDIN_FILENO) == -1)
-			{
-				perror("dup2");
-				exit(EXIT_FAILURE);
-			}
-			close(pipefd[0]);
-			waitpid(pid, NULL, 0);
-		}
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	close(read_fd);
+	waitpid(child_pid, NULL, 0);
+}
+
+void	handle_heredoc_input(t_redirection *redirection)
+{
+	int		pipefd[2];
+	pid_t	pid;
+
+	if (pipe(pipefd) == -1)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		close(pipefd[0]);
+		process_heredoc_child(pipefd[1], redirection->file);
+	}
+	else
+	{
+		close(pipefd[1]);
+		process_heredoc_parent(pipefd[0], pid);
 	}
 }
 
-/**
- * Handle output redirection (">" and ">>").
- * @param redirection The redirection structure.
- */
+void	handle_input_redirection(t_redirection *redirection)
+{
+	if (redirection->type == TKN_RDIR_IN)
+	{
+		handle_simple_input(redirection);
+	}
+	else if (redirection->type == TKN_HEREDOC)
+	{
+		handle_heredoc_input(redirection);
+	}
+}
+
 void	handle_output_redirection(t_redirection *redirection)
 {
 	int	fd;
 
-	if (redirection->type == TKN_RDIR_OUT) // ">"
+	if (redirection->type == TKN_RDIR_OUT)
 	{
 		fd = open(redirection->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
@@ -107,7 +123,7 @@ void	handle_output_redirection(t_redirection *redirection)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
-	else if (redirection->type == TKN_APPEND) // ">>"
+	else if (redirection->type == TKN_APPEND)
 	{
 		fd = open(redirection->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
@@ -120,10 +136,6 @@ void	handle_output_redirection(t_redirection *redirection)
 	}
 }
 
-/**
- * Apply all redirections for a command.
- * @param redirections The list of redirections.
- */
 void	exec_redirections(t_redirection *redirections)
 {
 	t_redirection	*current;
@@ -132,9 +144,13 @@ void	exec_redirections(t_redirection *redirections)
 	while (current)
 	{
 		if (current->type == TKN_RDIR_IN || current->type == TKN_HEREDOC)
+		{
 			handle_input_redirection(current);
+		}
 		else if (current->type == TKN_RDIR_OUT || current->type == TKN_APPEND)
+		{
 			handle_output_redirection(current);
+		}
 		current = current->next;
 	}
 }

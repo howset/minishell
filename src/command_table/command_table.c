@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:52:36 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/10 20:32:36 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:50:10 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,9 @@ t_command	*create_command(char **args, t_cmd_type type)
 	cmd = malloc(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	// Count arguments
 	count = 0;
 	while (args && args[count])
 		count++;
-	// Duplicate arguments
 	cmd->args = duplicate_args(args, count);
 	if (!cmd->args)
 	{
@@ -143,11 +141,9 @@ t_command	*process_command_node(t_ast *node)
 		return (NULL);
 	if (node->type == NODE_REDIRECTION)
 	{
-		// Process the command part (left child)
 		cmd = process_command_node(node->left);
 		if (!cmd)
 		{
-			// Create empty command if none exists
 			default_args = malloc(sizeof(char *) * 2);
 			if (!default_args)
 				return (NULL);
@@ -157,11 +153,9 @@ t_command	*process_command_node(t_ast *node)
 			free(default_args[0]);
 			free(default_args);
 		}
-		// Create and add redirection
 		process_redirection_node(node, cmd);
 		return (cmd);
 	}
-	// Original command processing
 	if (!node->args || !node->args[0])
 	{
 		default_args = malloc(sizeof(char *) * 2);
@@ -186,11 +180,9 @@ void	process_pipe_node(t_ast *node, t_cmdtable *table)
 
 	if (pipe(pipefd) == -1)
 		return ;
-	// Process left side
 	if (node->left->type == NODE_PIPE)
 	{
 		process_pipe_node(node->left, table);
-		// Get the last command from the table to set its pipe_write
 		last = table->commands;
 		while (last && last->next)
 			last = last->next;
@@ -207,10 +199,8 @@ void	process_pipe_node(t_ast *node, t_cmdtable *table)
 			add_command(table, left_cmd);
 		}
 	}
-	// Process right side
 	if (node->right->type == NODE_PIPE)
 	{
-		// Create the first command of the right pipeline
 		right_cmd = process_command_node(node->right->left);
 		if (right_cmd)
 		{
@@ -218,7 +208,6 @@ void	process_pipe_node(t_ast *node, t_cmdtable *table)
 			right_cmd->pipe_read = pipefd[0];
 			add_command(table, right_cmd);
 		}
-		// Process the rest of the pipeline
 		process_pipe_node(node->right, table);
 	}
 	else
@@ -238,10 +227,8 @@ void	process_redirection_node(t_ast *node, t_command *cmd)
 {
 	t_redirection	*redir;
 
-	// If the left node is a redirection, process it first
 	if (node->left && node->left->type == NODE_REDIRECTION)
 		process_redirection_node(node->left, cmd);
-	// Then add this redirection
 	redir = create_redirection(node->redirection_type, node->filename);
 	if (redir)
 		add_redirection(cmd, redir);
@@ -305,8 +292,8 @@ void	ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table)
 	default:
 		break ;
 	}
-/* 	if (cmd)
-		free(cmd); */
+	/* 	if (cmd)
+			free(cmd); */
 }
 
 t_cmdtable	*ast_to_command_table(t_ast *ast)
@@ -340,7 +327,6 @@ void	free_command(t_command *cmd)
 	{
 		next = cmd->next;
 		free_redirection(cmd->redirections);
-		// Free command arguments
 		if (cmd->args)
 		{
 			i = 0;

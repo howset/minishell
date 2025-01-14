@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:10:52 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:49:06 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,38 +66,31 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-/*
- *This func is called by `exec_prog` and executed by the child process.
- * `cmd_path` is the complete path to  a command by `find_path`. The execution
- *  of the command is by execve.
- * 		Takes the command (args[0]), other args, the env_list and the envp.
- * 		Returns exit status of the executed command.
- */
-/*
-* // handle empty command
-* if (cmd->args[0] && cmd->args[0][0] == '\0')
-* // Apply redirections before executing the command
-* if (cmd->redirections)
-* // Add this line to exit after builtin execution
-* exit(exit_status);
-* // Check if it's a directory
-* ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
-*/
-int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
+int	handle_empty_command(t_command *cmd)
 {
-	char	*cmd_path;
-	int		exit_status;
-
 	if (cmd->args[0] && cmd->args[0][0] == '\0')
+	{
 		exit(0);
-	if (cmd->redirections)
-		exec_redirections(cmd->redirections);
+	}
+	return (0);
+}
+
+int	handle_builtin(t_command *cmd, t_env **env_list, char *envp[])
+{
+	int	exit_status;
+
 	if (is_builtin(cmd->args[0]))
 	{
 		exit_status = exec_builtin(cmd->args, env_list, envp);
 		return (exit_status);
-		//exit(exit_status); // Add this line to exit after builtin execution
 	}
+	return (-1);
+}
+
+void	handle_external_command(t_command *cmd, t_env **env_list, char *envp[])
+{
+	char	*cmd_path;
+
 	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
 	{
@@ -111,6 +104,24 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 	exit(EXIT_FAILURE);
 }
 
+int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
+{
+	int	exit_status;
+
+	handle_empty_command(cmd);
+	if (cmd->redirections)
+	{
+		exec_redirections(cmd->redirections);
+	}
+	exit_status = handle_builtin(cmd, env_list, envp);
+	if (exit_status >= 0)
+	{
+		return (exit_status);
+	}
+	handle_external_command(cmd, env_list, envp);
+	return (EXIT_FAILURE);
+}
+
 /**This function is executed by the parent process. It makes the parent waits
  * until the child finished executing and takes the exit status of the child.
  * 		Takes the pid of the child process.
@@ -122,7 +133,11 @@ int	wait_chprocess(pid_t p_id)
 
 	waitpid(p_id, &status, 0);
 	if (WIFEXITED(status))
+	{
 		return (WEXITSTATUS(status));
+	}
 	else
+	{
 		return (1);
+	}
 }
