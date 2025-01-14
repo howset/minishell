@@ -36,7 +36,9 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 
 SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/parser_utils.c \
-						./src/parser/ast.c
+						./src/parser/ast.c \
+						./src/parser/utils/string_processing.c \
+						./src/parser/utils/env_variable_handling.c
 
 SRC-EXEC			= 	./src/exec/exec.c \
 						./src/exec/exec_child.c \
