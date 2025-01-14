@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_pathfinding.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 04:41:45 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 18:05:47 by hsetyamu         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   exec_pathfinding.c								 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>	+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/12/30 04:41:45 by reldahli		  #+#	#+#			 */
+/*   Updated: 2025/01/14 19:57:57 by hsetyamu		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "./exec.h"
@@ -20,15 +20,13 @@
  * 		Takes a cmd (e.g. ls, or cat) and the env_list that contains PATH
  * 		Returns the complete path to the command (e.g. /dir/dir/cmd)
  */
-char	*find_path(char *cmd, t_env *env_list)
+/* char	*find_path(char *cmd, t_env *env_list)
 {
 	struct stat	st;
 	size_t		path_len;
 	char		*path;
 	char		*full_path;
 
-	// If user typed a path (contains '/'),
-	//	check if it’s a directory or executable
 	if (ft_strchr(cmd, '/'))
 	{
 		if (stat(cmd, &st) == 0)
@@ -38,9 +36,8 @@ char	*find_path(char *cmd, t_env *env_list)
 				ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd);
 				exit(126);
 			}
-			// If it’s not a directory, check execute permission
 			if (access(cmd, X_OK) == 0)
-				return (ft_strdup(cmd)); // replace with your own strdup
+				return (ft_strdup(cmd));
 			else
 			{
 				ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
@@ -50,12 +47,53 @@ char	*find_path(char *cmd, t_env *env_list)
 		ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
 		exit(127);
 	}
-	// Otherwise, proceed with existing PATH search
 	full_path = init_fullpath(env_list, &path_len);
 	if (!full_path)
 		return (NULL);
 	path = find_envvar(env_list, "PATH")->val;
 	return (process_dirs(path, cmd, full_path, path_len));
+} */
+
+char	*find_path(char *cmd, t_env *env_list)
+{
+	size_t	path_len;
+	char	*full_path;
+	char	*path;
+
+	full_path = resolve_path(cmd, env_list, &path_len);
+	if (!full_path)
+		return (NULL);
+	path = find_envvar(env_list, "PATH")->val;
+	return (process_dirs(path, cmd, full_path, path_len));
+}
+
+char	*resolve_path(char *cmd, t_env *env_list, size_t *path_len)
+{
+	struct stat	st;
+	char		*full_path;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		if (stat(cmd, &st) == 0)
+		{
+			if (S_ISDIR(st.st_mode))
+			{
+				ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd);
+				exit(126);
+			}
+			if (access(cmd, X_OK) == 0)
+				return (ft_strdup(cmd));
+			else
+			{
+				ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
+				exit(126);
+			}
+		}
+		ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
+		exit(127);
+	}
+	full_path = init_fullpath(env_list, path_len);
+	return (full_path);
 }
 
 /**This function basically initializes (malloc) full_path.
@@ -93,7 +131,8 @@ char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len)
 	char	*result;
 
 	start = path;
-	while ((end = ft_strchr(start, ':')) || (*start != '\0'))
+	end = ft_strchr(start, ':');
+	while (end || (*start != '\0'))
 	{
 		if (end)
 			*end = '\0';
@@ -109,6 +148,7 @@ char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len)
 		if (!end)
 			break ;
 		start = end + 1;
+		end = ft_strchr(start, ':');
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 17:26:30 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:47:48 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,18 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 	char	*cmd_path;
 	int		exit_status;
 
-	if (cmd->args[0] && cmd->args[0][0] == '\0') // handle empty command
+	if (cmd->args[0] && cmd->args[0][0] == '\0')
 		exit(0);
-	// Apply redirections before executing the command
 	if (cmd->redirections)
 		exec_redirections(cmd->redirections);
 	if (is_builtin(cmd->args[0]))
 	{
 		exit_status = exec_builtin(cmd->args, &env_list, envp);
 		return (exit_status);
-		//exit(exit_status); // Add this line to exit after builtin execution
 	}
 	cmd_path = find_path(cmd->args[0], env_list);
 	if (!cmd_path)
 	{
-		// Check if it's a directory
 		ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
 		free(cmd_path);
 		exit(127);

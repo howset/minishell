@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 17:24:39 by hsetyamu         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   exec.c											 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>	+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/12/30 04:41:13 by reldahli		  #+#	#+#			 */
+/*   Updated: 2025/01/14 19:16:06 by hsetyamu		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "./exec.h"
@@ -42,22 +42,55 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-/*
- * exec_simple_command makes sure that builtins is executed *NOT* as a child
- * process. for non builtins, go to exec_simprog
- */
 int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 {
-	int			exit_stat;
+	int		exit_stat;
+	pid_t	p_id;
 
 	if (is_builtin(cmd->args[0]))
 		exit_stat = exec_builtin(cmd->args, &env_list, envp);
 	else
-		exit_stat = exec_simprog(cmd, &env_list, envp);
+	{
+		p_id = fork();
+		if (p_id < 0)
+		{
+			perror("Forking error");
+			return (EXIT_FAILURE);
+		}
+		if (p_id == 0)
+		{
+			exec_chprocess(cmd, env_list, envp);
+			exit(EXIT_FAILURE);
+		}
+		else
+			exit_stat = wait_chprocess(p_id);
+	}
 	return (exit_stat);
 }
 
-int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
+int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
+{
+	int			status;
+	t_command	*current_cmd;
+
+	status = EXIT_SUCCESS;
+	current_cmd = cmd;
+	if (!cmd->next)
+	{
+		perror("No next command");
+		return (EXIT_FAILURE);
+	}
+	while (current_cmd && current_cmd->type == CMD_PIPE)
+	{
+		status = handle_pipecomm(current_cmd, env_list, envp);
+		if (status != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+		current_cmd = current_cmd->next;
+	}
+	return (status);
+}
+
+int	handle_pipecomm(t_command *current_cmd, t_env *env_list, char *envp[])
 {
 	pid_t	p_id;
 
@@ -68,13 +101,31 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 		return (EXIT_FAILURE);
 	}
 	if (p_id == 0)
-		exec_chprocess(cmd, *env_list, envp);
-	else
-		return (wait_chprocess(p_id));
-	return (EXIT_FAILURE);
+		handle_chprocess(current_cmd, env_list, envp);
+	if (current_cmd->pipe_read != -1)
+		close(current_cmd->pipe_read);
+	if (current_cmd->pipe_write != -1)
+		close(current_cmd->pipe_write);
+	return (wait_chprocess(p_id));
 }
 
-int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
+void	handle_chprocess(t_command *cmd, t_env *env_list, char *envp[])
+{
+	if (cmd->pipe_read != -1)
+	{
+		dup2(cmd->pipe_read, STDIN_FILENO);
+		close(cmd->pipe_read);
+	}
+	if (cmd->pipe_write != -1)
+	{
+		dup2(cmd->pipe_write, STDOUT_FILENO);
+		close(cmd->pipe_write);
+	}
+	exec_chprocess(cmd, env_list, envp);
+	exit(EXIT_FAILURE);
+}
+
+/* int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 {
 	int			status;
 	pid_t		p_id;
@@ -120,4 +171,4 @@ int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
 		current_cmd = current_cmd->next;
 	}
 	return (status);
-}
+} */
