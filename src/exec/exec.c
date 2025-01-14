@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 14:19:41 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:24:39 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 int	exec_simple_command(t_command *cmd, t_env *env_list, char *envp[])
 {
 	int			exit_stat;
+
 	if (is_builtin(cmd->args[0]))
 		exit_stat = exec_builtin(cmd->args, &env_list, envp);
 	else

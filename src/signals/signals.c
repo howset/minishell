@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 10:43:41 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:19:48 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,39 @@
 t_env	**g_env;
 
 /**
+ * heredoc must accepts ctrl+c but not ctrl+\
+ * sleep accepts both, but ctrl+c does not immediately change echo $?
+ * 						ctrl+| should dump core
+ */
+
+/**
  * CTRL + C
 */
-void	handle_sigint(int signum, siginfo_t *info, void *context)
+void	handle_sigint(int signum)
 {
-	(void)info;
-	(void)context;
 	if (signum == SIGINT)
 	{
 		ft_printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		add_envvar(g_env, "?", "130");
 	}
-	//g_signal_stat = 128 + SIGINT;
+	add_envvar(g_env, "?", "130");
 }
 
 /**
  * CTRL + \
+ * ??? where to put???
 */
-/*  void	handle_sigquit(int signum)
+ void	handle_sigquit(int signum)
 {
-	(void)signum;
-} */
+	ft_fprintf(STDERR_FILENO, "Quit: ");
+	if (signum)
+		ft_fprintf(STDERR_FILENO, "(fake core dumped)\n");
+	else
+		ft_fprintf(STDERR_FILENO, "what error?\n");
+	add_envvar(g_env, "?", "131");
+}
 
 /**
  * CTRL + D (EOF) is handled by readline in the main loop
@@ -48,23 +57,16 @@ void	handle_sigint(int signum, siginfo_t *info, void *context)
 */
 void	setup_signals(t_env **env)
 {
-	struct sigaction sa_int;
-	struct sigaction sa_quit;
+	struct sigaction sa;
 	
 	g_env = env;
-	ft_memset(&sa_int, 0, sizeof(sa_int));
-	ft_memset(&sa_quit, 0, sizeof(sa_quit));
+	sa.sa_handler = handle_sigint;
+	//sa_int.sa_sigaction = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART | SA_SIGINFO;
+	sigaction(SIGINT, &sa, NULL);
 	
-	//sa_int.sa_handler = handle_sigint;
-	sa_int.sa_sigaction = handle_sigint;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART | SA_SIGINFO;
-	sigaction(SIGINT, &sa_int, NULL);
-	
-	sa_quit.sa_handler = SIG_IGN;
-	//sa_quit.sa_handler = handle_sigquit;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
