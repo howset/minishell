@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 19:52:15 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:43:41 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 
 void	setup_signals(t_env **env);
-void	handle_sigint(int signum);
-//void	handle_sigquit(int signum);
+void	handle_sigint();
+void	handle_sigquit();
+void	handle_signals(int signum);
 #endif
