@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:57:31 by hsetyamu          #+#    #+#             */
-/*   Updated: 2024/12/06 14:37:45 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:13:50 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**The lexer function iterates over the input string and whenever a defined
  * symbol is encountered, a corresponding function is called to create a node
- * that contains an appropriate token, jumping over whitespaces. This will be 
+ * that contains an appropriate token, jumping over whitespaces. This will be
  * appended to the list. The list will contain all the tokens (the type, value,
  *  and position).
  * 		Takes the input from readline as the parameter.
@@ -38,7 +38,6 @@ t_token	*lexer(const char *input)
 	return (tokens);
 }
 
-/** */
 int	handle_token(const char *input, int pos, t_token **tokens)
 {
 	t_token	*new_tkn;

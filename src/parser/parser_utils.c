@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:28:10 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:42:43 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:36:15 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	syntax_error_at(int position, const char *message)
 
 void	free_ast(t_ast *ast)
 {
-	int i;
+	int	i;
 
 	if (ast == NULL)
 		return ;

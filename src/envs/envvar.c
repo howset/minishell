@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envvar.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/15 17:37:43 by reldahli          #+#    #+#             */
+/*   Updated: 2025/01/15 17:42:31 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "envs.h"
 
 /**add_envvar adds either a newly defined environmental variable or updates

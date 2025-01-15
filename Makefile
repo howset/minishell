@@ -55,8 +55,9 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 
 SRC-CMDTABLE		= 	./src/command_table/command_table.c
 
-SRC-ENVS 			= 	./src/envs/envvar.c \
-						./src/envs/envlist.c
+SRC-ENVS 			= 	./src/envs/envlist.c \
+						./src/envs/envvar.c \
+						./src/envs/free_env.c
 
 HEADER				= ./src/
 ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(SRC-ENVS) $(UTILS) $(SRC-SIGNALS)

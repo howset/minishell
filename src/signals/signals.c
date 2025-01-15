@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 20:44:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:42:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_env	**g_env;
  * sleep accepts both, but ctrl+c does not immediately change echo $?
  * 						ctrl+| should dump core
  */
-
 /**
  * CTRL + C
  */
@@ -36,13 +35,15 @@ void	handle_sigint(void)
  * CTRL + \
  * ??? where to put???
  */
-void	handle_sigquit(void)
-{
-	ft_fprintf(STDERR_FILENO, "Quit: ");
+/*
 	// if (signum)
 	// 	ft_fprintf(STDERR_FILENO, "(fake core dumped)\n");
 	// else
 	// 	ft_fprintf(STDERR_FILENO, "what error?\n");
+*/
+void	handle_sigquit(void)
+{
+	ft_fprintf(STDERR_FILENO, "Quit: ");
 	add_envvar(g_env, "?", "131");
 }
 
@@ -65,13 +66,16 @@ void	handle_signals(int signum)
  * SA_RESTART | SA_SIGINFO;
 	// Restart interrupted syscalls | SA_SIGINFO to pass extra info
  */
+/*
+	// sa_int.sa_sigaction = handle_sigint;
+*/
+
 void	setup_signals(t_env **env)
 {
 	struct sigaction	sa;
 
 	g_env = env;
 	sa.sa_handler = handle_signals;
-	// sa_int.sa_sigaction = handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigaction(SIGINT, &sa, NULL);
