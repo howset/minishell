@@ -50,6 +50,7 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/exit.c \
 						./src/builtins/export.c \
 						./src/builtins/unset.c \
+						./src/builtins/cd.c \
 						./src/builtins/pwd.c
 
 SRC-CMDTABLE		= 	./src/command_table/command_table.c
