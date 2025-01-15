@@ -95,7 +95,13 @@ test_val:				$(NAME-LIBFT) $(NAME-MS)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
 
 test_vallog:			$(NAME-LIBFT) $(NAME-MS)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=l_valgrind-out.txt ./$(NAME-MS)
+
+test_fds:				$(NAME-LIBFT) $(NAME-MS)
+	valgrind -q --tool=none --track-fds=all ./$(NAME-MS)
+
+test_fdslog:				$(NAME-LIBFT) $(NAME-MS)
+	valgrind -q --tool=none --track-fds=all --log-file=fd_valgrind-out.txt ./$(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Pattern rule
