@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:35 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:42:36 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:36:25 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	handle_input_redirection(t_redirection *redirection)
 		}
 		if (pid == 0) // Child process
 		{
-			close(pipefd[0]); // Close read end
+			signal(SIGINT, SIG_DFL); // Restore default SIGINT behavior
+			signal(SIGQUIT, SIG_IGN); // Restore default SIGINT behavior
+			close(pipefd[0]);        // Close read end
 			line = NULL;
 			while (1)
 			{
@@ -83,7 +85,7 @@ void	handle_input_redirection(t_redirection *redirection)
 				exit(EXIT_FAILURE);
 			}
 			close(pipefd[0]);
-			waitpid(pid, NULL, 0);
+			exit(wait_chprocess(pid));
 		}
 	}
 }
