@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/14 21:56:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:09:08 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
-	setup_signals(all_data->env_list);
+setup_signals(all_data->env_list);
 	while (1)
 	{
 		all_data->input = prompt_hist(all_data->input);
