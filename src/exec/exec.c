@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:10:17 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 21:55:56 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,50 +74,89 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 	return (EXIT_FAILURE);
 }
 
-int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
+int exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 {
-	int			status;
-	pid_t		p_id;
-	t_command	*current_cmd;
+    int         status;
+    pid_t       p_id;
+    t_command   *current_cmd;
+    int         prev_pipe[2] = {-1, -1};
+    int         new_pipe[2];
+    t_command   *last_cmd;
 
-	current_cmd = cmd;
-	if (!cmd->next)
-	{
-		perror("No next command");
-		return (EXIT_FAILURE);
-	}
-	while (current_cmd && current_cmd->type == CMD_PIPE)
-	{
-		p_id = fork();
-		if (p_id < 0)
-		{
-			perror("Forking error");
-			return (EXIT_FAILURE);
-		}
-		if (p_id == 0)
-		{
-			if (current_cmd->pipe_read != -1)
-			{
-				dup2(current_cmd->pipe_read, STDIN_FILENO);
-				close(current_cmd->pipe_read);
-			}
-			if (current_cmd->pipe_write != -1)
-			{
-				dup2(current_cmd->pipe_write, STDOUT_FILENO);
-				close(current_cmd->pipe_write);
-			}
-			exec_chprocess(current_cmd, env_list, envp);
-			exit(EXIT_FAILURE);
-		}
-		if (current_cmd->pipe_read != -1)
-			close(current_cmd->pipe_read);
-		if (current_cmd->pipe_write != -1)
-			close(current_cmd->pipe_write);
-		status = wait_chprocess(p_id);
-		// If the child process failed, break the pipeline
-		if (status != EXIT_SUCCESS)
-			return (EXIT_FAILURE);
-		current_cmd = current_cmd->next;
-	}
-	return (status);
+    // Find last command in pipeline
+    last_cmd = cmd;
+    while (last_cmd->next && last_cmd->next->type == CMD_PIPE)
+        last_cmd = last_cmd->next;
+
+    current_cmd = cmd;
+    while (current_cmd && current_cmd->type == CMD_PIPE)
+    {
+        // If this is last command and it's a builtin
+        if (current_cmd == last_cmd && is_builtin(current_cmd->args[0]))
+        {
+            if (prev_pipe[0] != -1)
+            {
+                // Setup input for builtin
+                dup2(prev_pipe[0], STDIN_FILENO);
+                close(prev_pipe[0]);
+                close(prev_pipe[1]);
+            }
+            status = exec_builtin(current_cmd->args, env_list, envp);
+            break;
+        }
+
+        if (current_cmd->next && pipe(new_pipe) < 0)
+        {
+            perror("pipe");
+            return (EXIT_FAILURE);
+        }
+
+        p_id = fork();
+        if (p_id < 0)
+        {
+            perror("Forking error");
+            return (EXIT_FAILURE);
+        }
+
+        if (p_id == 0)
+        {
+            if (prev_pipe[0] != -1)
+            {
+                dup2(prev_pipe[0], STDIN_FILENO);
+                close(prev_pipe[0]);
+                close(prev_pipe[1]);
+            }
+            if (current_cmd->next)
+            {
+                close(new_pipe[0]);
+                dup2(new_pipe[1], STDOUT_FILENO);
+                close(new_pipe[1]);
+            }
+            exec_chprocess(current_cmd, env_list, envp);
+            exit(EXIT_FAILURE);
+        }
+
+        if (prev_pipe[0] != -1)
+        {
+            close(prev_pipe[0]);
+            close(prev_pipe[1]);
+        }
+
+        if (current_cmd->next)
+        {
+            prev_pipe[0] = new_pipe[0];
+            prev_pipe[1] = new_pipe[1];
+        }
+
+        current_cmd = current_cmd->next;
+    }
+
+    // Wait for all child processes
+    while ((p_id = wait(&status)) > 0)
+    {
+        if (WIFEXITED(status))
+            status = WEXITSTATUS(status);
+    }
+
+    return (status);
 }
