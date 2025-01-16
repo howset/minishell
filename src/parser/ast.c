@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 14:22:02 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/28 22:18:45 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:35:29 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*create_ast_node(t_nodetype type)
 
 	node = malloc(sizeof(t_ast));
 	if (!node)
-		return (NULL); // Handle malloc failure
+		return (NULL);
 	node->type = type;
 	node->left = NULL;
 	node->right = NULL;

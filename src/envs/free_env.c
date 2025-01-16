@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   freeenv.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 18:42:19 by reldahli         ###   ########.fr       */
+/*   Created: 2025/01/15 17:41:43 by reldahli          #+#    #+#             */
+/*   Updated: 2025/01/15 17:42:30 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
-# define _XOPEN_SOURCE 700 // sigaction, in conjunction with signal.h
+#include "envs.h"
 
-# include "../minishell.h"
+// this aims to free the mallocs from create_envvar
+void	free_envlist(t_env *env_list)
+{
+	t_env	*tmp;
 
-void	setup_signals(t_env **env);
-void	handle_sigint(void);
-void	handle_sigquit(void);
-void	handle_signals(int signum);
-#endif
+	while (env_list)
+	{
+		tmp = env_list;
+		env_list = env_list->next;
+		if (tmp->key)
+			free(tmp->key);
+		if (tmp->val)
+			free(tmp->val);
+		free(tmp);
+	}
+}

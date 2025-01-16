@@ -1,64 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envlist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/15 17:37:26 by reldahli          #+#    #+#             */
+/*   Updated: 2025/01/15 17:52:37 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "envs.h"
 
-// this aims to free the mallocs from create_envvar
-void	free_envlist(t_env *env_list)
+void	parse_envvar(char *env, char **key, char **val)
 {
-	t_env	*tmp;
+	char	*equal_sign;
 
-	while (env_list)
+	equal_sign = ft_strchr(env, '=');
+	if (!equal_sign)
 	{
-		tmp = env_list;
-		env_list = env_list->next;
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->val)
-			free(tmp->val);
-		free(tmp);
+		ft_fprintf(STDERR_FILENO, "Failed to find equal sign.\n");
+		*key = NULL;
+		*val = NULL;
+		return ;
+	}
+	*key = ft_substr(env, 0, equal_sign - env);
+	if (!*key)
+	{
+		perror("Memory allocation failed for key");
+		*val = NULL;
+		return ;
+	}
+	*val = ft_strdup(equal_sign + 1);
+	if (!*val)
+	{
+		perror("Memory allocation failed for val");
+		free(*key);
+		*key = NULL;
 	}
 }
 
-/**Ditched the ft_split because it fails to recognize val that contains other
- * equal signs. Now just find the first occurence of '=', and split to key and
- * val.
- * This function initializes the env_list by going over envp row-by-row, finds
- * the `=`, then separates the string before and after the eq sign as key and
- * val. Both key and val are then put into env_list via `add_envvar`.
- * 		Takes the envp from main and declared env_list in main.
- * 		Returns nothing because void func, but initializes the env_list.
- */
 void	init_envlist(t_env **env_list, char *envp[])
 {
 	int		i;
 	char	*key;
 	char	*val;
-	char	*equal_sign;
 
 	i = 0;
 	while (envp[i])
 	{
-		equal_sign = ft_strchr(envp[i], '=');
-		if (!equal_sign)
+		parse_envvar(envp[i], &key, &val);
+		if (key && val)
 		{
-			ft_fprintf(STDERR_FILENO, "Failed to find equal sign.\n");
-			i++;
-			continue ;
-		}
-		key = ft_substr(envp[i], 0, equal_sign - envp[i]);
-		if (!key)
-		{
-			perror("Memory allocation failed for key");
-			return ;
-		}
-		val = ft_strdup(equal_sign + 1);
-		if (!val)
-		{
-			perror("Memory allocation failed for val");
+			add_envvar(env_list, key, val);
 			free(key);
-			return ;
+			free(val);
 		}
-		add_envvar(env_list, key, val);
-		free(key);
-		free(val);
 		i++;
 	}
 }
