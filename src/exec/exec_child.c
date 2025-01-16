@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:10:52 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:11:55 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  * 		Returns exit status of the executed command.
  */
 /*
-* // handle empty command
-* if (cmd->args[0] && cmd->args[0][0] == '\0')
-* // Apply redirections before executing the command
-* if (cmd->redirections)
-* // Add this line to exit after builtin execution
-* exit(exit_status);
-* // Check if it's a directory
-* ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
-*/
+ * // handle empty command
+ * if (cmd->args[0] && cmd->args[0][0] == '\0')
+ * // Apply redirections before executing the command
+ * if (cmd->redirections)
+ * // Add this line to exit after builtin execution
+ * exit(exit_status);
+ * // Check if it's a directory
+ * ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
+ */
 int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 {
 	char	*cmd_path;
@@ -96,7 +96,7 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 	{
 		exit_status = exec_builtin(cmd->args, env_list, envp);
 		return (exit_status);
-		//exit(exit_status); // Add this line to exit after builtin execution
+		// exit(exit_status); // Add this line to exit after builtin execution
 	}
 	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
@@ -123,6 +123,8 @@ int	wait_chprocess(pid_t p_id)
 	waitpid(p_id, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + 128);
 	else
 		return (1);
 }
