@@ -6,11 +6,13 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 22:42:53 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 23:10:20 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
+
+
 
 t_env	**g_env;
 
@@ -43,8 +45,18 @@ void	handle_sigint(void)
 */
 void	handle_sigquit(void)
 {
-	// ft_fprintf(STDERR_FILENO, "Quit: ");
-	// add_envvar(g_env, "?", "131");
+	rl_point = rl_end;
+	rl_redisplay();
+}
+
+void	disable_echoctl(void)
+{
+	struct termios	term;
+
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+		return ;
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void	handle_signals(int signum)
@@ -80,4 +92,5 @@ void	setup_signals(t_env **env)
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
+	disable_echoctl();
 }
