@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 18:42:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:04:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_env	**g_env;
  */
 void	handle_sigint(void)
 {
-	ft_printf("\n");
+	ft_printf("^C\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
@@ -43,7 +43,7 @@ void	handle_sigint(void)
 */
 void	handle_sigquit(void)
 {
-	ft_fprintf(STDERR_FILENO, "Quit: ");
+	//ft_fprintf(STDERR_FILENO, "Quit: ");
 	add_envvar(g_env, "?", "131");
 }
 
@@ -57,7 +57,7 @@ void	handle_signals(int signum)
 	{
 		handle_sigquit();
 	}
-	add_envvar(g_env, "?", "130");
+	//add_envvar(g_env, "?", "130");
 }
 /**
  * CTRL + D (EOF) is handled by readline in the main loop

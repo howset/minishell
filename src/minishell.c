@@ -6,13 +6,11 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/16 17:44:52 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:18:35 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//int	g_signal_stat;
 
 char	*fancy_prompt(void)
 {
@@ -97,9 +95,11 @@ int	main(int argc, char *argv[], char *envp[])
 
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
+	rl_catch_signals = 0;
 	setup_signals(all_data->env_list);
 	while (1)
 	{
+		g_blocking_command = 0; // Reset blocking command state
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
 		//print_tkn(all_data->tokens);
@@ -107,8 +107,10 @@ int	main(int argc, char *argv[], char *envp[])
 		//print_ast(all_data->tree, 0);
 		all_data->table = ast_to_command_table(all_data->tree);
 		//print_command_table(all_data->table);
+		g_blocking_command = 1;
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list,
 				envp);
+		g_blocking_command = 0;
 		ex_stat = ft_itoa(all_data->exit_stat);
 		add_envvar(all_data->env_list, "?", ex_stat);
 		free(ex_stat);
@@ -120,6 +122,6 @@ int	main(int argc, char *argv[], char *envp[])
 	free_envlist(*all_data->env_list);
 	free(all_data->env_list);
 	free(all_data);
-	rl_clear_history();
+	//rl_clear_history();
 	return (0);
 }

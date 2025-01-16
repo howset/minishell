@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 18:42:19 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:32:27 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # define _XOPEN_SOURCE 700 // sigaction, in conjunction with signal.h
 
 # include "../minishell.h"
+
+extern int g_blocking_command;
 
 void	setup_signals(t_env **env);
 void	handle_sigint(void);
