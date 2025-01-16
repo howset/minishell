@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:08:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/13 16:53:40 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:38:38 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "./lib/src/ft_printf/ft_printf.h"
 # include "./lib/src/get_next_line/get_next_line.h"
 # include "./lib/src/libft/libft.h"
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <signal.h>
@@ -46,7 +46,5 @@
 # define MAG			"\033[35m"
 # define YEL			"\033[33m"
 # define BOLD			"\x1b[1m"
-
-extern int	g_signal_stat;
 
 #endif

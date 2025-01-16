@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:33:11 by reldahli          #+#    #+#             */
-/*   Updated: 2024/12/30 04:35:20 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:55:06 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define BUILTINS_H
 
 # include "../minishell.h"
+# include <limits.h>
 
+// cd.c
+int		rh_cd(char *path);
 // echo.c
 int		rh_echo(char *args[]);
 int		check_n(char *arg);

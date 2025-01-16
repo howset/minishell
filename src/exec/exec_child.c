@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 19:47:48 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:18:47 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,17 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
  * 		Takes the command (args[0]), other args, the env_list and the envp.
  * 		Returns exit status of the executed command.
  */
-int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
+/*
+* // handle empty command
+* if (cmd->args[0] && cmd->args[0][0] == '\0')
+* // Apply redirections before executing the command
+* if (cmd->redirections)
+* // Add this line to exit after builtin execution
+* exit(exit_status);
+* // Check if it's a directory
+* ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);
+*/
+int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 {
 	char	*cmd_path;
 	int		exit_status;
@@ -84,10 +94,10 @@ int	exec_chprocess(t_command *cmd, t_env *env_list, char *envp[])
 		exec_redirections(cmd->redirections);
 	if (is_builtin(cmd->args[0]))
 	{
-		exit_status = exec_builtin(cmd->args, &env_list, envp);
+		exit_status = exec_builtin(cmd->args, env_list, envp);
 		return (exit_status);
 	}
-	cmd_path = find_path(cmd->args[0], env_list);
+	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
 	{
 		ft_fprintf(STDERR_FILENO, "%s: command not found\n", cmd->args[0]);

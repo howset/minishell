@@ -1,36 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/12 23:00:04 by reldahli          #+#    #+#             */
+/*   Updated: 2025/01/14 20:49:38 by reldahli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./builtins.h"
 #include <limits.h>
 
-/**An extension of ft_isdigit but includes checks to *str if its empty or NULL.
- * As well, to skip (-). Hate to use pointers to iterate the str, but have to
- * because of ft_isdigit -___-
- * 		Takes *str.
- * 		Returns 0 if no numeric char is found, 1 if found.
- */
-static int	ft_isnumber(const char *str)
-{
-	if (!str || !*str)
-		return (0);
-	if (*str == '-')
-		str++;
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
+#include "builtins.h"
 
-/**To imitate the real exit:
- * 1. If no args, then exit(0).
- * 2. If args is not numeric, then give error msg, and exit(2).
+/*
+ * To imitate the real exit:
+ *	1. If no args, then exit(0).
+ *	2. If args is not numeric, then give error msg, and exit(2).
  * 		- Incl. detail checks for invalid numbers (0 or INT_MAX).
- * 3. If more than 1 args, then give error msg and return but dont exit.
- * 4. Otherwise, exit with args.
+ *	3. If more than 1 args, then give error msg and return but dont exit.
+ *	4. Otherwise, exit with args.
  * 		Takes args
  * 		Return nothing i guess (?). Just exit.
  */
+
 int	rh_exit(char *args[])
 {
 	int	exit_stat;

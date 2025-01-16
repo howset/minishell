@@ -7,10 +7,16 @@ NAME-LIBFT			= ./src/lib/libft.a
 
 ## Compiler, flags, & other commands
 CC 					= cc
-CFLAGS 				= -g -O0 -Wall -Werror -Wextra -I
+CFLAGS 				= -g -O0 -Wall -Werror -Wextra
 AR					= ar rcs
 RM					= rm -f
 LIBS				= -lreadline
+
+ifeq ($(shell uname), Darwin)
+CFLAGS += -I/opt/homebrew/opt/readline/include
+LIBS += -L/opt/homebrew/opt/readline/lib
+endif
+
 
 UTILS 				= 	./src/utils/malloc_perex.c\
 						./src/utils/ft_fprintf.c
@@ -30,7 +36,9 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 
 SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/parser_utils.c \
-						./src/parser/ast.c
+						./src/parser/ast.c \
+						./src/parser/utils/string_processing.c \
+						./src/parser/utils/env_variable_handling.c
 
 SRC-EXEC			= 	./src/exec/exec.c \
 						./src/exec/exec_child.c \
@@ -42,6 +50,7 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/exit.c \
 						./src/builtins/export.c \
 						./src/builtins/unset.c \
+						./src/builtins/cd.c \
 						./src/builtins/pwd.c
 
 SRC-CMDTABLE		= 	./src/command_table/command_table.c
@@ -86,12 +95,18 @@ test_val:				$(NAME-LIBFT) $(NAME-MS)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(NAME-MS)
 
 test_vallog:			$(NAME-LIBFT) $(NAME-MS)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME-MS)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=l_valgrind-out.txt ./$(NAME-MS)
+
+test_fds:				$(NAME-LIBFT) $(NAME-MS)
+	valgrind -q --tool=none --track-fds=all ./$(NAME-MS)
+
+test_fdslog:				$(NAME-LIBFT) $(NAME-MS)
+	valgrind -q --tool=none --track-fds=all --log-file=fd_valgrind-out.txt ./$(NAME-MS)
 
 ##------------------------------------------------------------------##
 # Pattern rule
 %.o: %.c
-		@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+		@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
 
 ##------------------------------------------------------------------##
 # Targets
@@ -101,7 +116,7 @@ $(NAME-LIBFT):
 		@echo "$(GREEN)Libft ready!$(COLOFF)"
 
 $(NAME-MS): $(OBJS) $(NAME-LIBFT)
-		@$(CC) $(CFLAGS) $(HEADER) $(OBJS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
+		@$(CC) $(CFLAGS) $(OBJS) $(NAME-LIBFT) -o $(NAME-MS) $(LIBS)
 		@echo "$(GREEN)Minishell ready!$(COLOFF)"
 
 ##------------------------------------------------------------------##

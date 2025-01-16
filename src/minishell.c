@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/14 13:14:34 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:40:15 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*prompt_hist(char *input)
 	if (!input)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(0); // may have to free something?
 	}
 	if (ft_strlen(input) > 0)
 		add_history(input);
@@ -82,7 +82,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	all_data->env_list = &all_data->env_head;
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
-	add_envvar(all_data->env_list, "?", "init");
+	add_envvar(all_data->env_list, "?", "0");
 	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	return (all_data);
 }
@@ -133,7 +133,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
 	char		*ex_stat;
-	
+
 	all_data = malloc_perex(sizeof(t_alldata), "Malloc error on all_data");
 	all_data = initialize(argc, argv, envp, all_data);
 	setup_signals(all_data->env_list);
@@ -141,7 +141,9 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
+		// print_tkn(all_data->tokens);
 		all_data->tree = parse(all_data->tokens, all_data);
+		// print_ast(all_data->tree, 0);
 		all_data->table = ast_to_command_table(all_data->tree);
 		// print_command_table(all_data->table);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list,
