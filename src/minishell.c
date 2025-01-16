@@ -6,13 +6,17 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/01/16 22:09:08 by reldahli         ###   ########.fr       */
+=======
+/*   Updated: 2025/01/16 23:08:31 by reldahli         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//int	g_signal_stat;
+// int	g_signal_stat;
 
 char	*fancy_prompt(void)
 {
@@ -83,7 +87,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 	all_data->input = NULL;
 	init_envlist(all_data->env_list, envp);
 	add_envvar(all_data->env_list, "?", "0");
-	//add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
+	// add_envvar(all_data->env_list, "?", ft_itoa(all_data->exit_stat));
 	return (all_data);
 }
 

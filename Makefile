@@ -53,7 +53,12 @@ SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/cd.c \
 						./src/builtins/pwd.c
 
-SRC-CMDTABLE		= 	./src/command_table/command_table.c
+SRC-CMDTABLE		= 	./src/command_table/command_table_utils.c \
+						./src/command_table/command_table_process.c \
+						./src/command_table/command_table_pipe.c \
+						./src/command_table/command_table_init.c \
+						./src/command_table/command_table_free.c
+
 
 SRC-ENVS 			= 	./src/envs/envlist.c \
 						./src/envs/envvar.c \
