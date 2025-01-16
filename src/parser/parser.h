@@ -6,35 +6,51 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:23:52 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 15:47:11 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:21:31 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-// Function declarations and necessary includes go here
 # include "../minishell.h"
 
 // ast.c functions
 t_ast		*create_ast_node(t_nodetype type);
+void		free_ast(t_ast *ast);
 
 // parser_utils.c functions
 void		consume_token(t_token **current);
 t_tkntype	get_token_type(t_token **current);
 void		parse_error(const char *message, t_token *token);
 void		syntax_error_at(int position, const char *message);
-char		*sanitize_text(char *text, t_alldata *all_data);
 
 // parser.c functions
-t_ast		*parse_command(t_token **current, t_alldata *all_data);
-t_ast		*parse_factor(t_token **current, t_alldata *all_data);
-t_ast		*parse_term(t_token **current, t_alldata *all_data);
-t_ast		*parse_pipe(t_token **current, t_alldata *all_data);
+int			is_argument_token(t_tkntype type);
+int			is_redirection_token(t_tkntype type);
+t_ast		*parser(t_token *tokens, t_alldata *all_data);
+
+// parse_expression.c
 t_ast		*parse_expression(t_token **current, t_alldata *all_data);
-t_ast		*parse(t_token *tokens, t_alldata *all_data);
-void		syntax_error_at(int position, const char *message);
-void		free_ast(t_ast *ast);
+t_nodetype	check_optype(t_tkntype token_type);
+t_ast		*handle_opnode(t_token **current, t_alldata *all_data, 
+				t_ast *left_node, t_nodetype type);
+
+// parse_pipe.c
+t_ast		*parse_pipe(t_token **current, t_alldata *all_data);
+
+// parse_term.c
+t_ast		*parse_term(t_token **current, t_alldata *all_data);
+int			handle_redir(t_token **current, t_alldata *all_data, t_ast **node);
+int			check_redirtarget(t_token **current);
+int			handle_arg(t_token **current, t_alldata *all_data, t_ast *node);
+
+// parse_factor.c
+t_ast		*parse_factor(t_token **current, t_alldata *all_data);
+
+// parse_command.c
+t_ast		*parse_command(t_token **current, t_alldata *all_data);
+int			process_tkn(t_token **current, t_ast *node, t_alldata *all_data);
 
 // string_processing.c
 char		*extract_and_process_quotes(char *result, int *i,

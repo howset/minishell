@@ -37,6 +37,11 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/word.c
 
 SRC-PARSER			= 	./src/parser/parser.c \
+						./src/parser/parse_expression.c\
+						./src/parser/parse_pipe.c\
+						./src/parser/parse_term.c\
+						./src/parser/parse_factor.c\
+						./src/parser/parse_command.c\
 						./src/parser/parser_utils.c \
 						./src/parser/ast.c \
 						./src/parser/utils/string_processing.c \

@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 14:22:02 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 15:46:19 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:09:12 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,27 @@ t_ast	*create_ast_node(t_nodetype type)
 	node->args_count = 0;
 	node->filename = NULL;
 	return (node);
+}
+
+void	free_ast(t_ast *ast)
+{
+	int	i;
+
+	if (ast == NULL)
+		return ;
+	if (ast->args)
+	{
+		i = 0;
+		while (i < ast->args_count)
+		{
+			free(ast->args[i]);
+			i++;
+		}
+		free(ast->args);
+	}
+	if (ast->filename)
+		free(ast->filename);
+	free_ast(ast->left);
+	free_ast(ast->right);
+	free(ast);
 }

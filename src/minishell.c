@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/16 15:59:42 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:44:52 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char *argv[], char *envp[])
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
 		//print_tkn(all_data->tokens);
-		all_data->tree = parse(all_data->tokens, all_data);
+		all_data->tree = parser(all_data->tokens, all_data);
 		//print_ast(all_data->tree, 0);
 		all_data->table = ast_to_command_table(all_data->tree);
 		//print_command_table(all_data->table);
