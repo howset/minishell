@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:23:52 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:42:13 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:47:11 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 
 // ast.c functions
 t_ast		*create_ast_node(t_nodetype type);
-void		print_indentation(int level, int spaces);
-void		print_redirection_info(t_ast *node, int level);
-void		print_node_info(t_ast *node, int level);
-void		print_ast(t_ast *node, int level);
 
 // parser_utils.c functions
 void		consume_token(t_token **current);
@@ -29,6 +25,7 @@ t_tkntype	get_token_type(t_token **current);
 void		parse_error(const char *message, t_token *token);
 void		syntax_error_at(int position, const char *message);
 char		*sanitize_text(char *text, t_alldata *all_data);
+
 // parser.c functions
 t_ast		*parse_command(t_token **current, t_alldata *all_data);
 t_ast		*parse_factor(t_token **current, t_alldata *all_data);

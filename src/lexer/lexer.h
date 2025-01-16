@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:53:27 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 18:32:19 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:40:36 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int		lex_app_rout(const char *input, int pos, t_token **tokens,
 //token.c
 t_token	*create_tkn(t_tkntype type, const char *start, int len, int pos);
 void	append_tkn(t_token **head, t_token *new_token);
-void	print_tkn(t_token *tokens);
 void	free_tkn(t_token *tokens);
 
 //word.c

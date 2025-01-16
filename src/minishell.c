@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/14 21:56:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:59:42 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,45 +90,6 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 /**
  * currently the main function is getting confusing.
  */
-void	print_command_table(t_cmdtable *table)
-{
-	t_command		*cmd;
-	t_redirection	*redir;
-	int				i;
-
-	if (!table)
-		return ;
-	printf("\nCommand Table:\n");
-	printf("Total commands: %d\n", table->cmd_count);
-	printf("Total pipes: %d\n", table->pipe_count);
-	cmd = table->commands;
-	while (cmd)
-	{
-		printf("\nCommand:\n");
-		printf("Type: %d\n", cmd->type);
-		printf("Arguments: ");
-		i = 0;
-		while (cmd->args && cmd->args[i])
-		{
-			printf("%s ", cmd->args[i]);
-			i++;
-		}
-		printf("\n");
-		if (cmd->pipe_read != -1)
-			printf("Pipe read fd: %d\n", cmd->pipe_read);
-		if (cmd->pipe_write != -1)
-			printf("Pipe write fd: %d\n", cmd->pipe_write);
-		redir = cmd->redirections;
-		while (redir)
-		{
-			printf("Redirection: type=%d, file=%s\n", redir->type, redir->file);
-			redir = redir->next;
-		}
-		cmd = cmd->next;
-	}
-	printf("\n");
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_alldata	*all_data;
@@ -141,11 +102,11 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
-		// print_tkn(all_data->tokens);
+		//print_tkn(all_data->tokens);
 		all_data->tree = parse(all_data->tokens, all_data);
-		// print_ast(all_data->tree, 0);
+		//print_ast(all_data->tree, 0);
 		all_data->table = ast_to_command_table(all_data->tree);
-		// print_command_table(all_data->table);
+		//print_command_table(all_data->table);
 		all_data->exit_stat = exec_commtab(all_data->table, all_data->env_list,
 				envp);
 		ex_stat = ft_itoa(all_data->exit_stat);

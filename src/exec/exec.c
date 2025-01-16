@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 15:18:22 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:24:34 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
  */
 int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 {
-	int		exit_stat;
-	pid_t	p_id;
+	int			exit_stat;
 
 	if (is_builtin(cmd->args[0]))
 		exit_stat = exec_builtin(cmd->args, env_list, envp);
@@ -58,29 +57,7 @@ int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-int	exec_pipe_command(t_command *cmd, t_env *env_list, char *envp[])
-{
-	int			status;
-	t_command	*current_cmd;
-
-	status = EXIT_SUCCESS;
-	current_cmd = cmd;
-	if (!cmd->next)
-	{
-		perror("No next command");
-		return (EXIT_FAILURE);
-	}
-	while (current_cmd && current_cmd->type == CMD_PIPE)
-	{
-		status = handle_pipecomm(current_cmd, env_list, envp);
-		if (status != EXIT_SUCCESS)
-			return (EXIT_FAILURE);
-		current_cmd = current_cmd->next;
-	}
-	return (status);
-}
-
-int	handle_pipecomm(t_command *current_cmd, t_env *env_list, char *envp[])
+int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 {
 	pid_t	p_id;
 
@@ -143,4 +120,4 @@ int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 		current_cmd = current_cmd->next;
 	}
 	return (status);
-} */
+}
