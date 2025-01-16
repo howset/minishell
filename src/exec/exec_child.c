@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 22:44:44 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 23:15:09 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	wait_chprocess(pid_t p_id)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 		{
-			ft_fprintf(STDERR_FILENO, "Quit:");
+			ft_fprintf(STDERR_FILENO, "Quit (core dumped)\n");
 		}
 		return (WTERMSIG(status) + 128);
 	}
