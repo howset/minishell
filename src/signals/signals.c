@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 18:42:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:42:53 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	handle_sigint(void)
 */
 void	handle_sigquit(void)
 {
-	ft_fprintf(STDERR_FILENO, "Quit: ");
-	add_envvar(g_env, "?", "131");
+	// ft_fprintf(STDERR_FILENO, "Quit: ");
+	// add_envvar(g_env, "?", "131");
 }
 
 void	handle_signals(int signum)
