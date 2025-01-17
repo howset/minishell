@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 23:08:41 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/17 23:20:36 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 	if (is_builtin(cmd->args[0]))
 	{
 		exit_status = exec_builtin(cmd->args, env_list, envp);
-		return (exit_status);
-		// exit(exit_status); // Add this line to exit after builtin execution
+		exit(exit_status);
 	}
 	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
