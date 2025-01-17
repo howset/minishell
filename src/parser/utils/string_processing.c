@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_processing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 21:33:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 20:00:27 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:59:57 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 	processed = extract_and_process_quotes(result, i, all_data);
 	if (!processed)
 		return (result);
-	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) + 
+	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) +
 			ft_strlen(processed) + 1);
 	if (!new_str)
 	{
@@ -73,9 +73,9 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 	ft_memcpy(new_str + start - 1, processed, ft_strlen(processed));
 	ft_memcpy(new_str + start - 1 + ft_strlen(processed), result + *i + 1,
 		ft_strlen(result + *i + 1) + 1);
+	*i = start - 1 + ft_strlen(processed);
 	free(processed);
 	free(result);
-	*i = start - 1 + ft_strlen(processed);
 	return (new_str);
 }
 
