@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:54:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/16 17:54:01 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:15:33 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	handle_arg(t_token **current, t_alldata *all_data, t_ast *node)
 	}
 	command_node->args_count++;
 	command_node->args = ft_realloc(command_node->args,
+			sizeof(char *) * command_node->args_count,
 			sizeof(char *) * (command_node->args_count + 1));
 	command_node->args[command_node->args_count - 1]
 		= ft_strdup(sanitize_text((*current)->value, all_data));

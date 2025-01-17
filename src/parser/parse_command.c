@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:54:30 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/17 14:10:09 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:15:54 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,14 @@ int	process_tkn(t_token **current, t_ast *node, t_alldata *all_data)
 		return (1);
 	}
 	node->args_count++;
-	node->args
-		= ft_realloc(node->args, sizeof(char *) * (node->args_count + 1));
+	node->args = ft_realloc(node->args,
+			sizeof(char *) * node->args_count,
+			sizeof(char *) * (node->args_count + 1));
+	if (!node->args)
+	{
+		perror("ft_realloc");
+		exit(EXIT_FAILURE);
+	}
 	sanitized = sanitize_text((*current)->value, all_data);
 	node->args[node->args_count - 1] = ft_strdup(sanitized);
 	free(sanitized);
