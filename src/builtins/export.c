@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:34:17 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 01:22:55 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 15:23:06 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,24 @@ static int	add_env_variables(t_env **env_list, char *key, char *val)
  * to add_env_variables(). Then it restores '='.
  */
 
-static void	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
+static int	handle_with_equals(t_env **env_list, char *arg, char *eq_sign)
 {
 	char	*value;
 
 	*eq_sign = '\0';
 	value = eq_sign + 1;
 	if (*value == '\0')
-		add_env_variables(env_list, arg, NULL);
+	{
+		if (add_env_variables(env_list, arg, NULL) != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+	}
 	else
-		add_env_variables(env_list, arg, value);
+	{
+		if (add_env_variables(env_list, arg, value) != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+	}
 	*eq_sign = '=';
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -110,9 +117,15 @@ int	rh_export(char *args[], t_env **env_list)
 	{
 		eq_sign = ft_strchr(args[i], '=');
 		if (eq_sign)
-			handle_with_equals(env_list, args[i], eq_sign);
+		{
+			if (handle_with_equals(env_list, args[i], eq_sign) != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
+		}
 		else
-			add_env_variables(env_list, args[i], NULL);
+		{
+			if (add_env_variables(env_list, args[i], NULL) != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
