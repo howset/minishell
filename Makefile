@@ -19,7 +19,9 @@ endif
 
 
 UTILS 				= 	./src/utils/malloc_perex.c\
-						./src/utils/ft_fprintf.c
+						./src/utils/ft_fprintf.c\
+						./src/utils/debug_print_tkn_commtab.c\
+						./src/utils/debug_print_ast.c
 
 ## Sources & header
 SRC-MS				= 	./src/minishell.c
@@ -35,8 +37,13 @@ SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/word.c
 
 SRC-PARSER			= 	./src/parser/parser.c \
-						./src/parser/parser_utils.c \
+						./src/parser/parse_expression.c\
+						./src/parser/parse_pipe.c\
+						./src/parser/parse_term.c\
+						./src/parser/parse_factor.c\
+						./src/parser/parse_command.c\
 						./src/parser/ast.c \
+						./src/parser/utils/parser_utils.c \
 						./src/parser/utils/string_processing.c \
 						./src/parser/utils/env_variable_handling.c
 

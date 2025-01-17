@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 10:59:05 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:52:21 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	append_tkn(t_token **head, t_token *new_token)
 }
 
 // direct copy
-void	print_tkn(t_token *tokens)
+/* void	print_tkn(t_token *tokens)
 {
 	t_token	*current;
 
@@ -61,7 +61,7 @@ void	print_tkn(t_token *tokens)
 			current->value, current->position);
 		current = current->next;
 	}
-}
+} */
 
 // direct copy
 void	free_tkn(t_token *tokens)

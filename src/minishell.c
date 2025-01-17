@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/14 21:56:04 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:51:57 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_alldata	*initialize(int argc, char *argv[], char *envp[],
 /**
  * currently the main function is getting confusing.
  */
-void	print_command_table(t_cmdtable *table)
+/* void	print_command_table(t_cmdtable *table)
 {
 	t_command		*cmd;
 	t_redirection	*redir;
@@ -127,7 +127,7 @@ void	print_command_table(t_cmdtable *table)
 		cmd = cmd->next;
 	}
 	printf("\n");
-}
+} */
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -142,7 +142,7 @@ int	main(int argc, char *argv[], char *envp[])
 		all_data->input = prompt_hist(all_data->input);
 		all_data->tokens = lexer(all_data->input);
 		// print_tkn(all_data->tokens);
-		all_data->tree = parse(all_data->tokens, all_data);
+		all_data->tree = parser(all_data->tokens, all_data);
 		// print_ast(all_data->tree, 0);
 		all_data->table = ast_to_command_table(all_data->tree);
 		// print_command_table(all_data->table);
