@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 17:23:52 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 13:47:11 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:08:44 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_ast		*parser(t_token *tokens, t_alldata *all_data);
 // parse_expression.c
 t_ast		*parse_expression(t_token **current, t_alldata *all_data);
 t_nodetype	check_optype(t_tkntype token_type);
-t_ast		*handle_opnode(t_token **current, t_alldata *all_data, 
+t_ast		*handle_opnode(t_token **current, t_alldata *all_data,
 				t_ast *left_node, t_nodetype type);
 
 // parse_pipe.c
