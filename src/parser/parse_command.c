@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:54:30 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/17 19:40:58 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:00:50 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_ast	*parse_command(t_token **current, t_alldata *all_data)
 	}
 	return (node);
 }
+
 /**
  * process_tkn - Processes a token and updates the AST node with the token's
  * value.

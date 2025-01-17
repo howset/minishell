@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 21:33:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 19:35:46 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 20:00:27 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 	processed = extract_and_process_quotes(result, i, all_data);
 	if (!processed)
 		return (result);
-	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) + ft_strlen(processed)
-			+ 1);
+	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) + 
+			ft_strlen(processed) + 1);
 	if (!new_str)
 	{
 		free(processed);
@@ -107,8 +107,8 @@ char	*process_single_quotes(char *result, int *i)
 		return (result);
 	ft_memcpy(new_str, result, start - 1);
 	ft_memcpy(new_str + start - 1, result + start, len);
-	ft_memcpy(new_str + start - 1 + len, result + start + len + 1, ft_strlen(result
-			+ start + len + 1) + 1);
+	ft_memcpy(new_str + start - 1 + len, result + start + len + 1,
+		ft_strlen(result + start + len + 1) + 1);
 	free(result);
 	*i = start - 1 + len;
 	return (new_str);
