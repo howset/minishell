@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 20:52:20 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 13:52:21 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:56:24 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ void	append_tkn(t_token **head, t_token *new_token)
 		temp->next = new_token;
 	}
 }
-
-// direct copy
-/* void	print_tkn(t_token *tokens)
-{
-	t_token	*current;
-
-	printf("\n");
-	printf("Tokens:\n");
-	current = tokens;
-	while (current)
-	{
-		printf("Type: %d, Value: '%s', Position: %d\n", current->type,
-			current->value, current->position);
-		current = current->next;
-	}
-} */
 
 // direct copy
 void	free_tkn(t_token *tokens)
