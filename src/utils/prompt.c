@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 18:57:18 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/17 19:25:45 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:29:44 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
  */
 char	*colorize_prompt(char *wdir)
 {
-	char *temp;
-	char *temp1;
-	char *temp2;
-	char *col_prompt;
+	char	*temp;
+	char	*temp1;
+	char	*temp2;
+	char	*col_prompt;
 
 	temp = ft_strjoin(YEL BOLD, "rh-shell> ");
 	temp1 = ft_strjoin(BLU BOLD, wdir);
@@ -57,9 +57,9 @@ char	*colorize_prompt(char *wdir)
  */
 char	*fancy_prompt(void)
 {
-	char *wdir;
-	char *col_prompt;
-	char *prompt;
+	char	*wdir;
+	char	*col_prompt;
+	char	*prompt;
 
 	wdir = getcwd(NULL, 0);
 	col_prompt = colorize_prompt(wdir);
