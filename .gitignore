@@ -105,9 +105,11 @@ Temporary Items
 
 minishell
 test_runner
+minishell_tester
 
 ## Valgrind
 valgrind-out.txt
 .vscode/
 test_output
-
+l_valgrind-out.txt
+fd_valgrind-out.txt

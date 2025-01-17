@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 03:36:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/13 19:03:44 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:50:05 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ typedef struct s_ast
 	t_nodetype		type;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	char			**args;				//	For command arguments
-	int				args_count;			//	Number of arguments
-	t_tkntype		redirection_type;	//	If it's a redirection
-	char			*filename;			//	File for redirection
+	char			**args;
+	int				args_count;
+	t_tkntype		redirection_type;
+	char			*filename;
 }					t_ast;
 /*
  * Command type enumeration to identify different types of commands
@@ -72,9 +72,9 @@ typedef struct s_ast
  */
 typedef enum e_cmd_type
 {
-	CMD_SIMPLE,	// Simple command (e.g., ls -l)
-	CMD_PIPE,	// Command part of a pipeline
-	CMD_SUBSHELL// Command in subshell
+	CMD_SIMPLE,
+	CMD_PIPE,
+	CMD_SUBSHELL,
 }					t_cmd_type;
 
 /*
@@ -82,9 +82,9 @@ typedef enum e_cmd_type
  */
 typedef struct s_redirection
 {
-	t_tkntype				type;		// Type of redirection
-	char					*file;		// File for redirection
-	struct s_redirection	*next;	// Next redirection in list
+	t_tkntype				type;
+	char					*file;
+	struct s_redirection	*next;
 }					t_redirection;
 
 /*
@@ -93,12 +93,12 @@ typedef struct s_redirection
  */
 typedef struct s_command
 {
-	char				**args;			// Command and its arguments
-	t_redirection		*redirections;	// List of redirections
-	t_cmd_type			type;			// Type of command
-	int					pipe_read;		// Read end of pipe (-1 if none)
-	int					pipe_write;		// Write end of pipe (-1 if none)
-	struct s_command	*next;			// Next command in sequence
+	char				**args;
+	t_redirection		*redirections;
+	t_cmd_type			type;
+	int					pipe_read;
+	int					pipe_write;
+	struct s_command	*next;
 }							t_command;
 
 /*
@@ -106,9 +106,9 @@ typedef struct s_command
  */
 typedef struct s_cmdtable
 {
-	t_command		*commands;		// List of commands
-	int				cmd_count;		// Number of commands
-	int				pipe_count;		// Number of pipes
+	t_command		*commands;
+	int				cmd_count;
+	int				pipe_count;
 }					t_cmdtable;
 
 typedef struct s_env
