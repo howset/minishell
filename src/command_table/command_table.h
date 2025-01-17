@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:54:39 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 13:50:35 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:56:56 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void			free_command(t_command *cmd);
 void			free_command_table(t_cmdtable *table);
 
 //command_table_process_utils.c
-void			ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table);
 void			process_ast_node(t_ast *ast, t_cmdtable *table);
+void			ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table);
+
 
 #endif
