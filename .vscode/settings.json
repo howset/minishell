@@ -17,6 +17,7 @@
 		"array": "c",
 		"functional": "c",
 		"tuple": "c",
-		"utility": "c"
+		"utility": "c",
+		"signals.h": "c"
 	}
 }

@@ -57,7 +57,8 @@ SRC-CMDTABLE		= 	./src/command_table/command_table_utils.c \
 						./src/command_table/command_table_process.c \
 						./src/command_table/command_table_pipe.c \
 						./src/command_table/command_table_init.c \
-						./src/command_table/command_table_free.c
+						./src/command_table/command_table_free.c \
+						./src/command_table/command_table_process_utils.c
 
 
 SRC-ENVS 			= 	./src/envs/envlist.c \

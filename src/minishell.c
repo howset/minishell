@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/01/16 22:09:08 by reldahli         ###   ########.fr       */
-=======
-/*   Updated: 2025/01/16 23:08:31 by reldahli         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/01/17 11:45:47 by reldahli          #+#    #+#             */
+/*   Updated: 2025/01/17 11:45:54 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
