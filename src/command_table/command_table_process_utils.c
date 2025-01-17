@@ -6,13 +6,13 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:48:31 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 13:50:33 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:24:08 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_table.h"
 
-static void	process_ast_node(t_ast *ast, t_cmdtable *table)
+void	process_ast_node(t_ast *ast, t_cmdtable *table)
 {
 	t_command	*cmd;
 	t_ast		*cmd_node;
