@@ -6,12 +6,25 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:54:00 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/17 17:15:33 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:45:54 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./parser.h"
 
+/**
+ * parse_term - Parses a term from the token stream.
+ * @current: Double pointer to the current token in the token stream.
+ * @all_data: Pointer to the structure containing all necessary data.
+ *
+ * This function parses a term by first parsing a factor and then
+ * handling any subsequent redirection or argument tokens. If a factor
+ * cannot be parsed, it returns NULL. If a redirection or argument token
+ * is encountered, it calls the appropriate handler function. If any
+ * handler function fails, it returns NULL.
+ *
+ * Return: A pointer to the parsed AST node, or NULL on failure.
+ */
 t_ast	*parse_term(t_token **current, t_alldata *all_data)
 {
 	t_ast	*node;
@@ -36,6 +49,18 @@ t_ast	*parse_term(t_token **current, t_alldata *all_data)
 	return (node);
 }
 
+/**
+ * handle_redir - Handles redirection tokens in the parsing process.
+ * @current: Double pointer to the current token in the token list.
+ * @all_data: Pointer to the structure containing all relevant data.
+ * @node: Double pointer to the current AST node.
+ *
+ * This function processes redirection tokens, creates a new AST node for the
+ * redirection, and links it to the current AST node. It also sanitizes the
+ * filename associated with the redirection and duplicates it for the AST node.
+ *
+ * Return: 1 on success, 0 on failure.
+ */
 int	handle_redir(t_token **current, t_alldata *all_data, t_ast **node)
 {
 	t_ast	*redir_node;
@@ -57,6 +82,17 @@ int	handle_redir(t_token **current, t_alldata *all_data, t_ast **node)
 	return (1);
 }
 
+/**
+ * @brief Checks if the current token is a valid redirection target.
+ *
+ * This function verifies that the current token is not NULL and that it is
+ * a valid argument token, which is required to be a filename after a 
+ * redirection. If the token is invalid, a syntax error is reported.
+ *
+ * @param current A double pointer to the current token.
+ * @return int Returns 1 if the current token is a valid redirection target,
+ *         otherwise returns 0.
+ */
 int	check_redirtarget(t_token **current)
 {
 	if (!(*current))
@@ -73,6 +109,23 @@ int	check_redirtarget(t_token **current)
 	return (1);
 }
 
+/**
+ * handle_arg - Handles an argument token and adds it to the command node's
+ * arguments.
+ * @current: Double pointer to the current token being processed.
+ * @all_data: Pointer to the structure containing all relevant data.
+ * @node: Pointer to the current AST node.
+ *
+ * This function processes an argument token and adds it to the arguments list
+ * of the command node in the AST. It first traverses the AST to find the
+ * command node, skipping any redirection nodes. If the command node is not
+ * found or is not of type NODE_COMMAND, it reports a syntax error. Otherwise,
+ * it reallocates memory for the arguments list, duplicates the sanitized
+ * argument value, and adds it to the list. The current token pointer is then
+ * advanced to the next token.
+ *
+ * Return: 1 on success, 0 on syntax error.
+ */
 int	handle_arg(t_token **current, t_alldata *all_data, t_ast *node)
 {
 	t_ast	*command_node;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_processing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 21:33:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:39:09 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:35:46 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 	processed = extract_and_process_quotes(result, i, all_data);
 	if (!processed)
 		return (result);
-	new_str = malloc(strlen(result) - ((*i) - start + 2) + strlen(processed)
+	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) + ft_strlen(processed)
 			+ 1);
 	if (!new_str)
 	{
@@ -70,12 +70,12 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 		return (result);
 	}
 	ft_memcpy(new_str, result, start - 1);
-	ft_memcpy(new_str + start - 1, processed, strlen(processed));
-	ft_memcpy(new_str + start - 1 + strlen(processed), result + *i + 1,
-		strlen(result + *i + 1) + 1);
+	ft_memcpy(new_str + start - 1, processed, ft_strlen(processed));
+	ft_memcpy(new_str + start - 1 + ft_strlen(processed), result + *i + 1,
+		ft_strlen(result + *i + 1) + 1);
 	free(processed);
 	free(result);
-	*i = start - 1 + strlen(processed);
+	*i = start - 1 + ft_strlen(processed);
 	return (new_str);
 }
 
@@ -102,12 +102,12 @@ char	*process_single_quotes(char *result, int *i)
 		len++;
 		(*i)++;
 	}
-	new_str = malloc(strlen(result) - 2 + 1);
+	new_str = malloc(ft_strlen(result) - 2 + 1);
 	if (!new_str)
 		return (result);
 	ft_memcpy(new_str, result, start - 1);
 	ft_memcpy(new_str + start - 1, result + start, len);
-	ft_memcpy(new_str + start - 1 + len, result + start + len + 1, strlen(result
+	ft_memcpy(new_str + start - 1 + len, result + start + len + 1, ft_strlen(result
 			+ start + len + 1) + 1);
 	free(result);
 	*i = start - 1 + len;
@@ -132,7 +132,7 @@ char	*process_exit_status(char *result, int *i, t_alldata *all_data)
 	env = find_envvar(*all_data->env_list, "?");
 	if (!env)
 		return (result);
-	new_str = malloc(strlen(result) - 1 + ft_strlen(env->val) + 1);
+	new_str = malloc(ft_strlen(result) - 1 + ft_strlen(env->val) + 1);
 	if (!new_str)
 		return (result);
 	ft_memcpy(new_str, result, *i - 1);

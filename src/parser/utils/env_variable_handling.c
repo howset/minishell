@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variable_handling.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 21:34:01 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:40:57 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:34:52 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*process_env_variable(char *result, int *i, t_alldata *all_data)
 		value_len = ft_strlen(env->val);
 	else
 		value_len = 0;
-	new_str = malloc(strlen(result) - var_len + value_len + 1);
+	new_str = malloc(ft_strlen(result) - var_len + value_len + 1);
 	if (!new_str)
 		return (result);
 	ft_memcpy(new_str, result, *i - var_len - 1);

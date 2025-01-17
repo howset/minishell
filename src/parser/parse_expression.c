@@ -6,11 +6,25 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:52:38 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/16 17:52:47 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:42:15 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./parser.h"
+/**
+ * parse_expression - Parses an expression from the token stream.
+ * @current: A pointer to the current token pointer.
+ * @all_data: A pointer to the structure containing all necessary data.
+ *
+ * This function parses an expression by first parsing a pipe and then
+ * checking for logical operators (AND, OR, SEMICOLON). If a logical operator
+ * is found, it ensures that there is a preceding command and then handles
+ * the operator node accordingly. If any errors are encountered, such as a
+ * logical operator without a preceding command, a syntax error is reported.
+ *
+ * Return: A pointer to the root of the abstract syntax tree (AST) representing
+ *         the parsed expression, or NULL if an error occurs.
+ */
 
 t_ast	*parse_expression(t_token **current, t_alldata *all_data)
 {
@@ -37,6 +51,18 @@ t_ast	*parse_expression(t_token **current, t_alldata *all_data)
 	return (node);
 }
 
+/**
+ * @brief Determines the node type based on the token type.
+ *
+ * This function takes a token type as input and returns the corresponding
+ * node type. It maps specific token types to their respective node types.
+ *
+ * @param token_type The type of the token to be checked.
+ * @return The corresponding node type:
+ *         - NODE_AND if the token type is TKN_AND
+ *         - NODE_OR if the token type is TKN_OR
+ *         - NODE_SEQUENCE for any other token type
+ */
 t_nodetype	check_optype(t_tkntype token_type)
 {
 	if (token_type == TKN_AND)
@@ -46,6 +72,21 @@ t_nodetype	check_optype(t_tkntype token_type)
 	return (NODE_SEQUENCE);
 }
 
+/**
+ * handle_opnode - Handles the creation of an operator node in the AST.
+ * @current: Double pointer to the current token in the token list.
+ * @all_data: Pointer to the structure containing all necessary data.
+ * @left_node: Pointer to the left child node of the operator node.
+ * @type: The type of the operator node to be created.
+ *
+ * This function creates an operator node of the specified type and attaches
+ * the given left child node to it. It then advances the current token pointer
+ * and parses the right child node using the parse_pipe function. If the right
+ * child node cannot be parsed, it reports a syntax error indicating that a
+ * command was expected after the logical operator.
+ *
+ * Return: Pointer to the created operator node, or NULL if an error occurs.
+ */
 t_ast	*handle_opnode(t_token **current, t_alldata *all_data, t_ast *left_node,
 	t_nodetype type)
 {

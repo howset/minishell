@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 14:22:02 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 16:09:12 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:37:14 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ t_ast	*create_ast_node(t_nodetype type)
 	return (node);
 }
 
+/**
+ * @brief Frees the memory allocated for an abstract syntax tree (AST).
+ *
+ * This function recursively frees the memory allocated for the AST nodes,
+ * including their arguments and filenames. It ensures that all dynamically
+ * allocated memory associated with the AST is properly released.
+ *
+ * @param ast A pointer to the root of the AST to be freed. If the pointer is 
+ * 				NULL the function does nothing.
+ */
 void	free_ast(t_ast *ast)
 {
 	int	i;

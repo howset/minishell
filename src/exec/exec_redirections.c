@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:35 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 22:36:25 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:34:20 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_input_redirection(t_redirection *redirection)
 					free(line);
 					break ;
 				}
-				write(pipefd[1], line, strlen(line));
+				write(pipefd[1], line, ft_strlen(line));
 				write(pipefd[1], "\n", 1);
 				free(line);
 			}
