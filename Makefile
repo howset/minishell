@@ -21,7 +21,9 @@ endif
 UTILS 				= 	./src/utils/malloc_perex.c\
 						./src/utils/ft_fprintf.c\
 						./src/utils/debug_print_tkn_commtab.c\
-						./src/utils/debug_print_ast.c
+						./src/utils/debug_print_ast.c\
+						./src/utils/prompt.c\
+						./src/utils/cleanups.c
 
 ## Sources & header
 SRC-MS				= 	./src/minishell.c

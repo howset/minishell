@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:57:40 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 15:58:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:24:17 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ void	print_redirection_info(t_ast *node, int level);
 void	print_node_info(t_ast *node, int level);
 void	print_ast(t_ast *node, int level);
 
+// prompt.c
+char	*colorize_prompt(char *wdir);
+char	*fancy_prompt(void);
+char	*prompt_hist(char *input);
+
+// cleanups.c
+void	cleanup_iteration(t_alldata *all_data);
+void	cleanup_final(t_alldata *all_data);
 #endif
