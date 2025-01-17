@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:11:32 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/13 01:12:27 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:14:18 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_isspace(int c);
-void				*ft_realloc(void *ptr, size_t size);
+void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int					ft_isnumber(const char *str);
 
 #endif
