@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 14:35:11 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:08:23 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 	int			exit_stat;
 
 	if (is_builtin(cmd->args[0]))
-		exit_stat = exec_builtin(cmd->args, env_list, envp);
+		exit_stat = exec_builtin(cmd, env_list, envp);
 	else
 		exit_stat = exec_simprog(cmd, env_list, envp);
 	return (exit_stat);
@@ -101,7 +101,7 @@ int exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
                 close(prev_pipe[0]);
                 close(prev_pipe[1]);
             }
-            status = exec_builtin(current_cmd->args, env_list, envp);
+            status = exec_builtin(current_cmd, env_list, envp);
             break;
         }
 
