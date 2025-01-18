@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:35 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 19:34:20 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:13:08 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void	handle_input_redirection(t_redirection *redirection)
 		}
 		if (pid == 0) // Child process
 		{
-			signal(SIGINT, SIG_DFL); // Restore default SIGINT behavior
+			signal(SIGINT, SIG_DFL);  // Restore default SIGINT behavior
 			signal(SIGQUIT, SIG_IGN); // Restore default SIGINT behavior
-			close(pipefd[0]);        // Close read end
+			close(pipefd[0]);         // Close read end
 			line = NULL;
 			while (1)
 			{

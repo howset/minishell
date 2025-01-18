@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/18 15:08:10 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:15:29 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,14 @@ int	is_builtin(char *cmd)
 int	exec_builtin(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int	exit_stat;
+	int	stdin_backup;
+	int	stdout_backup;
 
+	// Save original file descriptors
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
+	if (cmd->redirections)
+		exec_redirections(cmd->redirections);
 	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
 		exit_stat = rh_echo(cmd->args);
 	else if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
@@ -63,6 +70,11 @@ int	exec_builtin(t_command *cmd, t_env **env_list, char *envp[])
 		exit_stat = rh_pwd();
 	else
 		exit_stat = 1;
+	// Restore original file descriptors
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
 	return (exit_stat);
 }
 
@@ -87,12 +99,10 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 {
 	char	*cmd_path;
 
-
 	if (cmd->args[0] && cmd->args[0][0] == '\0')
 		exit(0);
 	if (cmd->redirections)
 		exec_redirections(cmd->redirections);
-
 	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
 	{
