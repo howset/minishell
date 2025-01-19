@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 18:53:28 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:17:05 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,8 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 				cmd = cmd->next;
 			continue ;
 		}
-		if (cmd->next_operator == NODE_AND && exit_stat != 0)
-		{
-			while (cmd && cmd->next_operator == NODE_AND)
-				cmd = cmd->next;
-		}
-		else if (cmd->next_operator == NODE_OR && exit_stat == 0)
-		{
-			while (cmd && cmd->next_operator == NODE_OR)
-				cmd = cmd->next;
-		}
+		if (check_logicop(&cmd, exit_stat))
+			continue ;
 		cmd = cmd->next;
 	}
 	return (exit_stat);
@@ -59,18 +51,10 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			exit_stat;
+	pid_t		p_id;
 
 	if (is_builtin(cmd->args[0]))
-		exit_stat = exec_builtin(cmd, env_list, envp);
-	else
-		exit_stat = exec_simprog(cmd, env_list, envp);
-	return (exit_stat);
-}
-
-int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
-{
-	pid_t	p_id;
-
+		return (exec_builtin(cmd, env_list, envp));
 	p_id = fork();
 	if (p_id < 0)
 	{
@@ -79,9 +63,8 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 	}
 	if (p_id == 0)
 		exec_chprocess(cmd, env_list, envp);
-	else
-		return (wait_chprocess(p_id));
-	return (EXIT_FAILURE);
+	exit_stat = wait_chprocess(p_id);
+	return (exit_stat);
 }
 
 int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
@@ -113,4 +96,21 @@ int	waiting_pipeline(int status)
 		p_id = wait(&status);
 	}
 	return (status);
+}
+
+int	check_logicop(t_command **cmd, int exit_stat)
+{
+	if ((*cmd)->next_operator == NODE_AND && exit_stat != 0)
+	{
+		while (*cmd && (*cmd)->next_operator == NODE_AND)
+			*cmd = (*cmd)->next;
+		return (1);
+	}
+	else if ((*cmd)->next_operator == NODE_OR && exit_stat == 0)
+	{
+		while (*cmd && (*cmd)->next_operator == NODE_OR)
+			*cmd = (*cmd)->next;
+		return (1);
+	}
+	return (0);
 }
