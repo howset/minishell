@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_pipe.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:20:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 23:23:03 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:10:11 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	process_pipe_left(t_ast *node, t_cmdtable *table, int *pipefd)
 			add_command(table, left_cmd);
 		}
 	}
+	close(pipefd[1]);
 }
 
 static void	process_pipe_right(t_ast *node, t_cmdtable *table, int *pipefd)
@@ -63,6 +64,7 @@ static void	process_pipe_right(t_ast *node, t_cmdtable *table, int *pipefd)
 			add_command(table, right_cmd);
 		}
 	}
+	close(pipefd[0]);
 }
 
 void	process_pipe_node(t_ast *node, t_cmdtable *table)
