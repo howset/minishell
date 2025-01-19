@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 13:43:25 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:53:35 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 		exec_redirections(cmd->redirections);
 	if (is_builtin(cmd->args[0]))
 	{
-		exit_status = exec_builtin(cmd->args, env_list, envp);
+		exit_status = exec_builtin(cmd, env_list, envp);
 		exit(exit_status);
 	}
 	cmd_path = find_path(cmd->args[0], *env_list);

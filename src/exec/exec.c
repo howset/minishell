@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 01:19:14 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:53:44 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 	int			exit_stat;
 
 	if (is_builtin(cmd->args[0]))
-		exit_stat = exec_builtin(cmd->args, env_list, envp);
+		exit_stat = exec_builtin(cmd, env_list, envp);
 	else
 		exit_stat = exec_simprog(cmd, env_list, envp);
 	return (exit_stat);

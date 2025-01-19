@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 00:44:51 by hsetya            #+#    #+#             */
-/*   Updated: 2025/01/19 12:17:33 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:53:27 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	handle_lastbuiltin(t_command *curr, t_pipeline_data *data)
 			close(data->prev_pipe[0]);
 			close(data->prev_pipe[1]);
 		}
-		data->status = exec_builtin(curr->args, data->env_list, data->envp);
+		data->status = exec_builtin(curr, data->env_list, data->envp);
 		return (1);
 	}
 	return (0);

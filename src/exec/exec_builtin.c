@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 13:43:44 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/19 13:43:45 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:54:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,23 @@ int	is_builtin(char *cmd)
  * 			env_list and envp for functions that required them (e.g. export).
  * 		Returns an exit status.
  */
-int	exec_builtin(char *args[], t_env **env_list, char *envp[])
+int	exec_builtin(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int	exit_stat;
 
-	if (ft_strncmp(args[0], "echo", 4) == 0)
-		exit_stat = rh_echo(args);
-	else if (ft_strncmp(args[0], "exit", 4) == 0)
-		exit_stat = rh_exit(args);
-	else if (ft_strncmp(args[0], "env", 3) == 0)
-		exit_stat = rh_env(args, envp, env_list);
-	else if (ft_strncmp(args[0], "export", 6) == 0)
-		exit_stat = rh_export(args, env_list);
-	else if (ft_strncmp(args[0], "unset", 5) == 0)
-		exit_stat = rh_unset(args, env_list);
-	else if (ft_strncmp(args[0], "cd", 2) == 0)
-		exit_stat = rh_cd(args[1]);
-	else if (ft_strncmp(args[0], "pwd", 3) == 0)
+	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
+		exit_stat = rh_echo(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
+		exit_stat = rh_exit(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "env", 3) == 0)
+		exit_stat = rh_env(cmd->args, envp, env_list);
+	else if (ft_strncmp(cmd->args[0], "export", 6) == 0)
+		exit_stat = rh_export(cmd->args, env_list);
+	else if (ft_strncmp(cmd->args[0], "unset", 5) == 0)
+		exit_stat = rh_unset(cmd->args, env_list);
+	else if (ft_strncmp(cmd->args[0], "cd", 2) == 0)
+		exit_stat = rh_cd(cmd->args[1]);
+	else if (ft_strncmp(cmd->args[0], "pwd", 3) == 0)
 		exit_stat = rh_pwd();
 	else
 		exit_stat = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 03:36:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 02:11:45 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:55:18 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_token
  * @var t_ast::args_count
  * 	The number of arguments in the args array.
  * @var t_ast::redirection_type
- * 	The type of redirection associated with the node, represented by the t_tkntype enum.
+ * 	The type of redirection, represented by the t_tkntype enum.
  * @var t_ast::filename
  * 	The filename associated with the redirection, if any.
  */

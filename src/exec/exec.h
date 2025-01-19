@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 13:44:36 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 13:54:13 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		waiting_pipeline(int status);
 
 // exec_builtin
 int		is_builtin(char *cmd);
-int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
+int		exec_builtin(t_command *cmd, t_env **env_list, char *envp[]);
 
 // exec_child
 int		exec_chprocess(t_command *cmd, t_env **env_list, char *envp[]);
