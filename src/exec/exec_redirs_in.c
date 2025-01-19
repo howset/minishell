@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 00:18:10 by hsetya            #+#    #+#             */
-/*   Updated: 2025/01/19 14:52:32 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:07:46 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,5 @@ void	exec_parentheredoc(int pipefd[2], pid_t pid)
 		exit(EXIT_FAILURE);
 	}
 	close(pipefd[0]);
-	exit(wait_chprocess(pid));
+	wait_chprocess(pid); //previously exit(wait_chprocess(pid)) -->problem with printing cat << delim
 }

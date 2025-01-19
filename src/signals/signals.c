@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 18:46:16 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:04:09 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ void	handle_sigint(void)
  * CTRL + \
  * ??? where to put???
  */
-/*
-	// if (signum)
-	// 	ft_fprintf(STDERR_FILENO, "(fake core dumped)\n");
-	// else
-	// 	ft_fprintf(STDERR_FILENO, "what error?\n");
-*/
 void	handle_sigquit(void)
 {
 	rl_point = rl_end;
@@ -60,35 +54,27 @@ void	disable_echoctl(void)
 void	handle_signals(int signum)
 {
 	if (signum == SIGINT)
-	{
 		handle_sigint();
-	}
 	else if (signum == SIGQUIT)
-	{
 		handle_sigquit();
-	}
-	add_envvar(g_env, "?", "130");
 }
+
 /**
  * CTRL + D (EOF) is handled by readline in the main loop
  * CTRL + C SIGINT
  * CTRL + \ SIGQUIT
- * SA_RESTART | SA_SIGINFO;
-	// Restart interrupted syscalls | SA_SIGINFO to pass extra info
- */
-/*
-	// sa_int.sa_sigaction = handle_sigint;
 */
-
 void	setup_signals(t_env **env)
 {
 	struct sigaction	sa;
 
 	g_env = env;
+	//rl_catch_signals = 0; //experiment
 	sa.sa_handler = handle_signals;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	//sigaction(SIGQUIT, &sa, NULL); //experiment
+	signal(SIGQUIT, SIG_IGN);
 	disable_echoctl();
 }
