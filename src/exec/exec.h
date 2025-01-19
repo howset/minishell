@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 01:54:24 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/19 13:44:36 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int		exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		waiting_pipeline(int status);
 
-// exec_child
+// exec_builtin
 int		is_builtin(char *cmd);
 int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
+
+// exec_child
 int		exec_chprocess(t_command *cmd, t_env **env_list, char *envp[]);
 int		wait_chprocess(pid_t p_id);
 
