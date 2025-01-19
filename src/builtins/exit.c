@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 23:00:04 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 20:49:38 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/19 14:57:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	rh_exit(char *args[])
 			args[1]);
 		exit(2);
 	}
-	exit_stat = atoi(args[1]);
+	exit_stat = ft_atoi(args[1]);
 	if ((exit_stat == 0 && ft_strncmp(args[1], "0", 1) != 0)
 		|| exit_stat > INT_MAX || exit_stat < INT_MIN)
 	{

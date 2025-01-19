@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirs_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 00:18:10 by hsetya            #+#    #+#             */
-/*   Updated: 2025/01/19 00:23:58 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/19 14:52:32 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	exec_childheredoc(t_redirection *redirection, int pipefd[2])
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || strcmp(line, redirection->file) == 0)
+		if (!line || ft_strcmp(line, redirection->file) == 0)
 		{
 			free(line);
 			break ;
