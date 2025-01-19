@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 13:53:44 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:53:28 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 			while (cmd && cmd->type == CMD_PIPE)
 				cmd = cmd->next;
 			continue ;
+		}
+		if (cmd->next_operator == NODE_AND && exit_stat != 0)
+		{
+			while (cmd && cmd->next_operator == NODE_AND)
+				cmd = cmd->next;
+		}
+		else if (cmd->next_operator == NODE_OR && exit_stat == 0)
+		{
+			while (cmd && cmd->next_operator == NODE_OR)
+				cmd = cmd->next;
 		}
 		cmd = cmd->next;
 	}

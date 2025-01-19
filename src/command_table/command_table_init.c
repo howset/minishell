@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:20:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/16 23:23:03 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/19 18:57:05 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_command	*create_command(char **args, t_cmd_type type)
 	cmd->pipe_read = -1;
 	cmd->pipe_write = -1;
 	cmd->next = NULL;
+	cmd->next_operator = -1;
 	return (cmd);
 }
 
