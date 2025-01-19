@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 21:33:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 22:59:57 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/18 23:57:09 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*process_double_quotes(char *result, int *i, t_alldata *all_data)
 	processed = extract_and_process_quotes(result, i, all_data);
 	if (!processed)
 		return (result);
-	new_str = malloc(ft_strlen(result) - ((*i) - start + 2) +
-			ft_strlen(processed) + 1);
+	new_str = malloc(ft_strlen(result) - ((*i) - start + 2)
+			+ ft_strlen(processed) + 1);
 	if (!new_str)
 	{
 		free(processed);

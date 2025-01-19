@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 03:36:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 18:50:05 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/19 01:04:19 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,15 @@ typedef struct s_env
 	char			*val;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_pipeline_data
+{
+	t_command	*last_cmd;
+	t_env		**env_list;
+	char		**envp;
+	int			prev_pipe[2];
+	int			status;
+}	t_pipeline_data;
 
 typedef struct s_alldata
 {
