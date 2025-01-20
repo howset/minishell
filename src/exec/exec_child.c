@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 14:09:58 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:45:19 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 		free(cmd_path);
 		exit(127);
 	}
+	signal(SIGQUIT, SIG_DFL); // Set signal handler to default for SIGQUIT (fixes ctrl+\)
 	execve(cmd_path, cmd->args, envp);
 	perror("Execve fails");
 	free(cmd_path);

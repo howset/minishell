@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 00:44:51 by hsetya            #+#    #+#             */
-/*   Updated: 2025/01/19 16:04:03 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:46:07 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	fork_exec(t_command *curr, t_pipeline_data *data, int new_pipe[2])
 	}
 	if (p_id == 0)
 	{
-		signal(SIGQUIT, SIG_DFL); //experiment
+		signal(SIGQUIT, SIG_DFL); //experiment --> working with pipes
 		handle_chprocess(curr, data, new_pipe);
 		exit(EXIT_FAILURE);
 	}
