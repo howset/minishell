@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 19:17:24 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/20 23:08:22 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
 int		exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		waiting_pipeline(int status);
-int		check_logicop(t_command **cmd, int exit_stat);
+int check_logicopnode(t_command **cmd, int exit_stat, t_env **env_list, char *envp[]);
 
 // exec_builtin
 int		is_builtin(char *cmd);
