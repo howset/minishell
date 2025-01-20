@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 16:04:09 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:15:07 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,10 @@ void	setup_signals(t_env **env)
 	struct sigaction	sa;
 
 	g_env = env;
-	//rl_catch_signals = 0; //experiment
 	sa.sa_handler = handle_signals;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigaction(SIGINT, &sa, NULL);
-	//sigaction(SIGQUIT, &sa, NULL); //experiment
 	signal(SIGQUIT, SIG_IGN);
 	disable_echoctl();
 }
