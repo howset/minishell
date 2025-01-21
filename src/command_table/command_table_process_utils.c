@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:48:31 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 19:07:17 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:21:41 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	process_logicop(t_ast *ast, t_cmdtable *table)
 	ast_to_cmdtable_recursive(ast->left, table);
 	cmd = get_last_command(table);
 	if (cmd)
-		cmd->next_operator = ast->type;
+		cmd->next_opnode = ast->type;
 	ast_to_cmdtable_recursive(ast->right, table);
 }
 

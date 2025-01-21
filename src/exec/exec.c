@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/20 23:26:46 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/21 11:37:03 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,38 @@ int check_logicopnode(t_command **cmd, int exit_stat, t_env **env_list, char *en
 	}
 	return (0);
 }
+
+/* int check_logicopnode(t_command **cmd, int exit_stat, t_env **env_list, char *envp[])
+{
+	(void)env_list;
+	(void)envp;
+
+	while (*cmd)
+	{
+		if ((*cmd)->next_opnode == NODE_AND)
+		{
+			if (exit_stat != 0)  // If previous command failed
+			{
+				while (*cmd && (*cmd)->next_opnode == NODE_AND)
+					*cmd = (*cmd)->next;
+				return (1);  // Skip next command
+			}
+		}
+		else if ((*cmd)->next_opnode == NODE_OR)
+		{
+			if (exit_stat == 0)  // If previous command succeeded
+			{
+				while (*cmd && (*cmd)->next_opnode == NODE_OR)
+					*cmd = (*cmd)->next;
+				return (1);  // Skip next command
+			}
+		}
+		else
+			break;
+		*cmd = (*cmd)->next;
+	}
+	return (0);
+} */
 
 /*
  * exec_simple_command makes sure that builtins is executed *NOT* as a child
