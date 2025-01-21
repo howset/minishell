@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 14:31:36 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:08:21 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@
 
 # include "../minishell.h"
 
-extern int g_exit_stat;
+extern int	g_exit_stat;
 
-void	setup_signals(t_env **env);
+// signals.c
+void	setup_signals(void);
 void	handle_sigint(void);
 void	handle_sigquit(void);
 void	handle_signals(int signum);
 void	disable_echoctl(void);
+
+// signals_utils.c
+void	refresh_signals(t_alldata *all_data);
 #endif

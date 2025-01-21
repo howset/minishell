@@ -28,7 +28,8 @@ UTILS 				= 	./src/utils/malloc_perex.c\
 ## Sources & header
 SRC-MS				= 	./src/minishell.c
 
-SRC-SIGNALS			= 	./src/signals/signals.c
+SRC-SIGNALS			= 	./src/signals/signals.c \
+						./src/signals/signals_utils.c
 
 SRC-LEXER			= 	./src/lexer/grouping.c \
 						./src/lexer/lexer.c \
