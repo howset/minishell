@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:54:39 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 14:15:21 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:09:37 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void			free_command_table(t_cmdtable *table);
 //command_table_process_utils.c
 void			process_ast_node(t_ast *ast, t_cmdtable *table);
 void			ast_to_cmdtable_recursive(t_ast *ast, t_cmdtable *table);
-
+void			process_logicop(t_ast *ast, t_cmdtable *table);
+t_command		*get_last_command(t_cmdtable *table);
 #endif
