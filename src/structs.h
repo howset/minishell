@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 03:36:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/20 22:55:43 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/21 19:15:48 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ typedef struct s_command
 	int					pipe_read;
 	int					pipe_write;
 	t_nodetype			next_opnode;
+	struct s_cmdtable	*table;
 	struct s_command	*next;
 }						t_command;
 
