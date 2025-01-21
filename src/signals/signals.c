@@ -6,13 +6,14 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/20 14:15:07 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:31:45 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 
-t_env	**g_env;
+//t_env	**g_env;
+int g_exit_stat; 
 
 /**
  * heredoc must accepts ctrl+c but not ctrl+\
@@ -28,7 +29,8 @@ void	handle_sigint(void)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	add_envvar(g_env, "?", "130");
+	//add_envvar(g_env, "?", "130");
+	g_exit_stat = 130;
 }
 
 /**
@@ -68,7 +70,9 @@ void	setup_signals(t_env **env)
 {
 	struct sigaction	sa;
 
-	g_env = env;
+	//g_env = env;
+	(void)env;
+	g_exit_stat = 0;
 	sa.sa_handler = handle_signals;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;

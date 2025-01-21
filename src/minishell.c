@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:09:08 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/17 19:30:02 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:32:05 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		all_data->input = prompt_hist(all_data->input);
+
+		char *exit_stat_str = ft_itoa(g_exit_stat);
+        add_envvar(all_data->env_list, "?", exit_stat_str);
+        free(exit_stat_str);
+		
 		parse(all_data);
 		execute(all_data, envp);
 		cleanup_iteration(all_data);
