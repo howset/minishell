@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 15:39:52 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:44:17 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 // exec.c
 int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
 int		exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
+int		check_logicopnode(t_command **cmd, int exit_stat);
 int		exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 int		waiting_pipeline(int status);
-int		check_logicopnode(t_command **cmd, int exit_stat);
 
 // exec_builtin
 int		is_builtin(char *cmd);
