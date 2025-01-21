@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 11:37:03 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:41:59 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 		if (cmd->type == CMD_SIMPLE)
 		{
 			exit_stat = exec_simple_command(cmd, env_list, envp);
-			if (check_logicopnode(&cmd, exit_stat, env_list, envp))
+			if (check_logicopnode(&cmd, exit_stat))
 				continue ;
-			/* else if (exit_stat == 0)
-				exit_stat = exec_simple_command(cmd, env_list, envp); */
 		}
 		else if (cmd->type == CMD_PIPE)
 		{
@@ -48,62 +46,34 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	return (exit_stat);
 }
 
-int check_logicopnode(t_command **cmd, int exit_stat, t_env **env_list, char *envp[])
+int	check_logicopnode(t_command **cmd, int exit_stat)
 {
-	(void)env_list;
-	(void)envp;
 	if ((*cmd)->next_opnode == NODE_AND)
 	{
-		if (exit_stat != 0)  // If previous command failed
+		if (exit_stat != 0)
 		{
-			while (*cmd && (*cmd)->next_opnode == NODE_AND)
+			while (*cmd && ((*cmd)->next_opnode == NODE_AND
+					|| (*cmd)->next_opnode == NODE_OR))
 				*cmd = (*cmd)->next;
-			return (1);  // Skip next command
+			if (*cmd)
+				*cmd = (*cmd)->next;
+			return (1);
 		}
 	}
 	else if ((*cmd)->next_opnode == NODE_OR)
 	{
-		if (exit_stat == 0)  // If previous command succeeded
+		if (exit_stat == 0)
 		{
-			while (*cmd && (*cmd)->next_opnode == NODE_OR)
+			while (*cmd && ((*cmd)->next_opnode == NODE_AND
+					|| (*cmd)->next_opnode == NODE_OR))
 				*cmd = (*cmd)->next;
-			return (1);  // Skip next command
+			if (*cmd)
+				*cmd = (*cmd)->next;
+			return (1);
 		}
 	}
 	return (0);
 }
-
-/* int check_logicopnode(t_command **cmd, int exit_stat, t_env **env_list, char *envp[])
-{
-	(void)env_list;
-	(void)envp;
-
-	while (*cmd)
-	{
-		if ((*cmd)->next_opnode == NODE_AND)
-		{
-			if (exit_stat != 0)  // If previous command failed
-			{
-				while (*cmd && (*cmd)->next_opnode == NODE_AND)
-					*cmd = (*cmd)->next;
-				return (1);  // Skip next command
-			}
-		}
-		else if ((*cmd)->next_opnode == NODE_OR)
-		{
-			if (exit_stat == 0)  // If previous command succeeded
-			{
-				while (*cmd && (*cmd)->next_opnode == NODE_OR)
-					*cmd = (*cmd)->next;
-				return (1);  // Skip next command
-			}
-		}
-		else
-			break;
-		*cmd = (*cmd)->next;
-	}
-	return (0);
-} */
 
 /*
  * exec_simple_command makes sure that builtins is executed *NOT* as a child
@@ -158,22 +128,3 @@ int	waiting_pipeline(int status)
 	}
 	return (status);
 }
-
-/* int	check_logicop(t_command **cmd, int exit_stat, t_env **env_list, char *envp[])
-{
-	if ((*cmd)->next_operator == NODE_AND && exit_stat != 0)
-	{
-		exit_stat = exec_simple_command(*cmd, env_list, envp);
-		while (*cmd && (*cmd)->next_operator == NODE_AND)
-			*cmd = (*cmd)->next;
-		return (1);
-	}
-	else if ((*cmd)->next_operator == NODE_OR && exit_stat == 0)
-	{
-		exit_stat = exec_simple_command(*cmd, env_list, envp);
-		while (*cmd && (*cmd)->next_operator == NODE_OR)
-			*cmd = (*cmd)->next;
-		return (1);
-	}
-	return (0);
-} */
