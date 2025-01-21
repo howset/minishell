@@ -76,7 +76,7 @@ SRC-CMDTABLE		= 	./src/command_table/command_table_utils.c \
 
 SRC-ENVS 			= 	./src/envs/envlist.c \
 						./src/envs/envvar.c \
-						./src/envs/free_env.c
+						./src/envs/env_utils.c
 
 HEADER				= ./src/
 ALL_SRC				= $(SRC-MS) $(SRC-LEXER) $(SRC-PARSER) $(SRC-EXEC) $(SRC-BUILTINS) $(SRC-CMDTABLE) $(SRC-ENVS) $(UTILS) $(SRC-SIGNALS)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:37:26 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 17:52:37 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:33:50 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,6 @@ void	init_envlist(t_env **env_list, char *envp[])
 	}
 }
 
-// swap two nodes
-void	swap_envvar(t_env *a, t_env *b)
-{
-	char	*temp_key;
-	char	*temp_val;
-
-	temp_key = a->key;
-	temp_val = a->val;
-	a->key = b->key;
-	a->val = b->val;
-	b->key = temp_key;
-	b->val = temp_val;
-}
-
 // sort alphabetically (by key) --> bubble sort
 void	sort_envlist(t_env **env_list)
 {
@@ -106,15 +92,23 @@ void	sort_envlist(t_env **env_list)
 // print the sorted environment list
 void	print_sortedenvlist(t_env *env_list)
 {
+	t_env	*temp;
+	t_env	*head;
+
 	if (!env_list)
 		return ;
-	sort_envlist(&env_list);
-	while (env_list)
+	temp = copy_envlist(env_list);
+	if (!temp)
+		return ;
+	head = temp;
+	sort_envlist(&temp);
+	while (temp)
 	{
-		if (env_list->val)
-			printf("declare -x %s=\"%s\"\n", env_list->key, env_list->val);
+		if (temp->val)
+			printf("declare -x %s=\"%s\"\n", temp->key, temp->val);
 		else
-			printf("declare -x %s=\"\"\n", env_list->key);
-		env_list = env_list->next;
+			printf("declare -x %s=\"\"\n", temp->key);
+		temp = temp->next;
 	}
+	free_envlist(head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envvar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:37:43 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/15 17:42:31 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:29:10 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,18 @@ int	remove_envvar(char *key, t_env **env_list)
 		current = current->next;
 	}
 	return (-1);
+}
+
+// swap two nodes
+void	swap_envvar(t_env *a, t_env *b)
+{
+	char	*temp_key;
+	char	*temp_val;
+
+	temp_key = a->key;
+	temp_val = a->val;
+	a->key = b->key;
+	a->val = b->val;
+	b->key = temp_key;
+	b->val = temp_val;
 }
