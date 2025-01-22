@@ -51,13 +51,9 @@ SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/utils/env_variable_handling.c
 
 SRC-EXEC			= 	./src/exec/exec.c \
-						./src/exec/exec_builtin.c \
 						./src/exec/exec_child.c \
 						./src/exec/exec_pathfinding.c \
 						./src/exec/exec_redirections.c \
-						./src/exec/exec_redirs_in.c \
-						./src/exec/exec_pipes.c \
-						./src/exec/exec_pathfinding_build.c
 
 SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/env.c \
