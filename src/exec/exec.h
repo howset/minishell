@@ -6,7 +6,7 @@
 /*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 21:02:53 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/22 22:19:47 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@
 // exec.c
 int			exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
 int			exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
-int			exec_simprog(t_command *cmd, t_env **env_list, char *envp[]);
+int			exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
+t_command	*find_last_pipe_command(t_command *cmd);
 void		setup_pipes(int *prev_pipe, int *new_pipe, int has_next);
-void		update_pipes(int *prev_pipe, int *new_pipe, int has_next);
 
 //exec_spillover.c
 int			exec_last_builtin(t_command *cmd, t_env **env_list, char *envp[],
 				int *prev_pipe);
 void		handle_child_process(t_command *cmd, int *pipes, t_env **env_list,
 				char *envp[]);
-t_command	*find_last_pipe_command(t_command *cmd);
+void		update_pipes(int *prev_pipe, int *new_pipe, int has_next);
 int			fork_and_handle(t_command *cmd, int *pipes, t_env **env_list,
 				char *envp[]);
-int			exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 
 //exec_spillover2.c
 int			wait_for_children(int *status);
