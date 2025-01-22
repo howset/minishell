@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/18 15:07:45 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:56:34 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,24 @@
 # include "../minishell.h"
 
 // exec.c
-int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
-int		exec_builtin(t_command *cmd, t_env **env_list, char *envp[]);
-//int		exec_simprog(char *args[], t_env **env_list, char *envp[]);
-int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[]);
-//int		exec_prog(t_command *cmd, t_env *env_list, char *envp[]);
-int		exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
-int		exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
-int		is_builtin(char *cmd);
+int			exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
+int			exec_simple_command(t_command *cmd, t_env **env_list, char *envp[]);
+int			exec_simprog(t_command *cmd, t_env **env_list, char *envp[]);
+void		setup_pipes(int *prev_pipe, int *new_pipe, int has_next);
+void		update_pipes(int *prev_pipe, int *new_pipe, int has_next);
+
+//exec_spillover.c
+int			exec_last_builtin(t_command *cmd, t_env **env_list, char *envp[],
+				int *prev_pipe);
+void		handle_child_process(t_command *cmd, int *pipes, t_env **env_list,
+				char *envp[]);
+t_command	*find_last_pipe_command(t_command *cmd);
+int			fork_and_handle(t_command *cmd, int *pipes, t_env **env_list,
+				char *envp[]);
+int			exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
+
+//exec_spillover2.c
+int			wait_for_children(int *status);
 
 // exec_child
 int		exec_chprocess(t_command *cmd, t_env **env_list, char *envp[]);
