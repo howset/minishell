@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_spillover.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 17:51:37 by hsetyamu          #+#    #+#             */
-/*   Updated: 2025/01/22 17:52:24 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:58:07 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	exec_last_builtin(t_command *cmd, t_env **env_list, char *envp[],
 {
 	if (prev_pipe[0] != -1)
 	{
-		dup2(prev_pipe[0], STDIN_FILENO);
 		close(prev_pipe[0]);
 		close(prev_pipe[1]);
 	}
