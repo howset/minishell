@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:45 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/08 18:05:47 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:18:14 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,40 @@
  */
 char	*find_path(char *cmd, t_env *env_list)
 {
-	struct stat	st;
 	size_t		path_len;
 	char		*path;
 	char		*full_path;
 
-	// If user typed a path (contains '/'),
-	//	check if it’s a directory or executable
 	if (ft_strchr(cmd, '/'))
-	{
-		if (stat(cmd, &st) == 0)
-		{
-			if (S_ISDIR(st.st_mode))
-			{
-				ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd);
-				exit(126);
-			}
-			// If it’s not a directory, check execute permission
-			if (access(cmd, X_OK) == 0)
-				return (ft_strdup(cmd)); // replace with your own strdup
-			else
-			{
-				ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
-				exit(126);
-			}
-		}
-		ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
-		exit(127);
-	}
-	// Otherwise, proceed with existing PATH search
+		return (handle_direct_path(cmd));
 	full_path = init_fullpath(env_list, &path_len);
 	if (!full_path)
 		return (NULL);
 	path = find_envvar(env_list, "PATH")->val;
 	return (process_dirs(path, cmd, full_path, path_len));
+}
+
+char	*handle_direct_path(char *cmd)
+{
+	struct stat	st;
+
+	if (stat(cmd, &st) == 0)
+	{
+		if (S_ISDIR(st.st_mode))
+		{
+			ft_fprintf(STDERR_FILENO, "%s: is a directory\n", cmd);
+			exit(126);
+		}
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		else
+		{
+			ft_fprintf(STDERR_FILENO, "%s: Permission denied\n", cmd);
+			exit(126);
+		}
+	}
+	ft_fprintf(STDERR_FILENO, "%s: No such file or directory\n", cmd);
+	exit(127);
 }
 
 /**This function basically initializes (malloc) full_path.
@@ -93,7 +93,8 @@ char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len)
 	char	*result;
 
 	start = path;
-	while ((end = ft_strchr(start, ':')) || (*start != '\0'))
+	end = ft_strchr(start, ':');
+	while (end || (*start != '\0'))
 	{
 		if (end)
 			*end = '\0';
@@ -109,6 +110,7 @@ char	*process_dirs(char *path, char *cmd, char *full_path, size_t path_len)
 		if (!end)
 			break ;
 		start = end + 1;
+		end = ft_strchr(start, ':');
 	}
 	return (NULL);
 }

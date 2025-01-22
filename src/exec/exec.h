@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 18:11:13 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:18:38 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			wait_chprocess(pid_t p_id);
 
 // exec_pathfinding.c
 char		*find_path(char *cmd, t_env *env_list);
+char		*handle_direct_path(char *cmd);
 char		*init_fullpath(t_env *env_list, size_t *path_len);
 char		*process_dirs(char *path, char *cmd, char *full_path,
 				size_t path_len);
