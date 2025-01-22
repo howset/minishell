@@ -6,11 +6,74 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 15:41:59 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:03:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./exec.h"
+
+/* int exec_subshell_command(t_command *cmd, t_env **env_list, char *envp[])
+{
+	pid_t pid;
+	int status;
+	char *current_dir;
+
+	current_dir = getcwd(NULL, 0);
+	if (!current_dir)
+		return (EXIT_FAILURE);
+	pid = fork();
+	if (pid < 0)
+	{
+		free(current_dir);
+		perror("fork");
+		return (EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		if (cmd->redirections)
+			exec_redirections(cmd->redirections);
+		free(current_dir);
+		exit(exec_commtab(cmd->table, env_list, envp));
+	}
+	waitpid(pid, &status, 0);
+	if (chdir(current_dir) != 0)
+		perror("chdir");
+	free(current_dir);
+	return WEXITSTATUS(status);
+} */
+
+/* int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
+{
+	t_command	*cmd;
+	int			exit_stat;
+
+	exit_stat = EXIT_SUCCESS;
+	cmd = table->commands;
+	while (cmd)
+	{
+		if (cmd->type == CMD_SIMPLE)
+		{
+			exit_stat = exec_simple_command(cmd, env_list, envp);
+			if (check_logicopnode(&cmd, exit_stat))
+				continue;
+		}
+		else if (cmd->type == CMD_PIPE)
+	{
+			exit_stat = exec_pipe_command(cmd, env_list, envp);
+			while (cmd && cmd->type == CMD_PIPE)
+				cmd = cmd->next;
+			continue;
+		}
+		else if (cmd->type == CMD_SUBSHELL)
+		{
+			exit_stat = exec_subshell_command(cmd, env_list, envp);
+			if (check_logicopnode(&cmd, exit_stat))
+				continue;
+		}
+		cmd = cmd->next;
+	}
+	return (exit_stat);
+} */
 
 /**This function executes the simple commands from the command table
  * sequentially, row-by-row. A check for built-in functions is performed
