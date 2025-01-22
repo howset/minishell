@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 18:29:51 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:02:53 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[]);
 
 //exec_spillover2.c
 int			wait_for_children(int *status);
+int			check_logicopnode(t_command **cmd, int exit_stat);
 
 // exec_child
 int			is_builtin(char *cmd);

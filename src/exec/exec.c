@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 18:08:52 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 21:10:00 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	while (cmd)
 	{
 		if (cmd->type == CMD_SIMPLE)
+		{
 			exit_stat = exec_simple_command(cmd, env_list, envp);
+			if (check_logicopnode(&cmd, exit_stat))
+				continue ;
+		}
 		else if (cmd->type == CMD_PIPE)
 		{
 			exit_stat = exec_pipe_command(cmd, env_list, envp);
@@ -46,7 +50,7 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
  * exec_simple_command makes sure that builtins is executed *NOT* as a child
  * process. for non builtins, go to exec_simprog
  */
-int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
+/* int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			exit_stat;
 
@@ -72,6 +76,25 @@ int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[])
 	else
 		return (wait_chprocess(p_id));
 	return (EXIT_FAILURE);
+} */
+
+int	exec_simple_command(t_command *cmd, t_env **env_list, char *envp[])
+{
+	int			exit_stat;
+	pid_t		p_id;
+
+	if (is_builtin(cmd->args[0]))
+		return (exec_builtin(cmd, env_list, envp));
+	p_id = fork();
+	if (p_id < 0)
+	{
+		perror("Forking error");
+		return (EXIT_FAILURE);
+	}
+	if (p_id == 0)
+		exec_chprocess(cmd, env_list, envp);
+	exit_stat = wait_chprocess(p_id);
+	return (exit_stat);
 }
 
 void	setup_pipes(int *prev_pipe, int *new_pipe, int has_next)
@@ -83,25 +106,6 @@ void	setup_pipes(int *prev_pipe, int *new_pipe, int has_next)
 		exit(EXIT_FAILURE);
 	}
 }
-
-/* void	handle_child_process(t_command *cmd, int *prev_pipe, int *new_pipe,
-	t_env **env_list, char *envp[])
-{
-	if (prev_pipe[0] != -1)
-	{
-		dup2(prev_pipe[0], STDIN_FILENO);
-		close(prev_pipe[0]);
-		close(prev_pipe[1]);
-	}
-	if (cmd->next)
-	{
-		close(new_pipe[0]);
-		dup2(new_pipe[1], STDOUT_FILENO);
-		close(new_pipe[1]);
-	}
-	exec_chprocess(cmd, env_list, envp);
-	exit(EXIT_FAILURE);
-} */
 
 void	update_pipes(int *prev_pipe, int *new_pipe, int has_next)
 {
