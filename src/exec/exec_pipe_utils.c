@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:46:33 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 13:47:40 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:54:58 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ t_command	*find_last_pipe_cmd(t_command *cmd)
 		last_cmd = last_cmd->next;
 	return (last_cmd);
 }
-

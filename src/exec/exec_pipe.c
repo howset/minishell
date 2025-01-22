@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:24:18 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 13:48:29 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:52:12 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,19 @@ int	handle_last_builtin(t_command *cmd, int prev_pipe[2],
 	return (status);
 }
 
-int	exec_single_pipe_command(t_command *cmd, t_env **env_list, char *envp[], int prev_pipe[2], int new_pipe[2])
+typedef struct s_pipe_data
+{
+	int		prev_pipe[2];
+	int		new_pipe[2];
+	t_env	**env_list;
+	char	**envp;
+}			t_pipe_data;
+
+int	exec_single_pipe_command(t_command *cmd, t_pipe_data *data)
 {
 	pid_t	p_id;
 
-	if (cmd->next && pipe(new_pipe) < 0)
+	if (cmd->next && pipe(data->new_pipe) < 0)
 	{
 		perror("pipe");
 		return (EXIT_FAILURE);
@@ -71,8 +79,8 @@ int	exec_single_pipe_command(t_command *cmd, t_env **env_list, char *envp[], int
 	p_id = fork();
 	if (p_id == 0)
 	{
-		setup_pipe_fds(prev_pipe, new_pipe, !cmd->next);
-		exec_chprocess(cmd, env_list, envp);
+		setup_pipe_fds(data->prev_pipe, data->new_pipe, !cmd->next);
+		exec_chprocess(cmd, data->env_list, data->envp);
 	}
 	return (p_id);
 }
@@ -81,17 +89,18 @@ int	exec_pipe_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int			status;
 	t_command	*current_cmd;
-	int			prev_pipe[2];
-	int			new_pipe[2];
+	t_pipe_data	data;
 
-	prev_pipe[0] = -1;
-	prev_pipe[1] = -1;
+	data.prev_pipe[0] = -1;
+	data.prev_pipe[1] = -1;
+	data.env_list = env_list;
+	data.envp = envp;
 	current_cmd = cmd;
 	while (current_cmd && current_cmd->type == CMD_PIPE)
 	{
-		if (exec_single_pipe_command(current_cmd, env_list, envp, prev_pipe, new_pipe) < 0)
+		if (exec_single_pipe_command(current_cmd, &data) < 0)
 			return (EXIT_FAILURE);
-		cleanup_pipes(prev_pipe, new_pipe, current_cmd->next != NULL);
+		cleanup_pipes(data.prev_pipe, data.new_pipe, current_cmd->next != NULL);
 		current_cmd = current_cmd->next;
 	}
 	while (wait(&status) > 0)
