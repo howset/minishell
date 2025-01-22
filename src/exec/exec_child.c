@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 16:49:53 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:10:04 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,38 @@ int	is_builtin(char *cmd)
  * 			env_list and envp for functions that required them (e.g. export).
  * 		Returns an exit status.
  */
-int	exec_builtin(char *args[], t_env **env_list, char *envp[])
+int	exec_builtin(t_command *cmd, t_env **env_list, char *envp[])
 {
 	int	exit_stat;
+	int	stdin_backup;
+	int	stdout_backup;
 
-	if (ft_strncmp(args[0], "echo", 4) == 0)
-		exit_stat = rh_echo(args);
-	else if (ft_strncmp(args[0], "exit", 4) == 0)
-		exit_stat = rh_exit(args);
-	else if (ft_strncmp(args[0], "env", 3) == 0)
-		exit_stat = rh_env(args, envp, env_list);
-	else if (ft_strncmp(args[0], "export", 6) == 0)
-		exit_stat = rh_export(args, env_list);
-	else if (ft_strncmp(args[0], "unset", 5) == 0)
-		exit_stat = rh_unset(args, env_list);
-	else if (ft_strncmp(args[0], "cd", 2) == 0)
-		exit_stat = rh_cd(args[1]);
-	else if (ft_strncmp(args[0], "pwd", 3) == 0)
+	// Save original file descriptors
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
+	if (cmd->redirections)
+		exec_redirections(cmd->redirections);
+	if (ft_strncmp(cmd->args[0], "echo", 4) == 0)
+		exit_stat = rh_echo(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
+		exit_stat = rh_exit(cmd->args);
+	else if (ft_strncmp(cmd->args[0], "env", 3) == 0)
+		exit_stat = rh_env(cmd->args, envp, env_list);
+	else if (ft_strncmp(cmd->args[0], "export", 6) == 0)
+		exit_stat = rh_export(cmd->args, env_list);
+	else if (ft_strncmp(cmd->args[0], "unset", 5) == 0)
+		exit_stat = rh_unset(cmd->args, env_list);
+	else if (ft_strncmp(cmd->args[0], "cd", 2) == 0)
+		exit_stat = rh_cd(cmd->args[1]);
+	else if (ft_strncmp(cmd->args[0], "pwd", 3) == 0)
 		exit_stat = rh_pwd();
 	else
 		exit_stat = 1;
+	// Restore original file descriptors
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
 	return (exit_stat);
 }
 
@@ -86,17 +98,11 @@ int	exec_builtin(char *args[], t_env **env_list, char *envp[])
 int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 {
 	char	*cmd_path;
-	int		exit_status;
 
 	if (cmd->args[0] && cmd->args[0][0] == '\0')
 		exit(0);
 	if (cmd->redirections)
 		exec_redirections(cmd->redirections);
-	if (is_builtin(cmd->args[0]))
-	{
-		exit_status = exec_builtin(cmd->args, env_list, envp);
-		exit(exit_status);
-	}
 	cmd_path = find_path(cmd->args[0], *env_list);
 	if (!cmd_path)
 	{

@@ -6,7 +6,7 @@
 /*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/14 21:09:34 by reldahli         ###   ########.fr       */
+/*   Updated: 2025/01/18 15:07:45 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 // exec.c
 int		exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[]);
-int		exec_builtin(char *args[], t_env **env_list, char *envp[]);
+int		exec_builtin(t_command *cmd, t_env **env_list, char *envp[]);
 //int		exec_simprog(char *args[], t_env **env_list, char *envp[]);
 int	exec_simprog(t_command *cmd, t_env **env_list, char *envp[]);
 //int		exec_prog(t_command *cmd, t_env *env_list, char *envp[]);
