@@ -56,6 +56,8 @@ SRC-EXEC			= 	./src/exec/exec.c \
 						./src/exec/exec_child.c \
 						./src/exec/exec_pathfinding.c \
 						./src/exec/exec_redirections.c \
+						./src/exec/exec_redirections_input.c \
+
 
 SRC-BUILTINS		= 	./src/builtins/echo.c \
 						./src/builtins/env.c \

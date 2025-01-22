@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:21 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 18:18:38 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:29:51 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,14 @@ char		*build_fullpath(char *full_path, char *dir, char *cmd,
 				size_t path_len);
 
 // exec_redirections.c
-void		handle_input_redirection(t_redirection *redirection);
 void		handle_output_redirection(t_redirection *redirection);
 void		exec_redirections(t_redirection *redirections);
+
+// exec_redirections_input.c
+void		handle_simple_input(t_redirection *redirection);
+void		handle_heredoc_child(int *pipefd, char *delimiter);
+void		handle_heredoc_parent(int *pipefd, pid_t pid);
+void		handle_heredocc(t_redirection *redirection);
+void		handle_input_redirection(t_redirection *redirection);
+
 #endif
