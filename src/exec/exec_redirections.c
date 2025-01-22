@@ -6,7 +6,7 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:42:35 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 19:34:20 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:50:57 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	handle_input_redirection(t_redirection *redirection)
 				exit(EXIT_FAILURE);
 			}
 			close(pipefd[0]);
-			exit(wait_chprocess(pid));
+			//exit(wait_chprocess(pid));
+			wait_chprocess(pid);
 		}
 	}
 }

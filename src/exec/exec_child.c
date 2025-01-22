@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:40:12 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/17 23:20:36 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/22 16:49:53 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	exec_chprocess(t_command *cmd, t_env **env_list, char *envp[])
 		free(cmd_path);
 		exit(127);
 	}
+	signal(SIGQUIT, SIG_DFL);
 	execve(cmd_path, cmd->args, envp);
 	perror("Execve fails");
 	free(cmd_path);
