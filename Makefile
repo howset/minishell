@@ -51,6 +51,8 @@ SRC-PARSER			= 	./src/parser/parser.c \
 						./src/parser/utils/env_variable_handling.c
 
 SRC-EXEC			= 	./src/exec/exec.c \
+						./src/exec/exec_spillover.c \
+						./src/exec/exec_spillover2.c \
 						./src/exec/exec_child.c \
 						./src/exec/exec_pathfinding.c \
 						./src/exec/exec_redirections.c \
