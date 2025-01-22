@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:30 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 15:08:12 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:32:42 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
 
-int	g_exit_stat; 
+int	g_exit_stat;
 
 /**
  * heredoc must accepts ctrl+c but not ctrl+\
@@ -35,7 +35,7 @@ void	handle_sigint(void)
  * CTRL + \
  * ??? where to put???
  */
-void	handle_sigquit(void)
+void	handle_sigquit2(void)
 {
 	rl_point = rl_end;
 	rl_redisplay();
@@ -56,7 +56,7 @@ void	handle_signals(int signum)
 	if (signum == SIGINT)
 		handle_sigint();
 	else if (signum == SIGQUIT)
-		handle_sigquit();
+		handle_sigquit2();
 }
 
 /**

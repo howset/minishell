@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:55:41 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 15:08:21 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:32:49 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ extern int	g_exit_stat;
 // signals.c
 void	setup_signals(void);
 void	handle_sigint(void);
-void	handle_sigquit(void);
+void	handle_sigquit2(void);
 void	handle_signals(int signum);
 void	disable_echoctl(void);
 
