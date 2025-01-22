@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_pipe.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 16:20:00 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 19:13:20 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 23:09:33 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 static void	process_pipe_left(t_ast *node, t_cmdtable *table, int *pipefd)
 {
 	t_command	*left_cmd;
-	t_command	*last;
 
-	if (node->left->type == NODE_PIPE)
+	if (!node->left)
 	{
-		process_pipe_node(node->left, table);
-		last = table->commands;
-		while (last && last->next)
-			last = last->next;
-		if (last)
-			last->pipe_write = pipefd[1];
+		ft_fprintf(STDERR_FILENO, "Error: node->left is NULL\n");
+		return ;
 	}
+	if (node->left->type == NODE_PIPE)
+		handle_left_pipe_node(node, table, pipefd);
 	else
 	{
 		left_cmd = process_command_node(node->left);
@@ -43,17 +40,13 @@ static void	process_pipe_right(t_ast *node, t_cmdtable *table, int *pipefd)
 {
 	t_command	*right_cmd;
 
-	if (node->right->type == NODE_PIPE)
+	if (!node->right)
 	{
-		right_cmd = process_command_node(node->right->left);
-		if (right_cmd)
-		{
-			right_cmd->type = CMD_PIPE;
-			right_cmd->pipe_read = pipefd[0];
-			add_command(table, right_cmd);
-		}
-		process_pipe_node(node->right, table);
+		ft_fprintf(STDERR_FILENO, "Error: node->right is NULL\n");
+		return ;
 	}
+	if (node->right->type == NODE_PIPE)
+		handle_right_pipe_node(node, table, pipefd);
 	else
 	{
 		right_cmd = process_command_node(node->right);
