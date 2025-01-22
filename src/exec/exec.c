@@ -6,13 +6,13 @@
 /*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/21 19:54:01 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:03:40 by hsetyamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./exec.h"
 
-int exec_subshell_command(t_command *cmd, t_env **env_list, char *envp[])
+/* int exec_subshell_command(t_command *cmd, t_env **env_list, char *envp[])
 {
 	pid_t pid;
 	int status;
@@ -40,43 +40,9 @@ int exec_subshell_command(t_command *cmd, t_env **env_list, char *envp[])
 		perror("chdir");
 	free(current_dir);
 	return WEXITSTATUS(status);
-}
-
-/**This function executes the simple commands from the command table
- * sequentially, row-by-row. A check for built-in functions is performed
- * and the corresponding function will be called appropriately (exec_prog for
- * non-built-ins).
- * 		Takes the command table as an argument.
- * 		Returns the exit status of the executed commands.
- */
-/* int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
-{
-	t_command	*cmd;
-	int			exit_stat;
-
-	exit_stat = EXIT_SUCCESS;
-	cmd = table->commands;
-	while (cmd)
-	{
-		if (cmd->type == CMD_SIMPLE)
-		{
-			exit_stat = exec_simple_command(cmd, env_list, envp);
-			if (check_logicopnode(&cmd, exit_stat))
-				continue ;
-		}
-		else if (cmd->type == CMD_PIPE)
-		{
-			exit_stat = exec_pipe_command(cmd, env_list, envp);
-			while (cmd && cmd->type == CMD_PIPE)
-				cmd = cmd->next;
-			continue ;
-		}
-		cmd = cmd->next;
-	}
-	return (exit_stat);
 } */
 
-int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
+/* int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 {
 	t_command	*cmd;
 	int			exit_stat;
@@ -103,6 +69,40 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 			exit_stat = exec_subshell_command(cmd, env_list, envp);
 			if (check_logicopnode(&cmd, exit_stat))
 				continue;
+		}
+		cmd = cmd->next;
+	}
+	return (exit_stat);
+} */
+
+/**This function executes the simple commands from the command table
+ * sequentially, row-by-row. A check for built-in functions is performed
+ * and the corresponding function will be called appropriately (exec_prog for
+ * non-built-ins).
+ * 		Takes the command table as an argument.
+ * 		Returns the exit status of the executed commands.
+ */
+int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
+{
+	t_command	*cmd;
+	int			exit_stat;
+
+	exit_stat = EXIT_SUCCESS;
+	cmd = table->commands;
+	while (cmd)
+	{
+		if (cmd->type == CMD_SIMPLE)
+		{
+			exit_stat = exec_simple_command(cmd, env_list, envp);
+			if (check_logicopnode(&cmd, exit_stat))
+				continue ;
+		}
+		else if (cmd->type == CMD_PIPE)
+		{
+			exit_stat = exec_pipe_command(cmd, env_list, envp);
+			while (cmd && cmd->type == CMD_PIPE)
+				cmd = cmd->next;
+			continue ;
 		}
 		cmd = cmd->next;
 	}
