@@ -1,5 +1,8 @@
 # Minishell
 
+## About
+This group project was done by [Reem](https://github.com/ReemEssamEldin) and [Howard](https://github.com/howset). With help, of course.
+
 ## Install Dependencies
 ### Macos
 ```bash
@@ -16,60 +19,12 @@ sudo apt-get install pkg-config
 ```
 
 ## Notes
+- empty -
 
-### 🌎 General
-- Parsing:
-- Exec:
-	- Add builtins
-		- echo - Done.
-		- cd- Done.
-		- pwd - Done.
-		- export - Done.
-		- unset - Done.
-		- env - Done.
-		- exit - Done, but no frees.
-	- Exec non-builtins
-		- fork, waitpid, execve --> can now use non builtins in `$PATH`
-- Free:
-- Now have `ft_realloc` in libft.
-- Now have `ft_fprintf` in utils to circumvent fprintf.
+### General
+- empty -
 
-### 🌴 Main
-- stable
-
-#### 🌿 Branch: tokens
-- 26.11.2024 - stable & merged to main.
-
-#### 🌿 Branch: h-parse
-- 20.12.2024 -- delete the remote, obsolete.
-
-#### 🌿 Branch: r-parser
-- 1.12.2024 - parser done!
-	- Delete `consume_token`& `get_token_type`?
-	- If agreed, specify `tkn_type` & `node_type` in corresponding structs.
-	- If agreed, change `parse()` to `parser()`.
-- Merge the stable ast parser to main.
-
-#### 🌿 Branch: h-echo
-- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
-
-#### 🌿 Branch: h-env_exit
-- 11.12.2024 -- delete the remote, already contained in either h-export_unset or h_fork
-
-#### 🌿 Branch: h-export_unset
-- 20.12.2024 -- delete the remote, already contained in h_fork
-
-#### 🌿 Branch: h-fork
-- 11.12.2024 preliminary experiment with forks and executing non built-in functions.
-- 12.12.2024 can execute ls, which. not sure what else.
-
-#### 🌿 Branch: h-builtins
-- 20.12.2024 new branch
-	- return to prev iteration of echo without handling quotes, but retains the handling of -n.
-	- exec separated to a different module.
-	- to be consolidated with finished parser.
-
-## Collected materials:
+## Materials
 - https://github.com/DimitriDaSilva/42_minishell
 - https://github.com/appinha/42cursus-03-minishell
 - https://github.com/twagger/minishell
@@ -86,39 +41,6 @@ sudo apt-get install pkg-config
 - https://www.youtube.com/watch?v=SToUyjAsaFk
 - https://www.cs.uleth.ca/~holzmann/C/system/shell_does_pipeline.pdf
 - https://github.com/coreutils/coreutils
-
-## Scribbles
-- dup vs dup2: duplicate a file descriptor. dup uses the lowest-numbered unused file descriptor, dup2 uses the file descriptor number specified in newfd.
-On  success, these system calls return the new file descriptor.  On error, -1 is returned, and
-       errno is set appropriately.
-```
-int dup(int oldfd);
-int dup2(int oldfd, int newfd);
-```
-
-- fork: creates a new process by duplicating the calling process. On success, the PID of the child process is returned in the parent, and 0 is returned in the child. On failure, -1 is returned in the parent, no child process is created, and errno is set appropriately.
-```
-pid_t fork(void);
-```
-- wait vs waitpid:  wait for state changes in a child of the calling process, and obtain information about the child whose state has changed (child termination, stopped by signal, resumed by signal). wait() suspends execution of calling thread until one of its children terminates (returns the process ID of the terminated child on success; on error, -1). waitpid() suspends execution of calling thread until a child specified by pid has changed state (can be modified) (returns 0 on success or if WNOHANG was specified and no child(ren) specified by id has yet changed state; on error, -1.).
-```
-#include <sys/types.h>
-#include <sys/wait.h>
-pid_t wait(int *wstatus);
-pid_t waitpid(pid_t pid, int *wstatus, int options);
-```
-
-- termios
-Ctrl+C: Should interrupt the current process but not exit the shell itself.
-Ctrl+Z: Should suspend the current process.
-Ctrl+D: Should exit the shell only if no input is provided.
-By default, these signals terminate or suspend the terminal session, but with termios, their behavior can be overridden.
-
-When implementing job control (e.g., handling background and foreground processes), one might need to:
-	- Suspend processes (Ctrl+Z).
-	- Resume stopped jobs.
-	- Assign terminal control to a foreground process.
-The termios library can help by allowing the manipulation of the terminal's foreground process group with tcgetpgrp() and tcsetpgrp(). This ensures that when a process is in the foreground, it can read from and write to the terminal.
 
 ### Slides
 Contains redundant content
@@ -141,5 +63,5 @@ Contains redundant content
 ![Parsing15](./slides/Ms_slide15.svg "One struct to rule them all ")
 ![Parsing16](./slides/Ms_slide16.svg "Modules")
 
-### Allowed Funcs
-- ugly table removed.
+## Modules READMEs
+Put here? or in the module's folder?
