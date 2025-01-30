@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
+/*   By: reldahli <reldahli@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:41:13 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/22 22:28:39 by hsetya           ###   ########.fr       */
+/*   Updated: 2025/01/23 12:25:56 by reldahli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	exec_commtab(t_cmdtable *table, t_env **env_list, char *envp[])
 	while (cmd)
 	{
 		if (cmd->type == CMD_SIMPLE)
+		{
 			exit_stat = exec_simple_command(cmd, env_list, envp);
+			if (check_logicopnode(&cmd, exit_stat))
+				continue ;
+		}
 		else if (cmd->type == CMD_PIPE)
 		{
 			exit_stat = exec_pipe_command(cmd, env_list, envp);

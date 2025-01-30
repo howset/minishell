@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hsetyamu <hsetyamu@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: hsetya <hsetya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 04:54:39 by reldahli          #+#    #+#             */
-/*   Updated: 2025/01/19 19:09:37 by hsetyamu         ###   ########.fr       */
+/*   Updated: 2025/01/22 23:10:20 by hsetya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void			free_command(t_command *cmd);
 
 // command_table_free.c
 void			free_command_table(t_cmdtable *table);
+void			handle_left_pipe_node(t_ast *node, t_cmdtable *table,
+					int *pipefd);
+void			handle_right_pipe_node(t_ast *node, t_cmdtable *table,
+					int *pipefd);
 
 //command_table_process_utils.c
 void			process_ast_node(t_ast *ast, t_cmdtable *table);
