@@ -3,6 +3,8 @@
 ## About
 This project was done from around November 2024 until January 2025 by [Reem](https://github.com/ReemEssamEldin) and [Howard](https://github.com/howset), and as well with many, many help from Basel.
 
+The version in this repo is the final version on eval.
+
 ## Install Dependencies
 ### Macos
 ```bash
