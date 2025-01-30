@@ -32,7 +32,7 @@ In retrospect, I would never expect the project to be able to reach the state it
 4. We wanted to put nice documentation & comments for each functions. Well, by the day before eval we were still scrambling to make haphazard fixes here and there. Soooo, there you go.
 5. Remove the leftover function in the signal module.
 
-The way we worked together in this project was rather unconventional. Instead of delineating a concrete separation of responsibilities and then converge at the end, we decided to go the other approach. We decide to do **everything** together, that way we are always on the same page. Every incremental development was informed and pushed to the repo for inspection and development by the other (by means of making a branch, whose numbers in the end turns out to grow beyond control if not for Reem's cleanup routine). Well at least that was the ideal plan. But then, suddenly being faced with a gigantic `parser` **and** `exec` leaves quite an impression on me, as it also would on anyone. Nevertheless, our communication and cooperation seems to be very much to my liking. It may not be a perfect one, but I don't think it could have gone any better.
+The way we worked together in this project was rather unconventional. Instead of delineating a concrete separation of responsibilities and then converge at the end, we decided to go the other approach. We decide to do **everything** together, that way we are always on the same page at every stage of development. Every incremental development was informed and pushed to the repo for inspection and further experimentation/development by the other (by means of making a branch, whose numbers in the end turns out to grow beyond control if not for Reem's cleanup routine). Well at least that was the ideal plan. But then, suddenly being faced with a gigantic `parser` **and** `exec` leaves quite an impression on me, as it also would on anyone. Nevertheless, our communication and cooperation seems to be very much to my liking. It may not be a perfect one, but I don't think it could have gone any better.
 
 I would love to mention here somethings about my personal relationship with the eponimous pointers, but I'm afraid that confession would shed what's left of my dignity, so I will wisely refrain.
 
@@ -149,23 +149,5 @@ Basel & Reem made tests for:
 
 
 ### Slides
-Contains redundant content & not updated
 
-![Parsing1](./slides/Ms_slide0.svg "Parsing")
-![Parsing2](./slides/Ms_slide1.svg "Lexer")
-![Parsing3](./slides/Ms_slide2.svg "Parser")
-![Parsing4](./slides/Ms_slide3.svg "Parser Ex1")
-![Parsing5](./slides/Ms_slide4.svg "Parser Ex2")
-![Parsing6](./slides/Ms_slide5.svg "Nodes")
-![Parsing7](./slides/Ms_slide6.svg "ASTree & Command Table plan")
-![Parsing8](./slides/Ms_slide7.svg "Lex Syn Sem Analysis")
-![Parsing9](./slides/Ms_slide8.svg "parse_expression1")
-![Parsing10](./slides/Ms_slide9.svg "parse_expression2")
-![Parsing11](./slides/Ms_slide10.svg "parse_expression3")
-![Parsing12](./slides/Ms_slide11.svg "parse_expression4")
-![Parsing13](./slides/Ms_slide12.svg "Shortened funcs")
-![Parsing13](./slides/Ms_slide13.svg "Parsing workflow")
-![Parsing14](./slides/Ms_slide14.svg "AST -> Command Table flow")
-![Parsing15](./slides/Ms_slide15.svg "One struct to rule them all ")
-![Parsing16](./slides/Ms_slide16.svg "Modules")
-
+Slides [README](./slides/README.md)
