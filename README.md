@@ -32,7 +32,9 @@ In retrospect, I would never expect the project to be able to reach the state it
 4. We wanted to put nice documentation & comments for each functions. Well, by the day before eval we were still scrambling to make haphazard fixes here and there. Soooo, there you go.
 5. Remove the leftover function in the signal module.
 
-I would love to mentions somethings about my personal relationship with the eponimous pointers, but I'm afraid that confession would shed what's left of my dignity, so I will refrain.
+The way we worked together in this project was rather unconventional. Instead of delineating a concrete separation of responsibilities and then converge at the end, we decided to go the other approach. We decide to do **everything** together, that way we are always on the same page. Every incremental development was informed and pushed to the repo for inspection and development by the other (by means of making a branch, whose numbers in the end turns out to grow beyond control if not for Reem's cleanup routine). Well at least that was the ideal plan. But then, suddenly being faced with a gigantic `parser` **and** `exec` leaves quite an impression on me, as it also would on anyone. Nevertheless, our communication and cooperation seems to be very much to my liking. It may not be a perfect one, but I don't think it could have gone any better.
+
+I would love to mention here somethings about my personal relationship with the eponimous pointers, but I'm afraid that confession would shed what's left of my dignity, so I will wisely refrain.
 
 ## The Project
 ### 🖥️ General
@@ -49,7 +51,7 @@ We worked on the project step-by-step from just a functional prompt by `readline
 8. signals
 9. utils
 
-The header files for each modules was intentionally put in their respective directories to avoid having to go up and down the dirs to look for it whenever it was necessary, though of course, this could be done differently should there be reasons to do otherwise.
+The header file for each module was intentionally put in its respective directory to avoid having to go up and down the dirs to look for it whenever it was necessary, though of course, this could be done differently should there be reasons to do otherwise.
 
 Surprisingly, leaks seems to **not** be a major problem throughout this project (unlike some of us who are plagued by this issue to the death). File descriptor is a different topic though. I/we are not entirely sure how to approach this issue, but in the end nobody seem to care about this.
 
@@ -63,10 +65,10 @@ The `lexer` is arguably the most well polished module. Very neatly organized and
 This module is responsible in iterating over the input string and categorizing the input to tokens.
 
 #### ⚙️ Parser
-This is a big one, there is a [README](./src/parser/README_parser.md) for the `parser` inside the directory.
+This is a big one, there is a [README](./src/parser/README.md) for the `parser` inside the directory.
 
 #### ⚙️ Command Table
-Guess what? There is also another [README](./src/command_table/README_commtab.md) for the `command table`.
+Guess what? There is also another [README](./src/command_table/README.md) for the `command table`.
 
 I remembered this module started as something really simple to contain the AST and check the execution of some of our builtins. But then the piping. As well, the redirections. My god.
 
@@ -76,12 +78,12 @@ I think the idea of the `execution` module was pretty simple at first. Similar t
 #### ⚙️ Builtins
 There are only 7 builtins as mandated by the assignment. None were particularly complicated except perhaps `export` and `env`. For reasons that at the time were very convincing, many core functionalities that relate to the environment variables were separated to another module, `env`. What those reasons were exactly, I can't remember anymore 😑.
 
-Maybe worth mentioning, our first implementation of `export` sorts the `env_list` directly to display the `env` sorted alphabetically. We refactored it to first make a copy, sort it, then display the copy without touching the `env_list`.
+Maybe worth mentioning, our first implementation of `export` sorts the `env_list` directly to display the `env` sorted alphabetically. We refactored it to first make a copy, sort it, then display the copy without touching the `env_list`. Just a small detail that really doesn't matter in the grand scheme of things.
 
 #### ⚙️ Envs
 I think the highlight of of this module is the `add_envvar` function which is the most operative function. 
 The `env_list` contains the variable '?' to store the `exit_status` of the last executed command.
-More can be said here but currently I have blank in my head.
+Many more can obviously be said here but currently I have blank in my head.
 
 #### ⚙️ Signals
 I am embarassed to say that I took minitalk but I got severely confused with signalling. This is not a big module, we pushed working on this module right as we were nearing to finishing the project. 
@@ -111,7 +113,7 @@ The `readline` library provides the `input` buffer and also manages `history` in
 
 Efforts put into finding out how to adjust cursor placement was fruitless, hence the fancy prompt. 
 
-We didn't bother to take care the reachable bytes due to this library. I dont know it is at all manageable.
+We didn't bother to take care of the reachable bytes due to this library. I dont know if it is at all manageable.
 
 #### ⚙️ Structs
 We have a **lot** of `structs`. We luckily agreed early on to just keep all structs on a separate header, which I think was a good idea to have them all centralized and not strewn across everywhere, though perhaps not as modular as it could be.
